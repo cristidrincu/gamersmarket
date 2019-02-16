@@ -1,0 +1,13 @@
+ALTER TABLE gamers_market.hw_item
+DROP COLUMN connection_type,
+DROP COLUMN sensor_technology,
+DROP COLUMN buttons,
+DROP COLUMN scrolling_buttons,
+DROP COLUMN has_illumination,
+DROP COLUMN led_color,
+DROP COLUMN cable_length,
+DROP COLUMN weight,
+DROP COLUMN dpi,
+DROP COLUMN is_wireless,
+DROP COLUMN colour,
+DROP COLUMN hardware_type
