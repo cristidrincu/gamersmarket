@@ -7,15 +7,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.constants.GraphicsCardJsonKeys;
 import com.gamersmarket.deserializers.GraphicCardDeserializer;
+import com.gamersmarket.utils.DateValidator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 @Entity
@@ -189,39 +187,38 @@ public class GraphicsCard implements Serializable {
         this.updatedOn = new Date();
     }
 
-    public GraphicsCard(JsonNode graphicsCardNode, GraphicsCardJsonKeys graphicsCardJsonKeys) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
-        this.graphicsCardInterface = graphicsCardNode.get(graphicsCardJsonKeys.getGraphicsCardInterface()).asText();
-        this.maxResolution = graphicsCardNode.get(graphicsCardJsonKeys.getMaxResolution()).asText();
-        this.graphicsCardModel = graphicsCardNode.get(graphicsCardJsonKeys.getGraphicsCardModel()).asText();
-        this.cooling = graphicsCardNode.get(graphicsCardJsonKeys.getCooling()).asText();
-        this.recommendedForGaming = graphicsCardNode.get(graphicsCardJsonKeys.getRecommendedForGaming()).asInt();
-        this.chipsetProducer = graphicsCardNode.get(graphicsCardJsonKeys.getChipsetProducer()).asText();
-        this.gcSeries = graphicsCardNode.get(graphicsCardJsonKeys.getSeries()).asText();
-        this.nanometers = graphicsCardNode.get(graphicsCardJsonKeys.getNanometers()).asText();
-        this.graphicsProcessor = graphicsCardNode.get(graphicsCardJsonKeys.getProcessor()).asText();
-        this.gcReleaseDate = dateFormat.parse(graphicsCardNode.get(graphicsCardJsonKeys.getReleaseDate()).asText());
-        this.vertexShaderVersion = graphicsCardNode.get(graphicsCardJsonKeys.getVertexShaderVersion()).asText();
-        this.gcPixelFillRate = graphicsCardNode.get(graphicsCardJsonKeys.getPixelFillRate()).asText();
-        this.gcTextureFillRate = graphicsCardNode.get(graphicsCardJsonKeys.getTextureFillRate()).asText();
-        this.gcTextureUnits = graphicsCardNode.get(graphicsCardJsonKeys.getTextureUnits()).asInt();
-        this.gcRasterOperators = graphicsCardNode.get(graphicsCardJsonKeys.getRasterOperators()).asInt();
-        this.gcTransistorsNumber = graphicsCardNode.get(graphicsCardJsonKeys.getTransistorsNumber()).asInt();
-        this.gcCudaCores = graphicsCardNode.get(graphicsCardJsonKeys.getCudaCores()).asInt();
-        this.gcOCMaximumBandwith = graphicsCardNode.get(graphicsCardJsonKeys.getOcMaximumBandwith()).asText();
-        this.memoryType = graphicsCardNode.get(graphicsCardJsonKeys.getMemoryType()).asText();
-        this.memoryCapacity = graphicsCardNode.get(graphicsCardJsonKeys.getMemoryCapacity()).asText();
-        this.memoryBus = graphicsCardNode.get(graphicsCardJsonKeys.getMemoryBus()).asText();
-        this.memoryFrequency = graphicsCardNode.get(graphicsCardJsonKeys.getMemoryFrequency()).asText();
-        this.memoryBandwidth = graphicsCardNode.get(graphicsCardJsonKeys.getMemoryBandwidth()).asText();
-        this.gcDirectXSupport = graphicsCardNode.get(graphicsCardJsonKeys.getDirectXSupport()).asText();
-        this.gcOpenGLSupport = graphicsCardNode.get(graphicsCardJsonKeys.getOpenGLSupport()).asText();
-        this.gcVulkanSupport = graphicsCardNode.get(graphicsCardJsonKeys.getVulkanSupport()).asBoolean();
-        this.gcGSyncSupport = graphicsCardNode.get(graphicsCardJsonKeys.getgSyncSupport()).asBoolean();
-        this.gcVRReadySupport = graphicsCardNode.get(graphicsCardJsonKeys.getVrReadySupport()).asBoolean();
-        this.gcHdmiPorts = graphicsCardNode.get(graphicsCardJsonKeys.getHdmiPorts()).asInt();
-        this.gcDisplayPorts = graphicsCardNode.get(graphicsCardJsonKeys.getDisplayPorts()).asInt();
-        this.gcHdtvSupport = graphicsCardNode.get(graphicsCardJsonKeys.getHdtvSupport()).asBoolean();
+    public GraphicsCard(JsonNode graphicsCardNode) {
+        this.graphicsCardInterface = graphicsCardNode.get(GraphicsCardJsonKeys.getGraphicsCardInterface()).asText();
+        this.maxResolution = graphicsCardNode.get(GraphicsCardJsonKeys.getMaxResolution()).asText();
+        this.graphicsCardModel = graphicsCardNode.get(GraphicsCardJsonKeys.getGraphicsCardModel()).asText();
+        this.cooling = graphicsCardNode.get(GraphicsCardJsonKeys.getCooling()).asText();
+        this.recommendedForGaming = graphicsCardNode.get(GraphicsCardJsonKeys.getRecommendedForGaming()).asInt();
+        this.chipsetProducer = graphicsCardNode.get(GraphicsCardJsonKeys.getChipsetProducer()).asText();
+        this.gcSeries = graphicsCardNode.get(GraphicsCardJsonKeys.getSeries()).asText();
+        this.nanometers = graphicsCardNode.get(GraphicsCardJsonKeys.getNanometers()).asText();
+        this.graphicsProcessor = graphicsCardNode.get(GraphicsCardJsonKeys.getProcessor()).asText();
+        this.gcReleaseDate = DateValidator.parseDate(graphicsCardNode.get(GraphicsCardJsonKeys.getReleaseDate()), "yyyy-mm-dd");
+        this.vertexShaderVersion = graphicsCardNode.get(GraphicsCardJsonKeys.getVertexShaderVersion()).asText();
+        this.gcPixelFillRate = graphicsCardNode.get(GraphicsCardJsonKeys.getPixelFillRate()).asText();
+        this.gcTextureFillRate = graphicsCardNode.get(GraphicsCardJsonKeys.getTextureFillRate()).asText();
+        this.gcTextureUnits = graphicsCardNode.get(GraphicsCardJsonKeys.getTextureUnits()).asInt();
+        this.gcRasterOperators = graphicsCardNode.get(GraphicsCardJsonKeys.getRasterOperators()).asInt();
+        this.gcTransistorsNumber = graphicsCardNode.get(GraphicsCardJsonKeys.getTransistorsNumber()).asInt();
+        this.gcCudaCores = graphicsCardNode.get(GraphicsCardJsonKeys.getCudaCores()).asInt();
+        this.gcOCMaximumBandwith = graphicsCardNode.get(GraphicsCardJsonKeys.getOcMaximumBandwith()).asText();
+        this.memoryType = graphicsCardNode.get(GraphicsCardJsonKeys.getMemoryType()).asText();
+        this.memoryCapacity = graphicsCardNode.get(GraphicsCardJsonKeys.getMemoryCapacity()).asText();
+        this.memoryBus = graphicsCardNode.get(GraphicsCardJsonKeys.getMemoryBus()).asText();
+        this.memoryFrequency = graphicsCardNode.get(GraphicsCardJsonKeys.getMemoryFrequency()).asText();
+        this.memoryBandwidth = graphicsCardNode.get(GraphicsCardJsonKeys.getMemoryBandwidth()).asText();
+        this.gcDirectXSupport = graphicsCardNode.get(GraphicsCardJsonKeys.getDirectXSupport()).asText();
+        this.gcOpenGLSupport = graphicsCardNode.get(GraphicsCardJsonKeys.getOpenGLSupport()).asText();
+        this.gcVulkanSupport = graphicsCardNode.get(GraphicsCardJsonKeys.getVulkanSupport()).asBoolean();
+        this.gcGSyncSupport = graphicsCardNode.get(GraphicsCardJsonKeys.getgSyncSupport()).asBoolean();
+        this.gcVRReadySupport = graphicsCardNode.get(GraphicsCardJsonKeys.getVrReadySupport()).asBoolean();
+        this.gcHdmiPorts = graphicsCardNode.get(GraphicsCardJsonKeys.getHdmiPorts()).asInt();
+        this.gcDisplayPorts = graphicsCardNode.get(GraphicsCardJsonKeys.getDisplayPorts()).asInt();
+        this.gcHdtvSupport = graphicsCardNode.get(GraphicsCardJsonKeys.getHdtvSupport()).asBoolean();
         this.updatedOn = new Date();
     }
 

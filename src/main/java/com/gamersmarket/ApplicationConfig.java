@@ -5,7 +5,8 @@ import com.gamersmarket.boundary.GraphicCardResource;
 import com.gamersmarket.boundary.HardwareItemResource;
 import com.gamersmarket.boundary.HardwareTypeResource;
 import com.gamersmarket.boundary.MouseResource;
-import com.gamersmarket.utils.ObjectMapperProvider;
+import com.gamersmarket.mappers.InvalidJsonExceptionMapper;
+import com.gamersmarket.providers.ObjectMapperProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.validation.internal.ValidationExceptionMapper;
@@ -21,13 +22,11 @@ public class ApplicationConfig extends ResourceConfig {
                 HardwareItemResource.class,
                 MouseResource.class,
                 GraphicCardResource.class,
+                InvalidJsonExceptionMapper.class,
                 ValidationExceptionMapper.class
         );
 
-//        final ObjectMapper mapper = new ObjectMapper();
-//        mapper.registerModule(new JaxbAnnotationModule());
         register(ObjectMapperProvider.class);
-//        register(new JacksonJaxbJsonProvider(new ObjectMapperProvider(), JacksonJaxbJsonProvider.DEFAULT_ANNOTATIONS));
         register(JacksonFeatures.class);
         property(ServerProperties.MOXY_JSON_FEATURE_DISABLE, true);
     }

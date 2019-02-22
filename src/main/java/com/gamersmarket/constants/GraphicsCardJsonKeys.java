@@ -1,210 +1,167 @@
 package com.gamersmarket.constants;
 
-import com.gamersmarket.ServiceStartup;
-
-import javax.ejb.DependsOn;
-import javax.ejb.Startup;
-import javax.inject.Singleton;
-import java.util.Properties;
-import java.util.logging.Logger;
-
-@DependsOn("JsonConstantsStartup")
-@Singleton
-@Startup
 public class GraphicsCardJsonKeys {
 
-    private Logger logger = Logger.getLogger(ServiceStartup.class.getName());
+    private GraphicsCardJsonKeys() {}
 
-    private String graphicsCardInterface = "graphicsCardInterface";
-    private String maxResolution = "maxResolution";
-    private String graphicsCardModel = "graphicsCardModel";
-    private String cooling = "cooling";
-    private String recommendedForGaming = "recommendedForGaming";
-    private String chipsetProducer = "chipsetProducer";
-    private String series = "gcSeries";
-    private String nanometers = "nanometers";
-    private String processor = "graphicsProcessor";
-    private String releaseDate = "gcReleaseDate";
-    private String vertexShaderVersion = "vertexShaderVersion";
-    private String pixelFillRate = "gcPixelFillRate";
-    private String textureFillRate = "gcTextureFillRate";
-    private String textureUnits = "gcTextureUnits";
-    private String rasterOperators = "gcRasterOperators";
-    private String transistorsNumber = "gcTransistorsNumber";
-    private String cudaCores = "gcCudaCores";
-    private String ocMaximumBandwith = "gcOCMaximumBandwith";
-    private String memoryType = "memoryType";
-    private String memoryCapacity = "memoryCapacity";
-    private String memoryBus = "memoryBus";
-    private String memoryFrequency = "memoryFrequency";
-    private String memoryBandwidth = "memoryBandwidth";
-    private String directXSupport = "gcDirectXSupport";
-    private String openGLSupport = "gcOpenGLSupport";
-    private String vulkanSupport = "gcVulkanSupport";
-    private String gSyncSupport = "gcGSyncSupport";
-    private String vrReadySupport = "gcGSyncSupport";
-    private String hdmiPorts = "gcHdmiPorts";
-    private String displayPorts = "gcDisplayPorts";
-    private String hdtvSupport = "hdtvSupport";
+    private static final String graphicsCardInterface = "graphicsCardInterface";
+    private static final String maxResolution = "maxResolution";
+    private static final String graphicsCardModel = "graphicsCardModel";
+    private static final String cooling = "cooling";
+    private static final String recommendedForGaming = "recommendedForGaming";
+    private static final String chipsetProducer = "chipsetProducer";
+    private static final String series = "gcSeries";
+    private static final String nanometers = "nanometers";
+    private static final String processor = "graphicsProcessor";
+    private static final String releaseDate = "gcReleaseDate";
+    private static final String pixelShaderVersion = "pixelShaderVersion";
+    private static final String vertexShaderVersion = "vertexShaderVersion";
+    private static final String pixelFillRate = "gcPixelFillRate";
+    private static final String textureFillRate = "gcTextureFillRate";
+    private static final String textureUnits = "gcTextureUnits";
+    private static final String rasterOperators = "gcRasterOperators";
+    private static final String transistorsNumber = "gcTransistorsNumber";
+    private static final String cudaCores = "gcCudaCores";
+    private static final String ocMaximumBandwith = "gcOCMaximumBandwith";
+    private static final String memoryType = "memoryType";
+    private static final String memoryCapacity = "memoryCapacity";
+    private static final String memoryBus = "memoryBus";
+    private static final String memoryFrequency = "memoryFrequency";
+    private static final String memoryBandwidth = "memoryBandwidth";
+    private static final String directXSupport = "gcDirectXSupport";
+    private static final String openGLSupport = "gcOpenGLSupport";
+    private static final String vulkanSupport = "gcVulkanSupport";
+    private static final String gSyncSupport = "gcGSyncSupport";
+    private static final String vrReadySupport = "gcVRReadySupport";
+    private static final String hdmiPorts = "gcHdmiPorts";
+    private static final String displayPorts = "gcDisplayPorts";
+    private static final String hdtvSupport = "gcHdtvSupport";
 
-    public GraphicsCardJsonKeys() {}
-
-    public String getGraphicsCardInterface() {
+    public static String getGraphicsCardInterface() {
         return graphicsCardInterface;
     }
 
-    public String getMaxResolution() {
+    public static String getMaxResolution() {
         return maxResolution;
     }
 
-    public String getGraphicsCardModel() {
+    public static String getGraphicsCardModel() {
         return graphicsCardModel;
     }
 
-    public String getCooling() {
+    public static String getCooling() {
         return cooling;
     }
 
-    public String getRecommendedForGaming() {
+    public static String getRecommendedForGaming() {
         return recommendedForGaming;
     }
 
-    public String getChipsetProducer() {
+    public static String getChipsetProducer() {
         return chipsetProducer;
     }
 
-    public String getSeries() {
+    public static String getSeries() {
         return series;
     }
 
-    public String getNanometers() {
+    public static String getNanometers() {
         return nanometers;
     }
 
-    public String getProcessor() {
+    public static String getProcessor() {
         return processor;
     }
 
-    public String getReleaseDate() {
+    public static String getReleaseDate() {
         return releaseDate;
     }
 
-    public String getVertexShaderVersion() {
+    public static String getVertexShaderVersion() {
         return vertexShaderVersion;
     }
 
-    public String getPixelFillRate() {
+    public static String getPixelFillRate() {
         return pixelFillRate;
     }
 
-    public String getTextureFillRate() {
+    public static String getTextureFillRate() {
         return textureFillRate;
     }
 
-    public String getTextureUnits() {
+    public static String getTextureUnits() {
         return textureUnits;
     }
 
-    public String getRasterOperators() {
+    public static String getRasterOperators() {
         return rasterOperators;
     }
 
-    public String getTransistorsNumber() {
+    public static String getTransistorsNumber() {
         return transistorsNumber;
     }
 
-    public String getCudaCores() {
+    public static String getCudaCores() {
         return cudaCores;
     }
 
-    public String getOcMaximumBandwith() {
+    public static String getOcMaximumBandwith() {
         return ocMaximumBandwith;
     }
 
-    public String getMemoryType() {
+    public static String getMemoryType() {
         return memoryType;
     }
 
-    public String getMemoryCapacity() {
+    public static String getMemoryCapacity() {
         return memoryCapacity;
     }
 
-    public String getMemoryBus() {
+    public static String getMemoryBus() {
         return memoryBus;
     }
 
-    public String getMemoryFrequency() {
+    public static String getMemoryFrequency() {
         return memoryFrequency;
     }
 
-    public String getMemoryBandwidth() {
+    public static String getMemoryBandwidth() {
         return memoryBandwidth;
     }
 
-    public String getDirectXSupport() {
+    public static String getDirectXSupport() {
         return directXSupport;
     }
 
-    public String getOpenGLSupport() {
+    public static String getOpenGLSupport() {
         return openGLSupport;
     }
 
-    public String getVulkanSupport() {
+    public static String getVulkanSupport() {
         return vulkanSupport;
     }
 
-    public String getgSyncSupport() {
+    public static String getgSyncSupport() {
         return gSyncSupport;
     }
 
-    public String getVrReadySupport() {
+    public static String getVrReadySupport() {
         return vrReadySupport;
     }
 
-    public String getHdmiPorts() {
+    public static String getHdmiPorts() {
         return hdmiPorts;
     }
 
-    public String getDisplayPorts() {
+    public static String getDisplayPorts() {
         return displayPorts;
     }
 
-    public String getHdtvSupport() {
+    public static String getHdtvSupport() {
         return hdtvSupport;
     }
 
-    public void buildGraphicsCardJsonKeys(Properties graphicsCardPropertiesJson) {
-        graphicsCardInterface = graphicsCardPropertiesJson.getProperty("GRAPHICS_CARD_INTERFACE");
-        maxResolution = graphicsCardPropertiesJson.getProperty("MAX_RESOLUTION");
-        graphicsCardModel = graphicsCardPropertiesJson.getProperty("GRAPHICS_CARD_MODEL");
-        cooling = graphicsCardPropertiesJson.getProperty("COOLING");
-        recommendedForGaming = graphicsCardPropertiesJson.getProperty("RECOMMENDED_FOR_GAMING");
-        chipsetProducer = graphicsCardPropertiesJson.getProperty("CHIPSET_PRODUCER");
-        series = graphicsCardPropertiesJson.getProperty("SERIES");
-        nanometers = graphicsCardPropertiesJson.getProperty("NANOMETERS");
-        processor = graphicsCardPropertiesJson.getProperty("PROCESSOR");
-        releaseDate = graphicsCardPropertiesJson.getProperty("RELEASE_DATE");
-        vertexShaderVersion = graphicsCardPropertiesJson.getProperty("VERTEX_SHADER_VERSION");
-        pixelFillRate = graphicsCardPropertiesJson.getProperty("PIXEL_FILL_RATE");
-        textureFillRate = graphicsCardPropertiesJson.getProperty("TEXTURE_FILL_RATE");
-        textureUnits = graphicsCardPropertiesJson.getProperty("TEXTURE_UNITS");
-        rasterOperators = graphicsCardPropertiesJson.getProperty("RASTER_OPERATORS");
-        transistorsNumber = graphicsCardPropertiesJson.getProperty("TRANSISTOR_NUMBERS");
-        cudaCores = graphicsCardPropertiesJson.getProperty("CUDA_CORES");
-        ocMaximumBandwith = graphicsCardPropertiesJson.getProperty("OC_MAXIMUM_BANDWIDTH");
-        memoryType = graphicsCardPropertiesJson.getProperty("MEMORY_TYPE");
-        memoryCapacity = graphicsCardPropertiesJson.getProperty("MEMORY_CAPACITY");
-        memoryBus = graphicsCardPropertiesJson.getProperty("MEMORY_BUS");
-        memoryFrequency = graphicsCardPropertiesJson.getProperty("MEMORY_FREQUENCY");
-        memoryBandwidth = graphicsCardPropertiesJson.getProperty("MEMORY_BANDWIDTH");
-        directXSupport = graphicsCardPropertiesJson.getProperty("DIRECT_X_SUPPORT");
-        openGLSupport = graphicsCardPropertiesJson.getProperty("OPEN_GL_SUPPORT");
-        vulkanSupport = graphicsCardPropertiesJson.getProperty("VULKAN_SUPPORT");
-        gSyncSupport = graphicsCardPropertiesJson.getProperty("G_SYNC_SUPPORT");
-        vrReadySupport = graphicsCardPropertiesJson.getProperty("VR_READY_SUPPORT");
-        hdmiPorts = graphicsCardPropertiesJson.getProperty("HDMI_PORTS");
-        displayPorts = graphicsCardPropertiesJson.getProperty("DISPLAY_PORTS");
-        hdtvSupport = graphicsCardPropertiesJson.getProperty("HDTV_SUPPORT");
-        logger.info("Built graphics card json keys.");
+    public static String getPixelShaderVersion() {
+        return pixelShaderVersion;
     }
 }

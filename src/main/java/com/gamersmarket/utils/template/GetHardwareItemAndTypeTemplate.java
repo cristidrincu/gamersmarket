@@ -2,7 +2,7 @@ package com.gamersmarket.utils.template;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.entity.hardware.HardwareItem;
-import com.gamersmarket.utils.ObjectMapperProvider;
+import com.gamersmarket.providers.ObjectMapperProvider;
 
 import javax.inject.Inject;
 import java.io.IOException;

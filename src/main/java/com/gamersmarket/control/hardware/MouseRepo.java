@@ -12,12 +12,8 @@ import java.util.List;
 
 public class MouseRepo implements HardwareRepository<Mouse>, HardwareItemRepository<Mouse> {
 
-    private HardwareItemRepo hardwareItemRepo;
-
     @Inject
-    public MouseRepo(HardwareItemRepo hardwareItemRepo) {
-        this.hardwareItemRepo = hardwareItemRepo;
-    }
+    HardwareItemRepo hardwareItemRepo;
 
     @PersistenceContext(name = "gamersMarket")
     EntityManager em;
