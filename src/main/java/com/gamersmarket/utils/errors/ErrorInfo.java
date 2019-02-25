@@ -1,7 +1,6 @@
 package com.gamersmarket.utils.errors;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.databind.JsonNode;
 
 @JsonPropertyOrder({"code", "field", "message"})
 public class ErrorInfo {

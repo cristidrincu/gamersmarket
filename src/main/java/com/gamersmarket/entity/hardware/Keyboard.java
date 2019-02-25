@@ -2,7 +2,9 @@ package com.gamersmarket.entity.hardware;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.constants.KeyboardJsonKeys;
+import com.gamersmarket.deserializers.KeyboardDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "hw_item_keyboard")
+@JsonDeserialize(using = KeyboardDeserializer.class)
 public class Keyboard {
 
     @Id
@@ -72,6 +75,7 @@ public class Keyboard {
     public Keyboard() {}
 
     public Keyboard(Keyboard keyboard) {
+        this.id = keyboard.getId();
         this.keyboardType = keyboard.getKeyboardType();
         this.keyboardColour = keyboard.getKeyboardColour();
         this.hasNumericalKeys = keyboard.getHasNumericalKeys();
@@ -84,7 +88,9 @@ public class Keyboard {
         this.keyboardKeysLayout = keyboard.getKeyboardKeysLayout();
         this.hasIllumination = keyboard.getHasIllumination();
         this.ledColour = keyboard.getLedColour();
+        this.createdOn = keyboard.getCreatedOn();
         this.updatedOn = keyboard.getUpdatedOn();
+        this.hardwareItem = keyboard.getHardwareItem();
     }
 
     public Keyboard(JsonNode keyboardNode) {

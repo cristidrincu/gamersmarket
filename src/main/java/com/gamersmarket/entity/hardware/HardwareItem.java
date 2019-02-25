@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -57,9 +56,12 @@ public class HardwareItem implements Serializable {
     public HardwareItem() {}
 
     public HardwareItem(HardwareItem hardwareItem) {
+        this.id = hardwareItem.getId();
         this.manufacturerCode = hardwareItem.getManufacturerCode();
         this.name = hardwareItem.getName();
+        this.createdOn = hardwareItem.getCreatedOn();
         this.updatedOn = new Date();
+        this.hardwareType = hardwareItem.getHardwareType();
     }
 
     public HardwareItem(JsonNode hwItemNode) {
