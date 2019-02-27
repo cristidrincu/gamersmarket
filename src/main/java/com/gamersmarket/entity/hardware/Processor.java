@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.constants.ProcessorJsonKeys;
+import com.gamersmarket.deserializers.ProcessorDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "hw_item_processor")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonDeserialize(using = ProcessorDeserializer.class)
 public class Processor implements Serializable {
 
     private static final long serialVersionUID = -8016496843122720880L;
