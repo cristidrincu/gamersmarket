@@ -6,16 +6,16 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.control.interfaces.DeserializerForEntities;
-import com.gamersmarket.entity.hardware.GraphicsCard;
+import com.gamersmarket.entity.bid.HardwareBid;
 
 import java.io.IOException;
 
-public class GraphicCardDeserializer extends JsonDeserializer<GraphicsCard> implements DeserializerForEntities {
+public class HardwareBidDeserializer extends JsonDeserializer<HardwareBid> implements DeserializerForEntities {
 
     @Override
-    public GraphicsCard deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        JsonNode graphicCardNode = this.getEntityRootNode(jsonParser, "graphicCard");
-        return new GraphicsCard(graphicCardNode);
+    public HardwareBid deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        JsonNode hardwareBidRootNode = this.getEntityRootNode(jsonParser, "hardwareBid");
+        return new HardwareBid(hardwareBidRootNode);
     }
 
     @Override
