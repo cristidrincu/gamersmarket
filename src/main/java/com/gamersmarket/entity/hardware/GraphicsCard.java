@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.constants.GraphicsCardJsonKeys;
-import com.gamersmarket.deserializers.GraphicCardDeserializer;
-import com.gamersmarket.utils.DateValidator;
+import com.gamersmarket.common.constants.GraphicsCardJsonKeys;
+import com.gamersmarket.common.deserializers.GraphicCardDeserializer;
+import com.gamersmarket.common.utils.DateValidator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -152,6 +152,7 @@ public class GraphicsCard implements Serializable {
     public GraphicsCard() {}
 
     public GraphicsCard(GraphicsCard graphicsCard) {
+        this.id = graphicsCard.getId();
         this.graphicsCardInterface = graphicsCard.getGraphicsCardInterface();
         this.maxResolution = graphicsCard.getMaxResolution();
         this.graphicsCardModel = graphicsCard.getGraphicsCardModel();

@@ -3,7 +3,7 @@ package com.gamersmarket.entity.hardware;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.deserializers.OfferDeserializer;
+import com.gamersmarket.common.deserializers.OfferDeserializer;
 import com.gamersmarket.entity.gamers.Gamer;
 
 import javax.persistence.*;

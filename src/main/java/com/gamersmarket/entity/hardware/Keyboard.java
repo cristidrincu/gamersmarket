@@ -3,8 +3,8 @@ package com.gamersmarket.entity.hardware;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.constants.KeyboardJsonKeys;
-import com.gamersmarket.deserializers.KeyboardDeserializer;
+import com.gamersmarket.common.constants.KeyboardJsonKeys;
+import com.gamersmarket.common.deserializers.KeyboardDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,9 +15,21 @@ import java.util.Objects;
 @Entity
 @Table(name = "hw_item_keyboard")
 @JsonDeserialize(using = KeyboardDeserializer.class)
+@NamedQueries({
+        @NamedQuery(name = Keyboard.FIND_ALL_KEYBOARDS, query = Keyboard.FIND_ALL_KEYBOARDS_QUERY),
+        @NamedQuery(name = Keyboard.FIND_KEYBOARD_BY_ID, query = Keyboard.FIND_KEYBOARD_BY_ID_QUERY)
+})
 public class Keyboard implements Serializable {
 
     private static final long serialVersionUID = 8674635200938651078L;
+
+    private static final String PARAM_ID = "id";
+
+    public static final String FIND_ALL_KEYBOARDS = "find_all_keyboards";
+    public static final String FIND_KEYBOARD_BY_ID = "find_keyboard_by_id";
+
+    public static final String FIND_ALL_KEYBOARDS_QUERY = "select keyboard from Keyboard keyboard";
+    public static final String FIND_KEYBOARD_BY_ID_QUERY = "select keyboard from Keyboard keyboard where keyboard.id = :" + PARAM_ID;
 
     @Id
     @NotNull

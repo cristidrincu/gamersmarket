@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.constants.ProcessorJsonKeys;
-import com.gamersmarket.deserializers.ProcessorDeserializer;
+import com.gamersmarket.common.constants.ProcessorJsonKeys;
+import com.gamersmarket.common.deserializers.ProcessorDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,9 +18,21 @@ import java.util.Objects;
 @Table(name = "hw_item_processor")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @JsonDeserialize(using = ProcessorDeserializer.class)
+@NamedQueries({
+        @NamedQuery(name = Processor.FIND_ALL_PROCESSORS, query = Processor.FIND_ALL_PROCESSORS_QUERY),
+        @NamedQuery(name = Processor.FIND_PROCESSOR_BY_ID, query = Processor.FIND_PROCESSOR_BY_ID_QUERY)
+})
 public class Processor implements Serializable {
 
     private static final long serialVersionUID = -8016496843122720880L;
+
+    private static final String PARAM_ID = "id";
+
+    public static final String FIND_ALL_PROCESSORS = "find_all_processors";
+    public static final String FIND_PROCESSOR_BY_ID = "find_processor";
+
+    public static final String FIND_ALL_PROCESSORS_QUERY = "select proc from Processor proc";
+    public static final String FIND_PROCESSOR_BY_ID_QUERY = "select proc from Processor proc where proc.id = :" + PARAM_ID;
 
     @Id
     @NotNull
@@ -105,6 +117,7 @@ public class Processor implements Serializable {
     public Processor() {}
 
     public Processor(Processor processor) {
+        this.id = processor.getId();
         this.recommendedForGaming = processor.getRecommendedForGaming();
         this.procSocket = processor.getProcSocket();
         this.procSeries = processor.getProcSeries();

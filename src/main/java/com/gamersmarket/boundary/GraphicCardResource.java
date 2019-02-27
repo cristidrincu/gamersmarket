@@ -3,7 +3,7 @@ package com.gamersmarket.boundary;
 import com.gamersmarket.entity.hardware.GraphicsCard;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.control.hardware.GraphicsCardRepo;
-import com.gamersmarket.utils.template.GetGraphicsCardTemplate;
+import com.gamersmarket.common.utils.template.GetGraphicsCardTemplate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

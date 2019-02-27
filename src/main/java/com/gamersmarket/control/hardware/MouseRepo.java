@@ -2,8 +2,8 @@ package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.Mouse;
-import com.gamersmarket.control.interfaces.HardwareItemRepository;
-import com.gamersmarket.control.interfaces.HardwareRepository;
+import com.gamersmarket.common.interfaces.HardwareItemRepository;
+import com.gamersmarket.common.interfaces.HardwareRepository;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -20,12 +20,12 @@ public class MouseRepo implements HardwareRepository<Mouse>, HardwareItemReposit
 
     @Override
     public List<Mouse> getItems() {
-        return em.createNamedQuery(Mouse.GET_ITEMS, Mouse.class).getResultList();
+        return em.createNamedQuery(Mouse.GET_MICE, Mouse.class).getResultList();
     }
 
     @Override
     public Mouse getItem(int hardwareId) {
-        return em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter("id", hardwareId).getSingleResult();
+        return em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter(Mouse.PARAM_ID, hardwareId).getSingleResult();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MouseRepo implements HardwareRepository<Mouse>, HardwareItemReposit
 
     @Override
     public void deleteItem(int hardwareId) {
-        Mouse mouse = em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter("id", hardwareId).getSingleResult();
+        Mouse mouse = em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter(Mouse.PARAM_ID, hardwareId).getSingleResult();
         em.remove(mouse);
     }
 

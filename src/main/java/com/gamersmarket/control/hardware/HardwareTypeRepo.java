@@ -1,7 +1,7 @@
 package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.entity.types.HardwareType;
-import com.gamersmarket.control.interfaces.HardwareRepository;
+import com.gamersmarket.common.interfaces.HardwareRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

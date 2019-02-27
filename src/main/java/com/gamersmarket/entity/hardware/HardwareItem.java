@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.deserializers.HardwareItemDeserializer;
+import com.gamersmarket.common.deserializers.HardwareItemDeserializer;
 import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.*;

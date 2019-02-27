@@ -2,7 +2,7 @@ package com.gamersmarket.control.pricing;
 
 import com.gamersmarket.entity.pricing.HardwarePricing;
 import com.gamersmarket.entity.types.HardwareType;
-import com.gamersmarket.control.interfaces.PricingRepository;
+import com.gamersmarket.common.interfaces.PricingRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

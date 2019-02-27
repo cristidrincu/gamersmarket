@@ -1,7 +1,7 @@
 package com.gamersmarket.control.hardware;
 
-import com.gamersmarket.control.interfaces.HardwareItemRepository;
-import com.gamersmarket.control.interfaces.HardwareRepository;
+import com.gamersmarket.common.interfaces.HardwareItemRepository;
+import com.gamersmarket.common.interfaces.HardwareRepository;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.Keyboard;
 

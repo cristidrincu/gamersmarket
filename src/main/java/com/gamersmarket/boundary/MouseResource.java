@@ -1,9 +1,11 @@
 package com.gamersmarket.boundary;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.control.hardware.MouseRepo;
-import com.gamersmarket.utils.template.GetMouseTemplate;
+import com.gamersmarket.common.utils.template.GetMouseTemplate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -24,10 +26,13 @@ public class MouseResource {
     @Inject
     GetMouseTemplate getMouseTemplate;
 
+    @Inject
+    MouseDetailsDTO mouseDetailsDTO;
+
     @GET
     @Path("{id}")
-    public Response getMouseDetails(@PathParam("id") int id) {
-        return Response.ok().entity(mouseRepo.getItem(id)).build();
+    public Response getMouseDetails(@PathParam("id") int id) throws JsonProcessingException {
+        return Response.ok().entity(mouseDetailsDTO.buildMouseDetails(id)).build();
     }
 
     @POST

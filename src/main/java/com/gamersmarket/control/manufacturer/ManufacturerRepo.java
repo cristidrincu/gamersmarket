@@ -1,7 +1,7 @@
 package com.gamersmarket.control.manufacturer;
 
 import com.gamersmarket.entity.manufacturer.Manufacturer;
-import com.gamersmarket.control.interfaces.ManufacturerRepository;
+import com.gamersmarket.common.interfaces.ManufacturerRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

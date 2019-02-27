@@ -2,7 +2,7 @@ package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.types.HardwareType;
-import com.gamersmarket.control.interfaces.HardwareRepository;
+import com.gamersmarket.common.interfaces.HardwareRepository;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;

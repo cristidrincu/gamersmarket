@@ -3,7 +3,7 @@ package com.gamersmarket.entity.bid;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.deserializers.HardwareBidDeserializer;
+import com.gamersmarket.common.deserializers.HardwareBidDeserializer;
 import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.hardware.HardwareOffer;
 

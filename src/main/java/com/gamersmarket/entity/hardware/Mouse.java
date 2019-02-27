@@ -1,12 +1,10 @@
 package com.gamersmarket.entity.hardware;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.constants.MouseJsonKeys;
-import com.gamersmarket.deserializers.MouseDeserializer;
+import com.gamersmarket.common.constants.MouseJsonKeys;
+import com.gamersmarket.common.deserializers.MouseDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,15 +18,20 @@ import java.util.Objects;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @JsonDeserialize(using = MouseDeserializer.class)
 @NamedQueries({
-        @NamedQuery(name = Mouse.GET_MOUSE_DETAILS, query = "select m from Mouse m where m.id = :id"),
-        @NamedQuery(name = Mouse.GET_ITEMS, query = "select m from Mouse m")
+        @NamedQuery(name = Mouse.GET_MICE, query = Mouse.GET_MICE_QUERY),
+        @NamedQuery(name = Mouse.GET_MOUSE_DETAILS, query = Mouse.GET_MOUSE_DETAILS_QUERY)
 })
 public class Mouse implements Serializable {
 
     private static final long serialVersionUID = 8821921956251827118L;
 
+    public static final String PARAM_ID = "id";
+
+    public static final String GET_MICE = "Mouse.getMice";
     public static final String GET_MOUSE_DETAILS = "Mouse.getMouseDetails";
-    public static final String GET_ITEMS = "Mouse.getMice";
+
+    public static final String GET_MICE_QUERY = "select m from Mouse m";
+    public static final String GET_MOUSE_DETAILS_QUERY = "select m from Mouse m where m.id = :" + PARAM_ID;
 
     @Id
     @NotNull
@@ -82,6 +85,7 @@ public class Mouse implements Serializable {
     public Mouse() {}
 
     public Mouse(Mouse mouse) {
+        this.id = mouse.getId();
         this.connectionType = mouse.getConnectionType();
         this.sensorTechnology = mouse.getSensorTechnology();
         this.buttons = mouse.getButtons();

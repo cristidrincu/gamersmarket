@@ -1,10 +1,9 @@
 package com.gamersmarket.control.hardware;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.entity.hardware.GraphicsCard;
 import com.gamersmarket.entity.hardware.HardwareItem;
-import com.gamersmarket.control.interfaces.HardwareItemRepository;
-import com.gamersmarket.control.interfaces.HardwareRepository;
+import com.gamersmarket.common.interfaces.HardwareItemRepository;
+import com.gamersmarket.common.interfaces.HardwareRepository;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
