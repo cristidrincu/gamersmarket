@@ -8,13 +8,16 @@ import com.gamersmarket.deserializers.KeyboardDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "hw_item_keyboard")
 @JsonDeserialize(using = KeyboardDeserializer.class)
-public class Keyboard {
+public class Keyboard implements Serializable {
+
+    private static final long serialVersionUID = 8674635200938651078L;
 
     @Id
     @NotNull

@@ -4,16 +4,20 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.deserializers.OfferDeserializer;
+import com.gamersmarket.entity.gamers.Gamer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "hardware_offer")
 @JsonDeserialize(using = OfferDeserializer.class)
-public class Offer {
+public class HardwareOffer implements Serializable {
+
+    private static final long serialVersionUID = 6420963588097220101L;
 
     @Id
     @NotNull
@@ -28,6 +32,22 @@ public class Offer {
     private int buyerRequestsReview;
 
     @ManyToOne
+    @JoinColumn(name = "selling_gamer_id")
+    private Gamer sellingGamer;
+
+    @ManyToOne
+    @JoinColumn(name = "buying_gamer_id")
+    private Gamer buyingGamer;
+
+    @ManyToOne
+    @JoinColumn(name = "approver_gamer_id")
+    private Gamer approverGamer;
+
+    @ManyToOne
+    @JoinColumn(name = "winner_bid_id")
+    private Gamer winnerBid;
+
+    @ManyToOne
     private HardwareItem hardwareItem;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,9 +60,9 @@ public class Offer {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private Date updatedOn;
 
-    public Offer() {}
+    public HardwareOffer() {}
 
-    public Offer(JsonNode jsonNode) {
+    public HardwareOffer(JsonNode jsonNode) {
         this.approvedByUs = jsonNode.get("approvedByUs").asInt();
         this.buyerRequestsReview = jsonNode.get("buyerRequestsReview").asInt();
         this.updatedOn = new Date();
@@ -80,6 +100,38 @@ public class Offer {
         this.hardwareItem = hardwareItem;
     }
 
+    public Gamer getSellingGamer() {
+        return sellingGamer;
+    }
+
+    public void setSellingGamer(Gamer sellingGamer) {
+        this.sellingGamer = sellingGamer;
+    }
+
+    public Gamer getBuyingGamer() {
+        return buyingGamer;
+    }
+
+    public void setBuyingGamer(Gamer buyingGamer) {
+        this.buyingGamer = buyingGamer;
+    }
+
+    public Gamer getApproverGamer() {
+        return approverGamer;
+    }
+
+    public void setApproverGamer(Gamer approverGamer) {
+        this.approverGamer = approverGamer;
+    }
+
+    public Gamer getWinnerBid() {
+        return winnerBid;
+    }
+
+    public void setWinnerBid(Gamer winnerBid) {
+        this.winnerBid = winnerBid;
+    }
+
     public Date getCreatedOn() {
         return createdOn;
     }
@@ -100,9 +152,9 @@ public class Offer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Offer offer = (Offer) o;
-        return id == offer.id &&
-                createdOn.equals(offer.createdOn);
+        HardwareOffer hardwareOffer = (HardwareOffer) o;
+        return id == hardwareOffer.id &&
+                createdOn.equals(hardwareOffer.createdOn);
     }
 
     @Override

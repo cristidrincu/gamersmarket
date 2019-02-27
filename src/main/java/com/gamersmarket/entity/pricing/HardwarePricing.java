@@ -1,6 +1,9 @@
 package com.gamersmarket.entity.pricing;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.entity.gamers.Gamer;
+import com.gamersmarket.entity.manufacturer.Manufacturer;
 import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.*;
@@ -42,6 +45,18 @@ public class HardwarePricing implements Serializable {
 
     private int age;
 
+    @ManyToOne
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturer;
+
+    @ManyToOne
+    @JoinColumn(name = "hw_type_id")
+    private HardwareType hardwareType;
+
+    @ManyToOne
+    @JoinColumn(name = "gamer_id")
+    private Gamer gamer;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_on")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
@@ -52,10 +67,6 @@ public class HardwarePricing implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private Date updatedOn;
 
-    @ManyToOne
-    @JoinColumn(name = "hw_type_id")
-    private HardwareType hardwareType;
-
     public HardwarePricing() {}
 
     public HardwarePricing(HardwarePricing newPricing) {
@@ -64,6 +75,15 @@ public class HardwarePricing implements Serializable {
         this.minPrice = newPricing.getMinPrice();
         this.recommendedPrice = newPricing.getRecommendedPrice();
         this.sellPeriodHours = newPricing.getSellPeriodHours();
+        this.updatedOn = new Date();
+    }
+
+    public HardwarePricing(JsonNode hardwarePricingNode) {
+        this.age = hardwarePricingNode.get("age").asInt();
+        this.hasWarranty = hardwarePricingNode.get("hasWarranty").asInt();
+        this.minPrice = hardwarePricingNode.get("minPrice").asInt();
+        this.recommendedPrice = hardwarePricingNode.get("recommendedPrice").asInt();
+        this.sellPeriodHours = hardwarePricingNode.get("sellPeriodHouse").asInt();
         this.updatedOn = new Date();
     }
 
@@ -131,12 +151,28 @@ public class HardwarePricing implements Serializable {
         this.updatedOn = updatedOn;
     }
 
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
     public HardwareType getHardwareType() {
         return hardwareType;
     }
 
     public void setHardwareType(HardwareType hardwareType) {
         this.hardwareType = hardwareType;
+    }
+
+    public Gamer getGamer() {
+        return gamer;
+    }
+
+    public void setGamer(Gamer gamer) {
+        this.gamer = gamer;
     }
 
     @Override
