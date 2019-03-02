@@ -13,7 +13,7 @@ public abstract class GetHardwareItemAndTypeTemplate<T> {
     ObjectMapperProvider objectMapperProvider;
 
     public HardwareItem getHardwareItem(String jsonObject) throws IOException {
-        return objectMapperProvider.objectMapper.readValue(jsonObject, HardwareItem.class);
+        return objectMapperProvider.getObjectMapper().readValue(jsonObject, HardwareItem.class);
     }
 
     public int getHardwareTypeId(String jsonObject) throws IOException {
@@ -22,7 +22,7 @@ public abstract class GetHardwareItemAndTypeTemplate<T> {
     }
 
     private JsonNode getRootNode(String jsonObject) throws IOException {
-        return objectMapperProvider.objectMapper.readTree(jsonObject);
+        return objectMapperProvider.getObjectMapper().readTree(jsonObject);
     }
 
     public abstract T getSpecificHardwareItem(String jsonObject) throws IOException;

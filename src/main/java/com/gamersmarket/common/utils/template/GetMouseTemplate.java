@@ -7,6 +7,6 @@ public class GetMouseTemplate extends GetHardwareItemAndTypeTemplate<Mouse> {
 
     @Override
     public Mouse getSpecificHardwareItem(String jsonObject) throws IOException {
-        return objectMapperProvider.objectMapper.readValue(jsonObject, Mouse.class);
+        return objectMapperProvider.getObjectMapper().readValue(jsonObject, Mouse.class);
     }
 }

@@ -7,40 +7,88 @@ import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.common.serializers.MouseDetailsSerializer;
 
 import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 
 @JsonSerialize(using = MouseDetailsSerializer.class)
 public class MouseDetailsDTO {
 
     private Mouse mouse;
+
+    @Inject
     private ObjectMapperProvider objectMapperProvider;
 
     @Inject
-    MouseRepo mouseRepo;
+    private MouseRepo mouseRepo;
 
     @Inject
-    public MouseDetailsDTO() {
-        objectMapperProvider = new ObjectMapperProvider();
-    }
+    public MouseDetailsDTO() {}
 
-    private MouseDetailsDTO(Mouse mouse) {
+    private MouseDetailsDTO(Mouse mouse, ObjectMapperProvider objectMapperProvider) {
         this.mouse = mouse;
+        this.objectMapperProvider = objectMapperProvider;
     }
 
     public String buildMouseDetails(int mouseId) throws JsonProcessingException {
         Mouse mouseDetails = mouseRepo.getItem(mouseId);
-        MouseDetailsDTO mouseDetailsDTO = new MouseDetailsDTO(mouseDetails);
-        return objectMapperProvider.objectMapper.writeValueAsString(mouseDetailsDTO);
+        MouseDetailsDTO mouseDetailsDTO = new MouseDetailsDTO(mouseDetails, objectMapperProvider);
+        return objectMapperProvider.getObjectMapper().writeValueAsString(mouseDetailsDTO);
+    }
+
+    public String getMouseId() {
+        return String.valueOf(mouse.getId());
     }
 
     public String getConnectionType() {
-        return this.mouse.getConnectionType();
+        return mouse.getConnectionType();
     }
 
-    public String getManufacturerCode() {
-        return this.mouse.getHardwareItem().getManufacturerCode();
+    public String getSensorTechnology() {
+        return mouse.getSensorTechnology();
     }
 
-    public String getHardwareType() {
-        return this.mouse.getHardwareItem().getHardwareType().getName();
+    public String getNumberOfButtons() {
+        return String.valueOf(mouse.getButtons());
+    }
+
+    public String getNumberOfScrollingButtons() {
+        return String.valueOf(mouse.getScrollingButtons());
+    }
+
+    public String getColour() {
+        return mouse.getColour();
+    }
+
+    public String getLedColour() {
+        return mouse.getLedColor();
+    }
+
+    public int hasIllumination() {
+        return mouse.getHasIllumination();
+    }
+
+    public String getCableLength() {
+        return mouse.getCableLength();
+    }
+
+    public String getWeight() {
+        return mouse.getWeight();
+    }
+
+    public int getDpi() {
+        return mouse.getDpi();
+    }
+
+    public int isWireless() {
+        return mouse.getIsWireless();
+    }
+
+    public String getHardwareItemDetails() throws JsonProcessingException {
+        Map<String, String> hardwareItemDetails = new HashMap<>();
+        hardwareItemDetails.put("hwItemId", String.valueOf(mouse.getHardwareItem().getId()));
+        hardwareItemDetails.put("hardwareType", mouse.getHardwareItem().getHardwareType().getName());
+        hardwareItemDetails.put("hardwareTypeAlias", mouse.getHardwareItem().getHardwareType().getAlias());
+        hardwareItemDetails.put("manufacturerCode", mouse.getHardwareItem().getManufacturerCode());
+        return objectMapperProvider.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(hardwareItemDetails);
     }
 }

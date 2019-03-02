@@ -11,7 +11,7 @@ public class GetGraphicsCardTemplate extends GetHardwareItemAndTypeTemplate<Grap
     @Override
     public GraphicsCard getSpecificHardwareItem(String jsonObject) throws IOException {
         DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
-        objectMapperProvider.objectMapper.setDateFormat(dateFormat);
-        return objectMapperProvider.objectMapper.readValue(jsonObject, GraphicsCard.class);
+        objectMapperProvider.getObjectMapper().setDateFormat(dateFormat);
+        return objectMapperProvider.getObjectMapper().readValue(jsonObject, GraphicsCard.class);
     }
 }
