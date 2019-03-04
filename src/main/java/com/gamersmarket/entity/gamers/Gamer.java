@@ -2,6 +2,8 @@ package com.gamersmarket.entity.gamers;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.gamersmarket.common.deserializers.GamerDeserializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,12 +13,25 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "gamers")
+@NamedQueries({
+    @NamedQuery(name = Gamer.GET_GAMER_DETAILS, query = Gamer.GET_GAMER_DETAILS_QUERY),
+    @NamedQuery(name = Gamer.FIND_GAMER_BY_EMAIL, query = Gamer.FIND_GAMER_BY_EMAIL_QUERY)
+})
+@JsonDeserialize(using = GamerDeserializer.class)
 public class Gamer implements Serializable {
 
     private static final long serialVersionUID = 5201550250565494409L;
+    public static final String PARAM_GAMER_ID = "id";
+    public static final String PARAM_GAMER_EMAIL = "email";
+    public static final String GET_GAMER_DETAILS = "get_gamer_details";
+    public static final String GET_GAMER_DETAILS_QUERY = "select gamer from Gamer gamer where gamer.id = :" + PARAM_GAMER_ID;
+    public static final String FIND_GAMER_BY_EMAIL = "findGamerByEmail";
+    public static final String FIND_GAMER_BY_EMAIL_QUERY = "select gamer from Gamer gamer where gamer.email = :" + PARAM_GAMER_EMAIL;
 
     @Id
     @NotNull
+    @GeneratedValue(generator = "sq_hardware_item")
+    @SequenceGenerator(name = "sq_gamer_generator", sequenceName = "sq_hardware_item")
     private int id;
 
     private String password;
@@ -48,23 +63,19 @@ public class Gamer implements Serializable {
     public Gamer() {}
 
     public Gamer(Gamer gamer) {
-        this.id = gamer.getId();
         this.password = gamer.getPassword();
         this.firstName = gamer.getFirstName();
         this.lastName = gamer.getLastName();
         this.email = gamer.getEmail();
         this.age = gamer.getAge();
-        this.createdOn = gamer.getCreatedOn();
-        this.role = gamer.getRole();
-        this.updatedOn = gamer.getUpdatedOn();
     }
 
     public Gamer(JsonNode gamerNode) {
-        this.password = gamerNode.get("password").asText();
         this.firstName = gamerNode.get("firstName").asText();
         this.lastName = gamerNode.get("lastName").asText();
         this.email = gamerNode.get("email").asText();
         this.age = gamerNode.get("age").asInt();
+        this.password = gamerNode.get("password").asText();
         this.updatedOn = new Date();
     }
 

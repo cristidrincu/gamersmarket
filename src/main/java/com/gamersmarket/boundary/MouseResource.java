@@ -5,7 +5,7 @@ import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.control.hardware.MouseRepo;
-import com.gamersmarket.common.utils.template.GetMouseTemplate;
+import com.gamersmarket.common.utils.template.hardware.MouseTemplate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -24,15 +24,22 @@ public class MouseResource {
     MouseRepo mouseRepo;
 
     @Inject
-    GetMouseTemplate getMouseTemplate;
+    MouseTemplate getMouseTemplate;
 
     @Inject
     MouseDetailsDTO mouseDetailsDTO;
 
     @GET
-    @Path("{id}")
+    @Path("{id}/basic-details")
     public Response getMouseDetails(@PathParam("id") int id) throws JsonProcessingException {
         return Response.ok().entity(mouseDetailsDTO.buildMouseDetails(id)).build();
+    }
+
+    @GET
+    @Path("{id}/complete-details")
+    public Response getCompleteMouseDetails(@PathParam("id") int id) throws JsonProcessingException {
+//        TODO - implement business logic for complete mouse details
+        return Response.ok().entity("Hello from complete details for mouse").build();
     }
 
     @POST

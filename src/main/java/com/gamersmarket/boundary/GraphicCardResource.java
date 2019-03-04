@@ -3,7 +3,7 @@ package com.gamersmarket.boundary;
 import com.gamersmarket.entity.hardware.GraphicsCard;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.control.hardware.GraphicsCardRepo;
-import com.gamersmarket.common.utils.template.GetGraphicsCardTemplate;
+import com.gamersmarket.common.utils.template.hardware.GraphicsCardTemplate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,7 +22,7 @@ public class GraphicCardResource {
     GraphicsCardRepo graphicsCardRepo;
 
     @Inject
-    GetGraphicsCardTemplate graphicsCardTemplate;
+    GraphicsCardTemplate graphicsCardTemplate;
 
     @GET
     @Path("{id}")

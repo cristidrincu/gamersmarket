@@ -86,6 +86,7 @@ public class MouseDetailsDTO {
     public String getHardwareItemDetails() throws JsonProcessingException {
         Map<String, String> hardwareItemDetails = new HashMap<>();
         hardwareItemDetails.put("hwItemId", String.valueOf(mouse.getHardwareItem().getId()));
+        hardwareItemDetails.put("hwTypeId", String.valueOf(mouse.getHardwareItem().getHardwareType().getId()));
         hardwareItemDetails.put("hardwareType", mouse.getHardwareItem().getHardwareType().getName());
         hardwareItemDetails.put("hardwareTypeAlias", mouse.getHardwareItem().getHardwareType().getAlias());
         hardwareItemDetails.put("manufacturerCode", mouse.getHardwareItem().getManufacturerCode());

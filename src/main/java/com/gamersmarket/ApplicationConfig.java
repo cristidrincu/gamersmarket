@@ -1,10 +1,8 @@
 package com.gamersmarket;
 
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
-import com.gamersmarket.boundary.GraphicCardResource;
-import com.gamersmarket.boundary.HardwareItemResource;
-import com.gamersmarket.boundary.HardwareTypeResource;
-import com.gamersmarket.boundary.MouseResource;
+import com.gamersmarket.boundary.*;
+import com.gamersmarket.common.mappers.AccountAlreadyExistsExceptionMapper;
 import com.gamersmarket.common.mappers.InvalidJsonExceptionMapper;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -22,7 +20,9 @@ public class ApplicationConfig extends ResourceConfig {
                 HardwareItemResource.class,
                 MouseResource.class,
                 GraphicCardResource.class,
+                GamersResource.class,
                 InvalidJsonExceptionMapper.class,
+                AccountAlreadyExistsExceptionMapper.class,
                 ValidationExceptionMapper.class
         );
 
