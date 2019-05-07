@@ -15,8 +15,17 @@ import java.util.Objects;
 @Entity
 @Table(name = "hardware_offer")
 @JsonDeserialize(using = OfferDeserializer.class)
+@NamedQueries({
+        @NamedQuery(name = HardwareOffer.FIND_HARDWARE_OFFER, query = HardwareOffer.FIND_HARDWARE_OFFER_QUERY),
+        @NamedQuery(name = HardwareOffer.FIND_HARDWARE_OFFERS, query = HardwareOffer.FIND_HARDWARE_OFFERS_QUERY)
+})
 public class HardwareOffer implements Serializable {
 
+    public static final String HARDWARE_OFFER_ID = "id";
+    public static final String FIND_HARDWARE_OFFER = "findHardwareOffer";
+    public static final String FIND_HARDWARE_OFFER_QUERY = "select hwOffer from HardwareOffer hwOffer where hwOffer.id = :" + HARDWARE_OFFER_ID;
+    public static final String FIND_HARDWARE_OFFERS = "findHardwareOffers";
+    public static final String FIND_HARDWARE_OFFERS_QUERY = "select hwOffer from HardwareOffer hwOffer";
     private static final long serialVersionUID = 6420963588097220101L;
 
     @Id
@@ -48,6 +57,7 @@ public class HardwareOffer implements Serializable {
     private Gamer winnerBid;
 
     @ManyToOne
+    @JoinColumn(name = "hwitem_id")
     private HardwareItem hardwareItem;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -65,6 +75,12 @@ public class HardwareOffer implements Serializable {
     public HardwareOffer(JsonNode jsonNode) {
         this.approvedByUs = jsonNode.get("approvedByUs").asInt();
         this.buyerRequestsReview = jsonNode.get("buyerRequestsReview").asInt();
+        this.updatedOn = new Date();
+    }
+
+    public HardwareOffer(int approvedByUs, int buyerRequestsReview) {
+        this.approvedByUs = approvedByUs;
+        this.buyerRequestsReview = buyerRequestsReview;
         this.updatedOn = new Date();
     }
 
@@ -160,5 +176,21 @@ public class HardwareOffer implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, createdOn);
+    }
+
+    @Override
+    public String toString() {
+        return "HardwareOffer{" +
+                "id=" + id +
+                ", approvedByUs=" + approvedByUs +
+                ", buyerRequestsReview=" + buyerRequestsReview +
+                ", sellingGamer=" + sellingGamer +
+                ", buyingGamer=" + buyingGamer +
+                ", approverGamer=" + approverGamer +
+                ", winnerBid=" + winnerBid +
+                ", hardwareItem=" + hardwareItem +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
+                '}';
     }
 }

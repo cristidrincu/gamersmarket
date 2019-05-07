@@ -1,22 +1,21 @@
 package com.gamersmarket.control.hardware;
 
-import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.Mouse;
-import com.gamersmarket.common.interfaces.HardwareItemRepository;
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.entity.types.HardwareType;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import javax.inject.Inject;
 
-public class MouseRepo implements HardwareRepository<Mouse>, HardwareItemRepository<Mouse> {
-
-    @Inject
-    HardwareItemRepo hardwareItemRepo;
+public class MouseRepo implements HardwareRepository<Mouse> {   
 
     @PersistenceContext(name = "gamersMarket")
-    EntityManager em;
+    private EntityManager em;
+    
+    @Inject
+    private HardwareTypeRepo hardwareTypeRepo;
 
     @Override
     public List<Mouse> getItems() {
@@ -25,25 +24,23 @@ public class MouseRepo implements HardwareRepository<Mouse>, HardwareItemReposit
 
     @Override
     public Mouse getItem(int hardwareId) {
-        return em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter(Mouse.PARAM_ID, hardwareId).getSingleResult();
+        return em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter(Mouse.MOUSE_PARAM_ID, hardwareId).getSingleResult();
     }
 
     @Override
     public void addItem(Mouse hardwareItem) {
-        em.persist(hardwareItem);
+        em.persist(hardwareItem);       
     }
 
-    @Override
+    @Override    
     public void deleteItem(int hardwareId) {
-        Mouse mouse = em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter(Mouse.PARAM_ID, hardwareId).getSingleResult();
-        em.remove(mouse);
+        Mouse mouse = getItem(hardwareId);        
+        em.remove(mouse);        
     }
-
-    @Override
-    public void persistItemWithHardwareType(Mouse mouse, HardwareItem hardwareItemJson, int hardwareTypeId) {
-        HardwareItem hwItem = hardwareItemRepo.addTypeToHardwareItem(hardwareItemJson, hardwareTypeId);
-        mouse.setHardwareItem(hwItem);
-        hardwareItemRepo.addItem(hwItem);
+    
+    public void persistItemWithHardwareType(Mouse mouse, int hardwareTypeId) {
+        HardwareType hardwareType = hardwareTypeRepo.getItem(hardwareTypeId);
+        mouse.setHardwareType(hardwareType);
         addItem(mouse);
     }
 }

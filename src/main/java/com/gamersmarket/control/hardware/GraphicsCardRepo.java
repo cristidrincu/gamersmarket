@@ -2,25 +2,16 @@ package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.entity.hardware.GraphicsCard;
 import com.gamersmarket.entity.hardware.HardwareItem;
-import com.gamersmarket.common.interfaces.HardwareItemRepository;
 import com.gamersmarket.common.interfaces.HardwareRepository;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public class GraphicsCardRepo implements HardwareRepository<GraphicsCard>, HardwareItemRepository<GraphicsCard> {
-
-    private HardwareItemRepo hardwareItemRepo;
+public class GraphicsCardRepo implements HardwareRepository<GraphicsCard> {  
 
     @PersistenceContext
-    EntityManager em;
-
-    @Inject
-    public GraphicsCardRepo(HardwareItemRepo hardwareItemRepo) {
-        this.hardwareItemRepo = hardwareItemRepo;
-    }
+    private EntityManager em;   
 
     @Override
     public List<GraphicsCard> getItems() {
@@ -42,12 +33,8 @@ public class GraphicsCardRepo implements HardwareRepository<GraphicsCard>, Hardw
         GraphicsCard graphicsCard = getItem(hardwareId);
         em.remove(graphicsCard);
     }
-
-    @Override
-    public void persistItemWithHardwareType(GraphicsCard graphicsCard, HardwareItem hardwareItemJson, int hardwareTypeId) {
-        HardwareItem hwItem = hardwareItemRepo.addTypeToHardwareItem(hardwareItemJson, hardwareTypeId);
-        graphicsCard.setHardwareItem(hwItem);
-        hardwareItemRepo.addItem(hwItem);
+    
+    public void persistItemWithHardwareType(GraphicsCard graphicsCard, HardwareItem hardwareItemJson, int hardwareTypeId) {                        
         addItem(graphicsCard);
     }
 }

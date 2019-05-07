@@ -16,8 +16,13 @@ import javax.ws.rs.core.Response;
 public class HardwareTypeResource {
 
     @Inject
-    HardwareTypeRepo hardwareTypeRepo;
+    private HardwareTypeRepo hardwareTypeRepo;
 
+    @GET
+    public Response getHardwareTypes() {
+        return Response.ok().entity(hardwareTypeRepo.getItems()).build();
+    }
+    
     @GET
     @Path("{id}")
     public Response getHardwareType(@PathParam("id") int hardwareTypeId) {

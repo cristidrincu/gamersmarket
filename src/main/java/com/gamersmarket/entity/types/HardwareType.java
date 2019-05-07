@@ -3,15 +3,12 @@ package com.gamersmarket.entity.types;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.gamersmarket.entity.hardware.HardwareItem;
-import com.gamersmarket.entity.pricing.HardwarePricing;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,6 +21,7 @@ import java.util.Objects;
 public class HardwareType implements Serializable {
 
     private static final long serialVersionUID = -1484902680516970327L;
+    public static final String PARAM_ID = "id";
     public static final String GET_HARDWARE_TYPES = "HardwareType.getHardwareTypes";
     public static final String GET_HARDWARE_TYPE = "HardwareType.getHardwareType";
 
@@ -37,9 +35,9 @@ public class HardwareType implements Serializable {
     @Size(min = 5, max = 50, message = "The name of the hardware type must be between 5 and 50 characters.")
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "hw_type_alias")
     @Size(min = 2, max = 10, message = "The alias must be between 2 and 10 characters long.")
-    private String alias;
+    private String hwTypeAlias;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_on")
@@ -51,17 +49,11 @@ public class HardwareType implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private Date updatedOn;
 
-    @OneToMany(mappedBy = "hardwareType")
-    private List<HardwarePricing> hardwareItemPricingList;
-
-    @OneToMany(mappedBy = "hardwareType")
-    private List<HardwareItem> hardwareItems;
-
     public HardwareType() {}
 
     public HardwareType(HardwareType hardwareType) {
         this.name = hardwareType.getName();
-        this.alias = hardwareType.getAlias();
+        this.hwTypeAlias = hardwareType.getHwTypeAlias();
         this.updatedOn = new Date();
     }
 
@@ -81,12 +73,12 @@ public class HardwareType implements Serializable {
         this.name = name;
     }
 
-    public String getAlias() {
-        return alias;
+    public String getHwTypeAlias() {
+        return hwTypeAlias;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
+    public void setHwTypeAlias(String hwTypeAlias) {
+        this.hwTypeAlias = hwTypeAlias;
     }
 
     public Date getCreatedOn() {
@@ -103,22 +95,6 @@ public class HardwareType implements Serializable {
 
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
-    }
-
-    public List<HardwarePricing> getHardwareItemPricingList() {
-        return hardwareItemPricingList;
-    }
-
-    public void setHardwareItemPricingList(List<HardwarePricing> hardwareItemPricingList) {
-        this.hardwareItemPricingList = hardwareItemPricingList;
-    }
-
-    public List<HardwareItem> getHardwareItems() {
-        return hardwareItems;
-    }
-
-    public void setHardwareItems(List<HardwareItem> mouseItems) {
-        this.hardwareItems = mouseItems;
     }
 
     @Override

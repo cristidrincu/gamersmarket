@@ -1,43 +1,39 @@
 package com.gamersmarket.entity.hardware;
 
-import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.common.constants.MouseJsonKeys;
 import com.gamersmarket.common.deserializers.MouseDeserializer;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "hw_item_mouse")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorValue("Mouse")
 @JsonDeserialize(using = MouseDeserializer.class)
 @NamedQueries({
         @NamedQuery(name = Mouse.GET_MICE, query = Mouse.GET_MICE_QUERY),
-        @NamedQuery(name = Mouse.GET_MOUSE_DETAILS, query = Mouse.GET_MOUSE_DETAILS_QUERY)
+        @NamedQuery(name = Mouse.GET_MOUSE_DETAILS, query = Mouse.GET_MOUSE_DETAILS_QUERY)        
 })
-public class Mouse implements Serializable {
+public class Mouse extends HardwareItem implements Serializable {
 
     private static final long serialVersionUID = 8821921956251827118L;
 
-    public static final String PARAM_ID = "id";
+    public static final String MOUSE_PARAM_ID = "id";
 
     public static final String GET_MICE = "Mouse.getMice";
     public static final String GET_MOUSE_DETAILS = "Mouse.getMouseDetails";
 
     public static final String GET_MICE_QUERY = "select m from Mouse m";
-    public static final String GET_MOUSE_DETAILS_QUERY = "select m from Mouse m where m.id = :" + PARAM_ID;
+    public static final String GET_MOUSE_DETAILS_QUERY = "select m from Mouse m where m.id = :" + MOUSE_PARAM_ID;      
 
     @Id
     @NotNull
-    @GeneratedValue(generator = "sq_hardware_item")
-    @SequenceGenerator(name = "sq_hardware_item_mouse", sequenceName = "sq_hardware_item")
-    private int id;
+    private int id;        
 
     @Column(name = "connection_type")
     private String connectionType;
@@ -63,28 +59,18 @@ public class Mouse implements Serializable {
     private String cableLength;
 
     private String weight;
+    
     private int dpi;
 
     @Column(name = "is_wireless")
-    private int isWireless;
+    private int isWireless;            
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date createdOn = new Date();
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date updatedOn;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "hardware_item_id")
-    private HardwareItem hardwareItem;
-
-    public Mouse() {}
-
-    public Mouse(Mouse mouse) {
+    public Mouse() {
+        super();
+    }
+    
+    public Mouse(Mouse mouse, String name, String manufacturerCode) {        
+        super(name, manufacturerCode);
         this.id = mouse.getId();
         this.connectionType = mouse.getConnectionType();
         this.sensorTechnology = mouse.getSensorTechnology();
@@ -97,10 +83,10 @@ public class Mouse implements Serializable {
         this.weight = mouse.getWeight();
         this.dpi = mouse.getDpi();
         this.isWireless = mouse.getIsWireless();
-        this.updatedOn = new Date();
     }
 
     public Mouse(JsonNode mouseNode) {
+        super(mouseNode.get("manufacturerCode").asText(), mouseNode.get("name").asText());
         this.connectionType = mouseNode.get(MouseJsonKeys.getConnectionType()).asText();
         this.sensorTechnology = mouseNode.get(MouseJsonKeys.getSensorTechnology()).asText();
         this.buttons = mouseNode.get(MouseJsonKeys.getButtons()).asInt();
@@ -111,8 +97,7 @@ public class Mouse implements Serializable {
         this.cableLength = mouseNode.get(MouseJsonKeys.getCableLength()).asText();
         this.weight = mouseNode.get(MouseJsonKeys.getWeight()).asText();
         this.dpi = mouseNode.get(MouseJsonKeys.getDpi()).asInt();
-        this.isWireless = mouseNode.get(MouseJsonKeys.getIsWireless()).asInt();
-        this.updatedOn = new Date();
+        this.isWireless = mouseNode.get(MouseJsonKeys.getIsWireless()).asInt();        
     }
 
     public int getId() {
@@ -209,60 +194,5 @@ public class Mouse implements Serializable {
 
     public void setIsWireless(int isWireless) {
         this.isWireless = isWireless;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public HardwareItem getHardwareItem() {
-        return hardwareItem;
-    }
-
-    public void setHardwareItem(HardwareItem hardwareItem) {
-        this.hardwareItem = hardwareItem;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Mouse mouse = (Mouse) o;
-        return id == mouse.id &&
-                createdOn.equals(mouse.createdOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createdOn);
-    }
-
-    @Override
-    public String toString() {
-        return "Mouse{" +
-                ", connectionType='" + connectionType + '\'' +
-                ", sensorTechnology='" + sensorTechnology + '\'' +
-                ", buttons=" + buttons +
-                ", scrollingButtons=" + scrollingButtons +
-                ", colour=" + colour +
-                ", hasIllumination=" + hasIllumination +
-                ", ledColor='" + ledColor + '\'' +
-                ", cableLength='" + cableLength + '\'' +
-                ", weight='" + weight + '\'' +
-                ", dpi=" + dpi +
-                ", isWireless=" + isWireless +
-                '}';
-    }
+    } 
 }

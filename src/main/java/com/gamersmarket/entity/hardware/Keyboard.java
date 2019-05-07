@@ -1,6 +1,5 @@
 package com.gamersmarket.entity.hardware;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.common.constants.KeyboardJsonKeys;
@@ -9,32 +8,33 @@ import com.gamersmarket.common.deserializers.KeyboardDeserializer;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "hw_item_keyboard")
+@PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorValue("Keyboard")
 @JsonDeserialize(using = KeyboardDeserializer.class)
 @NamedQueries({
         @NamedQuery(name = Keyboard.FIND_ALL_KEYBOARDS, query = Keyboard.FIND_ALL_KEYBOARDS_QUERY),
         @NamedQuery(name = Keyboard.FIND_KEYBOARD_BY_ID, query = Keyboard.FIND_KEYBOARD_BY_ID_QUERY)
 })
-public class Keyboard implements Serializable {
+@XmlRootElement
+public class Keyboard extends HardwareItem implements Serializable {
 
     private static final long serialVersionUID = 8674635200938651078L;
 
-    private static final String PARAM_ID = "id";
+    public static final String KEYBOARD_PARAM_ID = "id";
 
     public static final String FIND_ALL_KEYBOARDS = "find_all_keyboards";
     public static final String FIND_KEYBOARD_BY_ID = "find_keyboard_by_id";
 
     public static final String FIND_ALL_KEYBOARDS_QUERY = "select keyboard from Keyboard keyboard";
-    public static final String FIND_KEYBOARD_BY_ID_QUERY = "select keyboard from Keyboard keyboard where keyboard.id = :" + PARAM_ID;
+    public static final String FIND_KEYBOARD_BY_ID_QUERY = "select keyboard from Keyboard keyboard where keyboard.id = :" + KEYBOARD_PARAM_ID;
 
     @Id
-    @NotNull
-    @GeneratedValue(generator = "sq_hardware_item")
-    @SequenceGenerator(name = "sq_hardware_item_keyboard", sequenceName = "sq_hardware_item")
+    @NotNull    
     private int id;
 
     @Column(name = "keyboard_type")
@@ -71,25 +71,12 @@ public class Keyboard implements Serializable {
     private int hasIllumination;
 
     @Column(name = "led_colour")
-    private String ledColour;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date createdOn = new Date();
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date updatedOn;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "hardware_item_id")
-    private HardwareItem hardwareItem;
+    private String ledColour;    
 
     public Keyboard() {}
 
-    public Keyboard(Keyboard keyboard) {
+    public Keyboard(Keyboard keyboard, String name, String manufacturerCode) {
+        super(name, manufacturerCode);
         this.id = keyboard.getId();
         this.keyboardType = keyboard.getKeyboardType();
         this.keyboardColour = keyboard.getKeyboardColour();
@@ -104,11 +91,11 @@ public class Keyboard implements Serializable {
         this.hasIllumination = keyboard.getHasIllumination();
         this.ledColour = keyboard.getLedColour();
         this.createdOn = keyboard.getCreatedOn();
-        this.updatedOn = keyboard.getUpdatedOn();
-        this.hardwareItem = keyboard.getHardwareItem();
+        this.updatedOn = keyboard.getUpdatedOn();        
     }
 
     public Keyboard(JsonNode keyboardNode) {
+        super(keyboardNode.get("manufacturerCode").asText(), keyboardNode.get("name").asText());
         this.keyboardType = keyboardNode.get(KeyboardJsonKeys.getKeyboardType()).asText();
         this.keyboardColour = keyboardNode.get(KeyboardJsonKeys.getKeyboardColour()).asText();
         this.hasNumericalKeys = keyboardNode.get(KeyboardJsonKeys.getHasNumericalKeys()).asInt();
@@ -123,10 +110,12 @@ public class Keyboard implements Serializable {
         this.ledColour = keyboardNode.get(KeyboardJsonKeys.getLedColour()).asText();
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public void setId(int id) {
         this.id = id;
     }
@@ -225,31 +214,7 @@ public class Keyboard implements Serializable {
 
     public void setLedColour(String ledColour) {
         this.ledColour = ledColour;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-    public HardwareItem getHardwareItem() {
-        return hardwareItem;
-    }
-
-    public void setHardwareItem(HardwareItem hardwareItem) {
-        this.hardwareItem = hardwareItem;
-    }
+    }      
 
     @Override
     public boolean equals(Object o) {
@@ -282,8 +247,7 @@ public class Keyboard implements Serializable {
                 ", hasIllumination=" + hasIllumination +
                 ", ledColour='" + ledColour + '\'' +
                 ", createdOn=" + createdOn +
-                ", updatedOn=" + updatedOn +
-                ", hardwareItem=" + hardwareItem +
+                ", updatedOn=" + updatedOn +                
                 '}';
     }
 }

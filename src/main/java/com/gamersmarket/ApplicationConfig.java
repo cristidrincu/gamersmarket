@@ -14,13 +14,15 @@ import javax.ws.rs.ApplicationPath;
 @ApplicationPath("/explore")
 public class ApplicationConfig extends ResourceConfig {
 
-    public ApplicationConfig(){
+    public ApplicationConfig() {
         registerClasses(
                 HardwareTypeResource.class,
                 HardwareItemResource.class,
                 MouseResource.class,
+                KeyboardResource.class,
                 GraphicCardResource.class,
                 GamersResource.class,
+                HardwareOfferResource.class,
                 InvalidJsonExceptionMapper.class,
                 AccountAlreadyExistsExceptionMapper.class,
                 ValidationExceptionMapper.class

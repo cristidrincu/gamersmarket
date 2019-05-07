@@ -4,16 +4,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 
-import javax.inject.Inject;
+
 import java.io.IOException;
+import javax.inject.Inject;
 
 public abstract class HardwareItemAndTypeTemplate<T> {
-
+    
     @Inject
-    ObjectMapperProvider objectMapperProvider;
-
+    protected ObjectMapperProvider objectMapperProvider;
+        
     public HardwareItem getHardwareItem(String jsonObject) throws IOException {
-        return objectMapperProvider.getObjectMapper().readValue(jsonObject, HardwareItem.class);
+        return objectMapperProvider.getContext(HardwareItemAndTypeTemplate.class).readValue(jsonObject, HardwareItem.class);
     }
 
     public int getHardwareTypeId(String jsonObject) throws IOException {
@@ -22,7 +23,7 @@ public abstract class HardwareItemAndTypeTemplate<T> {
     }
 
     private JsonNode getRootNode(String jsonObject) throws IOException {
-        return objectMapperProvider.getObjectMapper().readTree(jsonObject);
+        return objectMapperProvider.getContext(HardwareItemAndTypeTemplate.class).readTree(jsonObject);
     }
 
     public abstract T getSpecificHardwareItem(String jsonObject) throws IOException;

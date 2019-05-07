@@ -5,34 +5,35 @@ import com.gamersmarket.control.hardware.MouseRepo;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.common.serializers.MouseDetailsSerializer;
+import java.util.List;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
 
 @JsonSerialize(using = MouseDetailsSerializer.class)
 public class MouseDetailsDTO {
 
-    private Mouse mouse;
-
-    @Inject
+    private Mouse mouse;        
     private ObjectMapperProvider objectMapperProvider;
 
     @Inject
     private MouseRepo mouseRepo;
-
-    @Inject
+    
     public MouseDetailsDTO() {}
 
+    @Inject
     private MouseDetailsDTO(Mouse mouse, ObjectMapperProvider objectMapperProvider) {
         this.mouse = mouse;
-        this.objectMapperProvider = objectMapperProvider;
+        this.objectMapperProvider = objectMapperProvider;        
     }
 
     public String buildMouseDetails(int mouseId) throws JsonProcessingException {
         Mouse mouseDetails = mouseRepo.getItem(mouseId);
         MouseDetailsDTO mouseDetailsDTO = new MouseDetailsDTO(mouseDetails, objectMapperProvider);
-        return objectMapperProvider.getObjectMapper().writeValueAsString(mouseDetailsDTO);
+        return objectMapperProvider.getContext(MouseDetailsDTO.class).writeValueAsString(mouseDetailsDTO);
+    }
+    
+    public List<Mouse> buildMiceList() {
+        return mouseRepo.getItems();        
     }
 
     public String getMouseId() {
@@ -81,15 +82,5 @@ public class MouseDetailsDTO {
 
     public int isWireless() {
         return mouse.getIsWireless();
-    }
-
-    public String getHardwareItemDetails() throws JsonProcessingException {
-        Map<String, String> hardwareItemDetails = new HashMap<>();
-        hardwareItemDetails.put("hwItemId", String.valueOf(mouse.getHardwareItem().getId()));
-        hardwareItemDetails.put("hwTypeId", String.valueOf(mouse.getHardwareItem().getHardwareType().getId()));
-        hardwareItemDetails.put("hardwareType", mouse.getHardwareItem().getHardwareType().getName());
-        hardwareItemDetails.put("hardwareTypeAlias", mouse.getHardwareItem().getHardwareType().getAlias());
-        hardwareItemDetails.put("manufacturerCode", mouse.getHardwareItem().getManufacturerCode());
-        return objectMapperProvider.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(hardwareItemDetails);
-    }
+    }       
 }

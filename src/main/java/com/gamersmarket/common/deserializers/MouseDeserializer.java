@@ -14,7 +14,7 @@ public class MouseDeserializer extends JsonDeserializer<Mouse> implements Deseri
 
     @Override
     public Mouse deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        JsonNode mouseNode = this.getEntityRootNode(jsonParser,"mouse");
+        JsonNode mouseNode = this.getEntityRootNode(jsonParser, "mouse");
         return new Mouse(mouseNode);
     }
 

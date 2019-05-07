@@ -10,7 +10,7 @@ import java.util.List;
 public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
 
     @PersistenceContext(name = "gamersMarket")
-    EntityManager em;
+    private EntityManager em;
 
     @Override
     public List<HardwareType> getItems() {
@@ -19,7 +19,9 @@ public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
 
     @Override
     public HardwareType getItem(int hardwareId) {
-        return em.createNamedQuery(HardwareType.GET_HARDWARE_TYPE, HardwareType.class).setParameter("id", hardwareId).getSingleResult();
+        return em.createNamedQuery(HardwareType.GET_HARDWARE_TYPE, HardwareType.class)
+                .setParameter(HardwareType.PARAM_ID, hardwareId)
+                .getSingleResult();
     }
 
     @Override
@@ -29,7 +31,9 @@ public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
 
     @Override
     public void deleteItem(int hardwareId) {
-        HardwareType hwType = em.createNamedQuery(HardwareType.GET_HARDWARE_TYPE, HardwareType.class).setParameter("id", hardwareId).getSingleResult();
+        HardwareType hwType = em.createNamedQuery(HardwareType.GET_HARDWARE_TYPE, HardwareType.class)
+                .setParameter(HardwareType.PARAM_ID, hardwareId)
+                .getSingleResult();
         em.remove(hwType);
     }
 }

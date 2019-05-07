@@ -1,7 +1,7 @@
 package com.gamersmarket.control.pricing;
 
+import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.pricing.HardwarePricing;
-import com.gamersmarket.entity.types.HardwareType;
 import com.gamersmarket.common.interfaces.PricingRepository;
 
 import javax.persistence.EntityManager;
@@ -23,10 +23,10 @@ public class HardwarePricingRepo implements PricingRepository<HardwarePricing> {
     }
 
     @Override
-    public void addPricingToHardwareType(HardwarePricing pricingInformation, int hardwareTypeId) {
+    public void addPricingToHardwareType(HardwarePricing pricingInformation, int hardwareItemId) {
         HardwarePricing pricing = new HardwarePricing(pricingInformation);
-        HardwareType hwType = em.createNamedQuery(HardwareType.GET_HARDWARE_TYPE, HardwareType.class).setParameter("id", hardwareTypeId).getSingleResult();
-        pricing.setHardwareType(hwType);
+        HardwareItem hwItem = em.createNamedQuery(HardwareItem.GET_HARDWARE_ITEM, HardwareItem.class).setParameter("id", hardwareItemId).getSingleResult();
+        pricing.setHardwareItem(hwItem);
         em.persist(pricing);
     }
 }

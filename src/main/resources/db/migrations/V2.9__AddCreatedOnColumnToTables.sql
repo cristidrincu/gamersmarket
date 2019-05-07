@@ -22,10 +22,6 @@ ALTER TABLE gamers_market.hardware_item
 ADD COLUMN created_on TIMESTAMPTZ,
 ADD COLUMN updated_on TIMESTAMPTZ;
 
-ALTER TABLE gamers_market.hardware_bid
-ADD COLUMN created_on TIMESTAMPTZ,
-ADD COLUMN updated_on TIMESTAMPTZ;
-
 ALTER TABLE gamers_market.gamers
 ADD COLUMN created_on TIMESTAMPTZ,
 ADD COLUMN updated_on TIMESTAMPTZ;

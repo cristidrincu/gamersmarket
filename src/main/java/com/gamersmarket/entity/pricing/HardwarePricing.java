@@ -3,6 +3,7 @@ package com.gamersmarket.entity.pricing;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.entity.gamers.Gamer;
+import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.manufacturer.Manufacturer;
 import com.gamersmarket.entity.types.HardwareType;
 
@@ -50,8 +51,8 @@ public class HardwarePricing implements Serializable {
     private Manufacturer manufacturer;
 
     @ManyToOne
-    @JoinColumn(name = "hw_type_id")
-    private HardwareType hardwareType;
+    @JoinColumn(name = "hw_item_id")
+    private HardwareItem hardwareItem;
 
     @ManyToOne
     @JoinColumn(name = "gamer_id")
@@ -159,12 +160,12 @@ public class HardwarePricing implements Serializable {
         this.manufacturer = manufacturer;
     }
 
-    public HardwareType getHardwareType() {
-        return hardwareType;
+    public HardwareItem getHardwareItem() {
+        return hardwareItem;
     }
 
-    public void setHardwareType(HardwareType hardwareType) {
-        this.hardwareType = hardwareType;
+    public void setHardwareItem(HardwareItem hardwareItem) {
+        this.hardwareItem = hardwareItem;
     }
 
     public Gamer getGamer() {

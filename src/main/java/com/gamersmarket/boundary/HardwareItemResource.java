@@ -19,6 +19,11 @@ public class HardwareItemResource {
     HardwareItemRepo hardwareItemRepo;
 
     @GET
+    public Response getHardwareItems() {
+        return Response.ok().entity(hardwareItemRepo.getItems()).build();
+    }
+    
+    @GET
     @Path("{id}")
     public Response getHardwareItem(@PathParam("id") int hardwareItemId) {
         HardwareItem retrievedHardwareItem = hardwareItemRepo.getItem(hardwareItemId);

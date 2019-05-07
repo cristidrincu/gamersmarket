@@ -1,10 +1,6 @@
 package com.gamersmarket.entity.hardware;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.common.deserializers.HardwareItemDeserializer;
 import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.*;
@@ -16,14 +12,22 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "hw_item")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonDeserialize(using = HardwareItemDeserializer.class)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(
+        discriminatorType = DiscriminatorType.STRING,
+        name = "hw_item_discriminator"
+)
 @NamedQueries({
-        @NamedQuery(name = HardwareItem.GET_HARDWARE_ITEM, query = "select hwItem from HardwareItem hwitem where hwItem.id = :id")
+        @NamedQuery(name = HardwareItem.GET_HARDWARE_ITEM, query = HardwareItem.GET_HARDWARE_ITEM_QUERY),
+        @NamedQuery(name = HardwareItem.GET_HARDWARE_ITEMS, query = HardwareItem.GET_HARDWARE_ITEMS_QUERY)
 })
 public class HardwareItem implements Serializable {
 
+    public static final String PARAM_ID = "id";
     public static final String GET_HARDWARE_ITEM = "HardwareItem.getHardwareItem";
+    public static final String GET_HARDWARE_ITEM_QUERY = "select hwItem from HardwareItem hwitem where hwItem.id = :" + PARAM_ID;
+    public static final String GET_HARDWARE_ITEMS = "HardwareItem.getHardwareItems";
+    public static final String GET_HARDWARE_ITEMS_QUERY = "select hwItem from HardwareItem hwItem";
     private static final long serialVersionUID = 762283048421625510L;
 
     @Id
@@ -42,18 +46,24 @@ public class HardwareItem implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_on")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date createdOn = new Date();
+    protected Date createdOn = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_on")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date updatedOn;
+    protected Date updatedOn;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hardware_type_id")
     private HardwareType hardwareType;
-
+    
     public HardwareItem() {}
+    
+    public HardwareItem(String manufacturerCode, String name) {                
+        this.manufacturerCode = manufacturerCode;
+        this.name = name;
+        this.createdOn = new Date();        
+    }
 
     public HardwareItem(HardwareItem hardwareItem) {
         this.id = hardwareItem.getId();
@@ -139,8 +149,7 @@ public class HardwareItem implements Serializable {
                 ", manufacturerCode='" + manufacturerCode + '\'' +
                 ", name='" + name + '\'' +
                 ", createdOn=" + createdOn +
-                ", updatedOn=" + updatedOn +
-                ", hardwareType=" + hardwareType +
+                ", updatedOn=" + updatedOn +                
                 '}';
     }
 }

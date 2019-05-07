@@ -1,51 +1,37 @@
 package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.entity.hardware.HardwareItem;
-import com.gamersmarket.entity.types.HardwareType;
 import com.gamersmarket.common.interfaces.HardwareRepository;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-public class HardwareItemRepo implements HardwareRepository<HardwareItem> {
+public class HardwareItemRepo implements HardwareRepository<HardwareItem> {   
 
-    private HardwareTypeRepo hardwareTypeRepo;
+    @PersistenceContext(name = "gamersMarket")
+    private EntityManager em;
 
-    @PersistenceContext
-    EntityManager em;
-
-    @Inject
-    public HardwareItemRepo(HardwareTypeRepo hardwareTypeRepo) {
-        this.hardwareTypeRepo = hardwareTypeRepo;
-    }
+    public HardwareItemRepo() {};   
 
     @Override
     public List<HardwareItem> getItems() {
-        return null;
+        return em.createNamedQuery(HardwareItem.GET_HARDWARE_ITEMS, HardwareItem.class).getResultList();
     }
 
     @Override
     public HardwareItem getItem(int hardwareId) {
-        return em.createNamedQuery(HardwareItem.GET_HARDWARE_ITEM, HardwareItem.class).setParameter("id", hardwareId).getSingleResult();
+        return em.createNamedQuery(HardwareItem.GET_HARDWARE_ITEM, HardwareItem.class).setParameter(HardwareItem.PARAM_ID, hardwareId).getSingleResult();
     }
 
     @Override
     public void addItem(HardwareItem hwItem) {
-        em.persist(hwItem);
+        em.persist(hwItem);        
     }
 
     @Override
     public void deleteItem(int hardwareId) {
         HardwareItem hwItem = getItem(hardwareId);
-        em.remove(hwItem);
-    }
-
-    protected HardwareItem addTypeToHardwareItem(HardwareItem hwItem, int hardwareTypeId) {
-        HardwareType type = hardwareTypeRepo.getItem(hardwareTypeId);
-        hwItem.setHardwareType(type);
-
-        return hwItem;
-    }
+        em.remove(hwItem);        
+    }   
 }

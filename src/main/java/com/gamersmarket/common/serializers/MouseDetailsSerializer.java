@@ -23,8 +23,7 @@ public class MouseDetailsSerializer extends JsonSerializer<MouseDetailsDTO> {
         jsonGenerator.writeStringField("cableLength", mouseDetailsDTO.getCableLength());
         jsonGenerator.writeStringField("weight", mouseDetailsDTO.getWeight());
         jsonGenerator.writeStringField("dpi", String.valueOf(mouseDetailsDTO.getDpi()));
-        jsonGenerator.writeStringField("wireless", String.valueOf(mouseDetailsDTO.isWireless() > 0));
-        jsonGenerator.writeStringField("hwItemDetails", mouseDetailsDTO.getHardwareItemDetails());
+        jsonGenerator.writeStringField("wireless", String.valueOf(mouseDetailsDTO.isWireless() > 0));        
         jsonGenerator.writeEndObject();
     }
 }

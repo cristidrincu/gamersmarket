@@ -14,7 +14,7 @@ public class OfferDeserializer extends JsonDeserializer<HardwareOffer> implement
 
     @Override
     public HardwareOffer deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        JsonNode offerNode = this.getEntityRootNode(jsonParser, "hardwareOffer");
+        JsonNode offerNode = this.getEntityRootNode(jsonParser, "");
         return new HardwareOffer(offerNode);
     }
 
@@ -22,6 +22,6 @@ public class OfferDeserializer extends JsonDeserializer<HardwareOffer> implement
     public JsonNode getEntityRootNode(JsonParser jsonParser, String rootNode) throws IOException {
         ObjectCodec codec = jsonParser.getCodec();
         JsonNode node = codec.readTree(jsonParser);
-        return node.get(rootNode);
+        return rootNode.isEmpty() ? node : node.get(rootNode);
     }
 }

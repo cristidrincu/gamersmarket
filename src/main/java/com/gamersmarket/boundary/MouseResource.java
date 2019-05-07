@@ -1,8 +1,10 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.providers.ObjectMapperProvider;
+import com.gamersmarket.common.utils.BasicResponse;
 import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;
-import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.control.hardware.MouseRepo;
 import com.gamersmarket.common.utils.template.hardware.MouseTemplate;
@@ -28,7 +30,18 @@ public class MouseResource {
 
     @Inject
     MouseDetailsDTO mouseDetailsDTO;
+    
+    @Inject
+    ObjectMapperProvider provider;
+    
+    @Inject
+    BasicResponse basicResponse;
 
+    @GET
+    public Response getMice() {
+        return Response.ok().entity(mouseDetailsDTO.buildMiceList()).build();
+    }
+    
     @GET
     @Path("{id}/basic-details")
     public Response getMouseDetails(@PathParam("id") int id) throws JsonProcessingException {
@@ -43,12 +56,20 @@ public class MouseResource {
     }
 
     @POST
-    public Response addMouse(String jsonObject) throws IOException {
-        Mouse mouse = getMouseTemplate.getSpecificHardwareItem(jsonObject);
-        HardwareItem hwItem = getMouseTemplate.getHardwareItem(jsonObject);
-        int hwTypeId = getMouseTemplate.getHardwareTypeId(jsonObject);
-
-        mouseRepo.persistItemWithHardwareType(mouse, hwItem, hwTypeId);
+    public Response addMouse(String jsonObject) throws IOException {        
+        JsonNode rootNode = provider.getContext(MouseResource.class).readTree(jsonObject);
+        
+        Mouse mouse = new Mouse(rootNode.get("mouse"));        
+        int hwTypeId = rootNode.get("hwType").get("id").asInt();
+        
+        mouseRepo.persistItemWithHardwareType(mouse, hwTypeId);
         return Response.ok().entity("Mouse saved successfully").build();
+    }
+    
+    @DELETE
+    @Path("/remove/{id}")
+    public Response deleteMouse(@PathParam("id") String mouseId) {
+        mouseRepo.deleteItem(Integer.parseInt(mouseId));
+        return Response.ok().entity("Mouse deleted successfully!").build();
     }
 }

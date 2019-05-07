@@ -22,10 +22,10 @@ public class GamersRepo implements GamersRepository<Gamer> {
 
     @Override
     public void createAccount(Gamer gamer) {
-      if (accountExists(gamer.getEmail())) {
+      List<Gamer> existingAccount = getExistingAccount(gamer.getEmail());
+      if (!existingAccount.isEmpty()) {
           throw new AccountAlreadyExistsException("An account with this email address already exists!");
       }
-
       em.persist(gamer);
     }
 
@@ -66,8 +66,7 @@ public class GamersRepo implements GamersRepository<Gamer> {
                 .getResultList();
     }
 
-    private boolean accountExists(String email) {
-        Gamer gamer = em.createNamedQuery(Gamer.FIND_GAMER_BY_EMAIL, Gamer.class).setParameter(Gamer.PARAM_GAMER_EMAIL, email).getSingleResult();
-        return gamer != null;
+    private List<Gamer> getExistingAccount(String email) {
+        return em.createNamedQuery(Gamer.FIND_GAMER_BY_EMAIL, Gamer.class).setParameter(Gamer.PARAM_GAMER_EMAIL, email).getResultList();
     }
 }
