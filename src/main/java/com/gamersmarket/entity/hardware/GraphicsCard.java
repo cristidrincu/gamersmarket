@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.common.constants.GraphicsCardJsonKeys;
+import com.gamersmarket.common.enums.GraphicsCardJsonKeys;
 import com.gamersmarket.common.deserializers.GraphicCardDeserializer;
 import com.gamersmarket.common.utils.DateValidator;
 

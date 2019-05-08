@@ -1,4 +1,4 @@
-package com.gamersmarket.common.constants;
+package com.gamersmarket.common.enums;
 
 public enum GraphicsCardJsonKeys {    
 

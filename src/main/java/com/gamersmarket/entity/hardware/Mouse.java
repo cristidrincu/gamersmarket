@@ -2,7 +2,7 @@ package com.gamersmarket.entity.hardware;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.common.constants.MouseJsonKeys;
+import com.gamersmarket.common.enums.MouseJsonKeys;
 import com.gamersmarket.common.deserializers.MouseDeserializer;
 
 import javax.persistence.*;
