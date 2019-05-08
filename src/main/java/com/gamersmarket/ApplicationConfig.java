@@ -4,6 +4,7 @@ import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 import com.gamersmarket.boundary.*;
 import com.gamersmarket.common.mappers.AccountAlreadyExistsExceptionMapper;
 import com.gamersmarket.common.mappers.InvalidJsonExceptionMapper;
+import com.gamersmarket.common.providers.CORSFilterProvider;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
@@ -28,7 +29,8 @@ public class ApplicationConfig extends ResourceConfig {
                 ValidationExceptionMapper.class
         );
 
-        register(ObjectMapperProvider.class);
+        register(CORSFilterProvider.class);
+        register(ObjectMapperProvider.class);       
         register(JacksonFeatures.class);
         property(ServerProperties.MOXY_JSON_FEATURE_DISABLE, true);
     }
