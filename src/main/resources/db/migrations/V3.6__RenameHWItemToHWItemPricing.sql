@@ -1,2 +1,0 @@
-ALTER TABLE gamers_market.hardware_item
-RENAME TO hardware_item_pricing;
