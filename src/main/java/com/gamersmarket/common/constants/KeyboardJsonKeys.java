@@ -1,67 +1,27 @@
 package com.gamersmarket.common.constants;
 
-public class KeyboardJsonKeys {
+public enum KeyboardJsonKeys {   
 
-    private KeyboardJsonKeys() {}
+    KEYBOARD_TYPE("keyboardType"),
+    KEYBOARD_COLOUR("keyboardColour"),
+    HAS_NUMERICAL_KEYS("hasNumericalKeys"),
+    NR_OF_KEYS("nrOfKeys"),
+    KEYBOARD_TECHNOLOGY("keyboardTechnology"),
+    KEYBOARD_INTERFACE("keyboardInterface"),
+    KEYBOARD_WIRE_LENGTH("keyboardWireLength"),
+    IS_MECHANICAL("isMechanical"),
+    HAS_PALM_REST("hasPalmRest"),
+    KEYBOARD_KEYS_LAYOUT("keyboardKeysLayout"),
+    HAS_ILLUMINATION("hasIllumination"),
+    LED_COLOUR("ledColour");
 
-    private static final String KEYBOARD_TYPE = "keyboardType";
-    private static final String KEYBOARD_COLOUR = "keyboardColour";
-    private static final String HAS_NUMERICAL_KEYS = "hasNumericalKeys";
-    private static final String NR_OF_KEYS = "nrOfKeys";
-    private static final String KEYBOARD_TECHNOLOGY = "keyboardTechnology";
-    private static final String KEYBOARD_INTERFACE = "keyboardInterface";
-    private static final String KEYBOARD_WIRE_LENGTH = "keyboardWireLength";
-    private static final String IS_MECHANICAL = "isMechanical";
-    private static final String HAS_PALM_REST = "hasPalmRest";
-    private static final String KEYBOARD_KEYS_LAYOUT = "keyboardKeysLayout";
-    private static final String HAS_ILLUMINATION = "hasIllumination";
-    private static final String LED_COLOUR = "ledColour";
+    private final String jsonKeyDescription;
 
-    public static String getKeyboardType() {
-        return KEYBOARD_TYPE;
+    private KeyboardJsonKeys(String jsonKeyDescription) {
+        this.jsonKeyDescription = jsonKeyDescription;
     }
 
-    public static String getKeyboardColour() {
-        return KEYBOARD_COLOUR;
-    }
-
-    public static String getHasNumericalKeys() {
-        return HAS_NUMERICAL_KEYS;
-    }
-
-    public static String getNrOfKeys() {
-        return NR_OF_KEYS;
-    }
-
-    public static String getKeyboardTechnology() {
-        return KEYBOARD_TECHNOLOGY;
-    }
-
-    public static String getKeyboardInterface() {
-        return KEYBOARD_INTERFACE;
-    }
-
-    public static String getKeyboardWireLength() {
-        return KEYBOARD_WIRE_LENGTH;
-    }
-
-    public static String getIsMechanical() {
-        return IS_MECHANICAL;
-    }
-
-    public static String getHasPalmRest() {
-        return HAS_PALM_REST;
-    }
-
-    public static String getKeyboardKeysLayout() {
-        return KEYBOARD_KEYS_LAYOUT;
-    }
-
-    public static String getHasIllumination() {
-        return HAS_ILLUMINATION;
-    }
-
-    public static String getLedColour() {
-        return LED_COLOUR;
-    }
+    public String getJsonKeyDescription() {
+        return jsonKeyDescription;
+    }    
 }

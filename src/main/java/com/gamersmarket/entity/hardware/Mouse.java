@@ -87,17 +87,17 @@ public class Mouse extends HardwareItem implements Serializable {
 
     public Mouse(JsonNode mouseNode) {
         super(mouseNode.get("manufacturerCode").asText(), mouseNode.get("name").asText());
-        this.connectionType = mouseNode.get(MouseJsonKeys.getConnectionType()).asText();
-        this.sensorTechnology = mouseNode.get(MouseJsonKeys.getSensorTechnology()).asText();
-        this.buttons = mouseNode.get(MouseJsonKeys.getButtons()).asInt();
-        this.scrollingButtons = mouseNode.get(MouseJsonKeys.getScrollingButtons()).asInt();
-        this.colour = mouseNode.get(MouseJsonKeys.getColour()).asText();
-        this.hasIllumination = mouseNode.get(MouseJsonKeys.getHasIllumination()).asInt();
-        this.ledColor = mouseNode.get(MouseJsonKeys.getLedColor()).asText();
-        this.cableLength = mouseNode.get(MouseJsonKeys.getCableLength()).asText();
-        this.weight = mouseNode.get(MouseJsonKeys.getWeight()).asText();
-        this.dpi = mouseNode.get(MouseJsonKeys.getDpi()).asInt();
-        this.isWireless = mouseNode.get(MouseJsonKeys.getIsWireless()).asInt();        
+        this.connectionType = mouseNode.get(MouseJsonKeys.CONNECTION_TYPE.getJsonKeyDescription()).asText();
+        this.sensorTechnology = mouseNode.get(MouseJsonKeys.SENSOR_TECHNOLOGY.getJsonKeyDescription()).asText();
+        this.buttons = mouseNode.get(MouseJsonKeys.BUTTONS.getJsonKeyDescription()).asInt();
+        this.scrollingButtons = mouseNode.get(MouseJsonKeys.SCROLLING_BUTTONS.getJsonKeyDescription()).asInt();
+        this.colour = mouseNode.get(MouseJsonKeys.COLOUR.getJsonKeyDescription()).asText();
+        this.hasIllumination = mouseNode.get(MouseJsonKeys.HAS_ILLUMINATION.getJsonKeyDescription()).asInt();
+        this.ledColor = mouseNode.get(MouseJsonKeys.LED_COLOR.getJsonKeyDescription()).asText();
+        this.cableLength = mouseNode.get(MouseJsonKeys.CABLE_LENGTH.getJsonKeyDescription()).asText();
+        this.weight = mouseNode.get(MouseJsonKeys.WEIGHT.getJsonKeyDescription()).asText();
+        this.dpi = mouseNode.get(MouseJsonKeys.DPI.getJsonKeyDescription()).asInt();
+        this.isWireless = mouseNode.get(MouseJsonKeys.IS_WIRELESS.getJsonKeyDescription()).asInt();      
     }
 
     public int getId() {

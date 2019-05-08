@@ -141,25 +141,25 @@ public class Processor implements Serializable {
     }
 
     public Processor(JsonNode processorJsonNode) {
-        this.recommendedForGaming = processorJsonNode.get(ProcessorJsonKeys.getRecommendedForGaming()).asInt();
-        this.procSocket = processorJsonNode.get(ProcessorJsonKeys.getSocket()).asText();
-        this.procSeries = processorJsonNode.get(ProcessorJsonKeys.getProcSeries()).asText();
-        this.procCore = processorJsonNode.get(ProcessorJsonKeys.getProcCore()).asText();
-        this.procNrOfCores = processorJsonNode.get(ProcessorJsonKeys.getProcNrOfCores()).asInt();
-        this.procNrOfThreads = processorJsonNode.get(ProcessorJsonKeys.getProcNrOfThreads()).asInt();
-        this.procFrequency = processorJsonNode.get(ProcessorJsonKeys.getFrequency()).asText();
-        this.procTurboFrequency = processorJsonNode.get(ProcessorJsonKeys.getTurboFrequency()).asText();
-        this.procSmartCache = processorJsonNode.get(ProcessorJsonKeys.getProcSmarthCache()).asText();
-        this.procManufacturingTechnology = processorJsonNode.get(ProcessorJsonKeys.getProcManufacturingTechnology()).asText();
-        this.procTotalPowerDissipated = processorJsonNode.get(ProcessorJsonKeys.getProcTotalPowerDissipated()).asText();
-        this.procHasStockCooler = processorJsonNode.get(ProcessorJsonKeys.getProcHasStockCooler()).asInt();
-        this.procEmbeddedGraphicsCardModel = processorJsonNode.get(ProcessorJsonKeys.getProcEmbeddedGraphicsCardModel()).asText();
-        this.procEmbeddedGraphicsCardFrequency = processorJsonNode.get(ProcessorJsonKeys.getProcEmbeddedGraphicsCardFrequency()).asText();
-        this.procSupportedRamType = processorJsonNode.get(ProcessorJsonKeys.getProcSupportedRamType()).asText();
-        this.procSupportedRamFrequency = processorJsonNode.get(ProcessorJsonKeys.getProcSupportedRamFrequency()).asText();
-        this.procSupportedRamChannel = processorJsonNode.get(ProcessorJsonKeys.getProcSupportedRamChannel()).asText();
-        this.procPciExpressRevision = processorJsonNode.get(ProcessorJsonKeys.getProcPciExpressRevision()).asText();
-        this.procMaxPciExpressLanes = processorJsonNode.get(ProcessorJsonKeys.getProcPciExpressLanes()).asText();
+        this.recommendedForGaming = processorJsonNode.get(ProcessorJsonKeys.RECOMMENDED_FOR_GAMING.getJsonKeyDescription()).asInt();
+        this.procSocket = processorJsonNode.get(ProcessorJsonKeys.SOCKET.getJsonKeyDescription()).asText();
+        this.procSeries = processorJsonNode.get(ProcessorJsonKeys.PROC_SERIES.getJsonKeyDescription()).asText();
+        this.procCore = processorJsonNode.get(ProcessorJsonKeys.PROC_CORE.getJsonKeyDescription()).asText();
+        this.procNrOfCores = processorJsonNode.get(ProcessorJsonKeys.PROC_NR_OF_CORES.getJsonKeyDescription()).asInt();
+        this.procNrOfThreads = processorJsonNode.get(ProcessorJsonKeys.PROC_NR_OF_THREADS.getJsonKeyDescription()).asInt();
+        this.procFrequency = processorJsonNode.get(ProcessorJsonKeys.FREQUENCY.getJsonKeyDescription()).asText();
+        this.procTurboFrequency = processorJsonNode.get(ProcessorJsonKeys.TURBO_FREQUENCY.getJsonKeyDescription()).asText();
+        this.procSmartCache = processorJsonNode.get(ProcessorJsonKeys.PROC_SMARTH_CACHE.getJsonKeyDescription()).asText();
+        this.procManufacturingTechnology = processorJsonNode.get(ProcessorJsonKeys.PROC_MANUFACTURING_TECHNOLOGY.getJsonKeyDescription()).asText();
+        this.procTotalPowerDissipated = processorJsonNode.get(ProcessorJsonKeys.PROC_TOTAL_POWER_DISSIPATED.getJsonKeyDescription()).asText();
+        this.procHasStockCooler = processorJsonNode.get(ProcessorJsonKeys.PROC_HAS_STOCK_COOLER.getJsonKeyDescription()).asInt();
+        this.procEmbeddedGraphicsCardModel = processorJsonNode.get(ProcessorJsonKeys.PROC_EMBEDDED_GRAPHICS_CARD_MODEL.getJsonKeyDescription()).asText();
+        this.procEmbeddedGraphicsCardFrequency = processorJsonNode.get(ProcessorJsonKeys.PROC_EMBEDDED_GRAPHICS_CARD_FREQUENCY.getJsonKeyDescription()).asText();
+        this.procSupportedRamType = processorJsonNode.get(ProcessorJsonKeys.PROC_SUPPORTED_RAM_TYPE.getJsonKeyDescription()).asText();
+        this.procSupportedRamFrequency = processorJsonNode.get(ProcessorJsonKeys.PROC_SUPPORTED_RAM_FREQUENCY.getJsonKeyDescription()).asText();
+        this.procSupportedRamChannel = processorJsonNode.get(ProcessorJsonKeys.PROC_SUPPORTED_RAM_CHANNEL.getJsonKeyDescription()).asText();
+        this.procPciExpressRevision = processorJsonNode.get(ProcessorJsonKeys.PROC_PCI_EXPRESS_REVISION.getJsonKeyDescription()).asText();
+        this.procMaxPciExpressLanes = processorJsonNode.get(ProcessorJsonKeys.PROC_PCI_EXPRESS_LANES.getJsonKeyDescription()).asText();
         this.updatedOn = new Date();
     }
 

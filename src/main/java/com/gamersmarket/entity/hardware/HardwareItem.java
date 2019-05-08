@@ -1,6 +1,7 @@
 package com.gamersmarket.entity.hardware;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.constants.HardwareItemJsonKeys;
 import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.*;
@@ -75,8 +76,8 @@ public class HardwareItem implements Serializable {
     }
 
     public HardwareItem(JsonNode hwItemNode) {
-        this.manufacturerCode = hwItemNode.get("manufacturerCode").asText();
-        this.name = hwItemNode.get("name").asText();
+        this.manufacturerCode = hwItemNode.get(HardwareItemJsonKeys.MANUFACTURER_CODE.getJsonKeyDescription()).asText();
+        this.name = hwItemNode.get(HardwareItemJsonKeys.HW_ITEM_NAME.getJsonKeyDescription()).asText();
         this.updatedOn = new Date();
     }
 

@@ -96,18 +96,18 @@ public class Keyboard extends HardwareItem implements Serializable {
 
     public Keyboard(JsonNode keyboardNode) {
         super(keyboardNode.get("manufacturerCode").asText(), keyboardNode.get("name").asText());
-        this.keyboardType = keyboardNode.get(KeyboardJsonKeys.getKeyboardType()).asText();
-        this.keyboardColour = keyboardNode.get(KeyboardJsonKeys.getKeyboardColour()).asText();
-        this.hasNumericalKeys = keyboardNode.get(KeyboardJsonKeys.getHasNumericalKeys()).asInt();
-        this.nrOfKeys = keyboardNode.get(KeyboardJsonKeys.getNrOfKeys()).asInt();
-        this.keyboardTechnology = keyboardNode.get(KeyboardJsonKeys.getKeyboardTechnology()).asText();
-        this.keyboardInterface = keyboardNode.get(KeyboardJsonKeys.getKeyboardInterface()).asText();
-        this.keyboardWireLength = keyboardNode.get(KeyboardJsonKeys.getKeyboardWireLength()).asText();
-        this.isMechanical = keyboardNode.get(KeyboardJsonKeys.getIsMechanical()).asInt();
-        this.hasPalmRest = keyboardNode.get(KeyboardJsonKeys.getHasPalmRest()).asInt();
-        this.keyboardKeysLayout = keyboardNode.get(KeyboardJsonKeys.getKeyboardKeysLayout()).asText();
-        this.hasIllumination = keyboardNode.get(KeyboardJsonKeys.getHasIllumination()).asInt();
-        this.ledColour = keyboardNode.get(KeyboardJsonKeys.getLedColour()).asText();
+        this.keyboardType = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_TYPE.getJsonKeyDescription()).asText();
+        this.keyboardColour = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_COLOUR.getJsonKeyDescription()).asText();
+        this.hasNumericalKeys = keyboardNode.get(KeyboardJsonKeys.HAS_NUMERICAL_KEYS.getJsonKeyDescription()).asInt();
+        this.nrOfKeys = keyboardNode.get(KeyboardJsonKeys.NR_OF_KEYS.getJsonKeyDescription()).asInt();
+        this.keyboardTechnology = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_TECHNOLOGY.getJsonKeyDescription()).asText();
+        this.keyboardInterface = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_INTERFACE.getJsonKeyDescription()).asText();
+        this.keyboardWireLength = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_WIRE_LENGTH.getJsonKeyDescription()).asText();
+        this.isMechanical = keyboardNode.get(KeyboardJsonKeys.IS_MECHANICAL.getJsonKeyDescription()).asInt();
+        this.hasPalmRest = keyboardNode.get(KeyboardJsonKeys.HAS_PALM_REST.getJsonKeyDescription()).asInt();
+        this.keyboardKeysLayout = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_KEYS_LAYOUT.getJsonKeyDescription()).asText();
+        this.hasIllumination = keyboardNode.get(KeyboardJsonKeys.HAS_ILLUMINATION.getJsonKeyDescription()).asInt();
+        this.ledColour = keyboardNode.get(KeyboardJsonKeys.LED_COLOUR.getJsonKeyDescription()).asText();
     }
 
     @Override
