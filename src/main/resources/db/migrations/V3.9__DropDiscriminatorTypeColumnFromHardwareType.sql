@@ -1,0 +1,2 @@
+-- ALTER TABLE gamers_market.hardware_type
+-- DROP COLUMN discriminator_hw_type;
