@@ -2,7 +2,7 @@ package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.enums.MouseJsonKeys;
+import com.gamersmarket.common.enums.jsonkeys.MouseJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.common.utils.BasicResponse;
 import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;

@@ -2,7 +2,7 @@ package com.gamersmarket.entity.hardware;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.common.enums.KeyboardJsonKeys;
+import com.gamersmarket.common.enums.jsonkeys.KeyboardJsonKeys;
 import com.gamersmarket.common.deserializers.KeyboardDeserializer;
 
 import javax.persistence.*;

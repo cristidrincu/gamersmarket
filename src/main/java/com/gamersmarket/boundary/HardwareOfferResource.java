@@ -1,6 +1,7 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.enums.messages.HardwareOfferMessages;
 import com.gamersmarket.common.utils.BasicResponse;
 import com.gamersmarket.control.hardware.HardwareOfferRepo;
 
@@ -32,7 +33,10 @@ public class HardwareOfferResource {
     public Response addInitialHardwareOffer(JsonNode hardwareOfferJson) {
         hardwareOfferRepo.buildInitialHardwareOffer(hardwareOfferJson);
         return Response.ok()
-                .entity(basicResponse.buildResponse(Response.Status.OK.getStatusCode(), "Initial hardware offer created successfully")).build();
+                .entity(
+                        basicResponse.buildResponse(Response.Status.OK.getStatusCode(),
+                        HardwareOfferMessages.INITIAL_HARDWARE_OFFER_SUCCESS_MESSAGE.getMessageDescription()))
+                .build();
     }
 
     @POST
@@ -42,6 +46,9 @@ public class HardwareOfferResource {
         hardwareOfferRepo.buildFinalHardwareOffer(hardwareOfferJson);
 
         return Response.ok()
-                .entity(basicResponse.buildResponse(Response.Status.OK.getStatusCode(), "Final hardware offer created successfully")).build();
+                .entity(
+                        basicResponse.buildResponse(Response.Status.OK.getStatusCode(), 
+                        HardwareOfferMessages.FINAL_HARDWARE_OFFER_SUCCESS_MESSAGE.getMessageDescription()))
+                .build();
     }
 }

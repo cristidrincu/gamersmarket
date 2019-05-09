@@ -1,7 +1,7 @@
 package com.gamersmarket.entity.hardware;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.enums.HardwareItemJsonKeys;
+import com.gamersmarket.common.enums.jsonkeys.HardwareItemJsonKeys;
 import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.*;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.common.deserializers.GamerDeserializer;
-import com.gamersmarket.common.enums.GamerJsonKeys;
+import com.gamersmarket.common.enums.jsonkeys.GamerJsonKeys;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

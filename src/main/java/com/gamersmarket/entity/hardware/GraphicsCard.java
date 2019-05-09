@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.common.enums.GraphicsCardJsonKeys;
+import com.gamersmarket.common.enums.jsonkeys.GraphicsCardJsonKeys;
 import com.gamersmarket.common.deserializers.GraphicCardDeserializer;
 import com.gamersmarket.common.utils.DateValidator;
 
@@ -66,6 +66,7 @@ public class GraphicsCard implements Serializable {
     private String graphicsProcessor;
 
     @Column(name = "gc_release_date")
+    @Temporal(TemporalType.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
     private Date gcReleaseDate;
 

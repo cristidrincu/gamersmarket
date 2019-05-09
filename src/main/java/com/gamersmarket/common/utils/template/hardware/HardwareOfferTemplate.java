@@ -1,7 +1,7 @@
 package com.gamersmarket.common.utils.template.hardware;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.enums.HardwareOfferJsonFields;
+import com.gamersmarket.common.enums.jsonkeys.HardwareOfferJsonKeys;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.control.hardware.HardwareItemRepo;
 import com.gamersmarket.entity.gamers.Gamer;
@@ -24,18 +24,18 @@ public class HardwareOfferTemplate {
     public Map<String, Object> buildInitialHardwareOffer(JsonNode hardwareOfferJson) {
         Map<String, Object> initialHardwareOfferDependencies = new LinkedHashMap<>();
 
-        int approvedByUs = hardwareOfferJson.get(HardwareOfferJsonFields.APPROVED_BY_US.getFieldName()).asInt();
-        int buyerRequestsReview = hardwareOfferJson.get(HardwareOfferJsonFields.BUYER_REQUESTS_REVIEW.getFieldName()).asInt();
-        int sellingGamerId = hardwareOfferJson.get(HardwareOfferJsonFields.SELLING_GAMER_ID.getFieldName()).asInt();
-        int hwItemId = hardwareOfferJson.get(HardwareOfferJsonFields.HARDWARE_ITEM_ID.getFieldName()).asInt();
+        int approvedByUs = hardwareOfferJson.get(HardwareOfferJsonKeys.APPROVED_BY_US.getJsonKeyDescription()).asInt();
+        int buyerRequestsReview = hardwareOfferJson.get(HardwareOfferJsonKeys.BUYER_REQUESTS_REVIEW.getJsonKeyDescription()).asInt();
+        int sellingGamerId = hardwareOfferJson.get(HardwareOfferJsonKeys.SELLING_GAMER_ID.getJsonKeyDescription()).asInt();
+        int hwItemId = hardwareOfferJson.get(HardwareOfferJsonKeys.HARDWARE_ITEM_ID.getJsonKeyDescription()).asInt();
 
         Gamer sellingGamer = gamersRepo.getGamerDetails(sellingGamerId);
         HardwareItem hardwareItem = hardwareItemRepo.getItem(hwItemId);
 
-        initialHardwareOfferDependencies.put(HardwareOfferJsonFields.APPROVED_BY_US.getFieldName(), approvedByUs);
-        initialHardwareOfferDependencies.put(HardwareOfferJsonFields.BUYER_REQUESTS_REVIEW.getFieldName(), buyerRequestsReview);
-        initialHardwareOfferDependencies.put(HardwareOfferJsonFields.SELLING_GAMER_ID.getFieldName(), sellingGamer);
-        initialHardwareOfferDependencies.put(HardwareOfferJsonFields.HARDWARE_ITEM_ID.getFieldName(), hardwareItem);
+        initialHardwareOfferDependencies.put(HardwareOfferJsonKeys.APPROVED_BY_US.getJsonKeyDescription(), approvedByUs);
+        initialHardwareOfferDependencies.put(HardwareOfferJsonKeys.BUYER_REQUESTS_REVIEW.getJsonKeyDescription(), buyerRequestsReview);
+        initialHardwareOfferDependencies.put(HardwareOfferJsonKeys.SELLING_GAMER_ID.getJsonKeyDescription(), sellingGamer);
+        initialHardwareOfferDependencies.put(HardwareOfferJsonKeys.HARDWARE_ITEM_ID.getJsonKeyDescription(), hardwareItem);
 
         return initialHardwareOfferDependencies;
     }
@@ -43,17 +43,17 @@ public class HardwareOfferTemplate {
     public Map<String, Object> buildFinalHardwareOffer(JsonNode hardwareOfferJson) {
         Map<String, Object> hardwareOfferDependencies = new LinkedHashMap<>();
 
-        int buyingGamerId = hardwareOfferJson.get(HardwareOfferJsonFields.BUYING_GAMER_ID.getFieldName()).asInt();
-        int approverGamerId = hardwareOfferJson.get(HardwareOfferJsonFields.APPROVER_GAMER_ID.getFieldName()).asInt();
-        int winnerBidId = hardwareOfferJson.get(HardwareOfferJsonFields.WINNER_BID_ID.getFieldName()).asInt();
+        int buyingGamerId = hardwareOfferJson.get(HardwareOfferJsonKeys.BUYING_GAMER_ID.getJsonKeyDescription()).asInt();
+        int approverGamerId = hardwareOfferJson.get(HardwareOfferJsonKeys.APPROVER_GAMER_ID.getJsonKeyDescription()).asInt();
+        int winnerBidId = hardwareOfferJson.get(HardwareOfferJsonKeys.WINNER_BID_ID.getJsonKeyDescription()).asInt();
 
         Gamer buyingGamer = gamersRepo.getGamerDetails(buyingGamerId);
         Gamer approverGamer = gamersRepo.getGamerDetails(approverGamerId);
         Gamer winnerBid = gamersRepo.getGamerDetails(winnerBidId);
 
-        hardwareOfferDependencies.put(HardwareOfferJsonFields.BUYING_GAMER_ID.getFieldName(), buyingGamer);
-        hardwareOfferDependencies.put(HardwareOfferJsonFields.APPROVER_GAMER_ID.getFieldName(), approverGamer);
-        hardwareOfferDependencies.put(HardwareOfferJsonFields.WINNER_BID_ID.getFieldName(), winnerBid);
+        hardwareOfferDependencies.put(HardwareOfferJsonKeys.BUYING_GAMER_ID.getJsonKeyDescription(), buyingGamer);
+        hardwareOfferDependencies.put(HardwareOfferJsonKeys.APPROVER_GAMER_ID.getJsonKeyDescription(), approverGamer);
+        hardwareOfferDependencies.put(HardwareOfferJsonKeys.WINNER_BID_ID.getJsonKeyDescription(), winnerBid);
 
         return hardwareOfferDependencies;
     }

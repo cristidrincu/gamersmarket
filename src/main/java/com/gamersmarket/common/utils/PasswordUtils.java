@@ -37,9 +37,19 @@ public class PasswordUtils {
         }
         
         return new String(returnValue);
+    }        
+    
+    public String generateSecurePassword(String password, String salt) {        
+        byte[] securePassword = hash(password.toCharArray(), salt.getBytes());        
+        return Base64.getEncoder().encodeToString(securePassword);
     }
     
-    public byte[] hash(char[] password, byte[] salt) {
+    public boolean verifyUserPassword(String providedPassword, String securedPassword, String salt) {                
+        String newSecurePassword = generateSecurePassword(providedPassword, salt);
+        return newSecurePassword.equalsIgnoreCase(securedPassword);
+    }
+    
+    private byte[] hash(char[] password, byte[] salt) {
         PBEKeySpec spec = new PBEKeySpec(password, salt, ITERATIONS, KEY_LENGTH);
         Arrays.fill(password, Character.MIN_VALUE);
         
@@ -51,15 +61,5 @@ public class PasswordUtils {
         } finally {
             spec.clearPassword();
         }
-    }
-    
-    public String generateSecurePassword(String password, String salt) {        
-        byte[] securePassword = hash(password.toCharArray(), salt.getBytes());        
-        return Base64.getEncoder().encodeToString(securePassword);
-    }
-    
-    public boolean verifyUserPassword(String providedPassword, String securedPassword, String salt) {                
-        String newSecurePassword = generateSecurePassword(providedPassword, salt);
-        return newSecurePassword.equalsIgnoreCase(securedPassword);
     }
 }

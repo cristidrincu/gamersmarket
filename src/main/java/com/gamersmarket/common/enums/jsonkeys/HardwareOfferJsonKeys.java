@@ -1,6 +1,6 @@
-package com.gamersmarket.common.enums;
+package com.gamersmarket.common.enums.jsonkeys;
 
-public enum HardwareOfferJsonFields {
+public enum HardwareOfferJsonKeys {
     HARDWARE_OFFER_ID("id"),
     APPROVED_BY_US("approvedByUs"),
     BUYER_REQUESTS_REVIEW("buyerRequestsReview"),
@@ -10,13 +10,13 @@ public enum HardwareOfferJsonFields {
     WINNER_BID_ID("winnerBidId"),
     HARDWARE_ITEM_ID("hwItemId");
 
-    private final String fieldName;
+    private final String jsonKeyDescription;
 
-    HardwareOfferJsonFields(String fieldName) {
-        this.fieldName = fieldName;
+    HardwareOfferJsonKeys(String jsonKeyDescription) {
+        this.jsonKeyDescription = jsonKeyDescription;
     }
 
-    public String getFieldName() {
-        return fieldName;
+    public String getJsonKeyDescription() {
+        return jsonKeyDescription;
     }
 }

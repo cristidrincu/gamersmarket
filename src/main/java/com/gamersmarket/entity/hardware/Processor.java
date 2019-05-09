@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.common.enums.ProcessorJsonKeys;
+import com.gamersmarket.common.enums.jsonkeys.ProcessorJsonKeys;
 import com.gamersmarket.common.deserializers.ProcessorDeserializer;
 
 import javax.persistence.*;

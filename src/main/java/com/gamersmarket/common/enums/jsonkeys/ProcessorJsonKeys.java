@@ -1,4 +1,4 @@
-package com.gamersmarket.common.enums;
+package com.gamersmarket.common.enums.jsonkeys;
 
 public enum ProcessorJsonKeys {   
 

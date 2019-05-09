@@ -6,7 +6,7 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.enums.KeyboardJsonKeys;
+import com.gamersmarket.common.enums.jsonkeys.KeyboardJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.common.utils.BasicResponse;
 import com.gamersmarket.control.hardware.KeyboardRepo;
