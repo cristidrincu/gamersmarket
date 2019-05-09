@@ -1,7 +1,7 @@
 package com.gamersmarket.common.enums;
 
 public enum MouseJsonKeys {   
-
+    ROOT_NODE("mouse"),
     CONNECTION_TYPE("connectionType"),
     SENSOR_TECHNOLOGY("sensorTechnology"),
     BUTTONS("buttons"),

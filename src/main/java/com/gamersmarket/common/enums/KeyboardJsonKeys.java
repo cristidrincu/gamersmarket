@@ -1,7 +1,7 @@
 package com.gamersmarket.common.enums;
 
 public enum KeyboardJsonKeys {   
-
+    ROOT_NODE("keyboard"),
     KEYBOARD_TYPE("keyboardType"),
     KEYBOARD_COLOUR("keyboardColour"),
     HAS_NUMERICAL_KEYS("hasNumericalKeys"),
