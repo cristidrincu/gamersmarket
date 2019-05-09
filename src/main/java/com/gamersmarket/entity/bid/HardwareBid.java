@@ -16,7 +16,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "hardware_bid")
 @NamedQueries({
-        @NamedQuery(name = HardwareBid.GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE, query = HardwareBid.GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE_QUERY),
+        @NamedQuery(name = HardwareBid.GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE, 
+                query = HardwareBid.GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE_QUERY)
 })
 @JsonDeserialize(using = HardwareBidDeserializer.class)
 public class HardwareBid implements Serializable {
@@ -25,7 +26,8 @@ public class HardwareBid implements Serializable {
     public static final String PARAM_GAMER_ID = "id";
     public static final String PARAM_BID_STATE = "bidState";
     public static final String GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE = "getHardwareBidsForGamer";
-    public static final String GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE_QUERY = "select hwBid from HardwareBid hwBid where hwBid.bidder.id = :" + PARAM_GAMER_ID + " and hwBid.bidState = :" + PARAM_BID_STATE;
+    public static final String GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE_QUERY = "select hwBid from HardwareBid hwBid where hwBid.bidder.id = :" 
+            + PARAM_GAMER_ID + " and hwBid.bidState = :" + PARAM_BID_STATE;
 
     @Id
     @NotNull
