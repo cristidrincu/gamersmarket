@@ -1,6 +1,8 @@
 package com.gamersmarket.boundary;
 
-import com.gamersmarket.common.utils.template.user.GamerTemplate;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.enums.GamerJsonKeys;
+import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 
@@ -21,7 +23,7 @@ public class GamersResource {
     GamersRepo gamersRepo;
 
     @Inject
-    GamerTemplate gamerTemplate;
+    ObjectMapperProvider provider;        
 
     @GET
     @Path("{id}")
@@ -31,7 +33,9 @@ public class GamersResource {
 
     @POST
     public Response createGamerAccount(String jsonGamerAccount) throws IOException {
-        Gamer gamer = gamerTemplate.getUserType(jsonGamerAccount);
+        JsonNode rootNode = provider.getContext(GamersResource.class).readTree(jsonGamerAccount);
+        
+        Gamer gamer = new Gamer(rootNode.get(GamerJsonKeys.ROOT_NODE.getJsonKeyDescription()));
         gamersRepo.createAccount(gamer);
         return Response.ok().entity("Account created successfully").build();
     }

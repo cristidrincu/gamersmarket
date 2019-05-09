@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 @Stateless
-@Path("/hardware-mfs")
+@Path("/hardware-manufacturers")
 public class ManufacturerResource {
 
     @Inject

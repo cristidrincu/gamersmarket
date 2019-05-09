@@ -2,6 +2,7 @@ package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.enums.MouseJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.common.utils.BasicResponse;
 import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;
@@ -59,7 +60,7 @@ public class MouseResource {
     public Response addMouse(String jsonObject) throws IOException {        
         JsonNode rootNode = provider.getContext(MouseResource.class).readTree(jsonObject);
         
-        Mouse mouse = new Mouse(rootNode.get("mouse"));        
+        Mouse mouse = new Mouse(rootNode.get(MouseJsonKeys.ROOT_NODE.getJsonKeyDescription()));        
         int hwTypeId = rootNode.get("hwType").get("id").asInt();
         
         mouseRepo.persistItemWithHardwareType(mouse, hwTypeId);
