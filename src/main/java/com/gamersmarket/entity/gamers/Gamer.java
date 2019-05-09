@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.common.deserializers.GamerDeserializer;
+import com.gamersmarket.common.enums.GamerJsonKeys;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,6 +36,9 @@ public class Gamer implements Serializable {
     private int id;
 
     private String password;
+    
+    @Column(name = "password_salt")
+    private String passwordSalt;
 
     @Column(name = "first_name")
     private String firstName;
@@ -71,11 +75,11 @@ public class Gamer implements Serializable {
     }
 
     public Gamer(JsonNode gamerNode) {
-        this.firstName = gamerNode.get("firstName").asText();
-        this.lastName = gamerNode.get("lastName").asText();
-        this.email = gamerNode.get("email").asText();
-        this.age = gamerNode.get("age").asInt();
-        this.password = gamerNode.get("password").asText();
+        this.firstName = gamerNode.get(GamerJsonKeys.FIRST_NAME.getJsonKeyDescription()).asText();
+        this.lastName = gamerNode.get(GamerJsonKeys.LAST_NAME.getJsonKeyDescription()).asText();
+        this.email = gamerNode.get(GamerJsonKeys.EMAIL_ADDRESS.getJsonKeyDescription()).asText();
+        this.age = gamerNode.get(GamerJsonKeys.GAMER_AGE.getJsonKeyDescription()).asInt();
+        this.password = gamerNode.get(GamerJsonKeys.PASSWORD.getJsonKeyDescription()).asText();
         this.updatedOn = new Date();
     }
 
@@ -94,6 +98,14 @@ public class Gamer implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getPasswordSalt() {
+        return passwordSalt;
+    }
+
+    public void setPasswordSalt(String passwordSalt) {
+        this.passwordSalt = passwordSalt;
+    }        
 
     public String getFirstName() {
         return firstName;
