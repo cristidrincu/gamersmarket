@@ -2,6 +2,7 @@ package com.gamersmarket.control.gamers;
 
 import com.gamersmarket.common.enums.HardwareBidStates;
 import com.gamersmarket.common.interfaces.GamersRepository;
+import com.gamersmarket.common.utils.PasswordUtils;
 import com.gamersmarket.common.utils.exceptions.AccountAlreadyExistsException;
 import com.gamersmarket.entity.bid.HardwareBid;
 import com.gamersmarket.entity.gamers.Gamer;
@@ -9,9 +10,13 @@ import com.gamersmarket.entity.gamers.Gamer;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import javax.inject.Inject;
 
 public class GamersRepo implements GamersRepository<Gamer> {
 
+    @Inject
+    PasswordUtils passwordUtils;
+    
     @PersistenceContext
     EntityManager em;
 
@@ -26,6 +31,13 @@ public class GamersRepo implements GamersRepository<Gamer> {
       if (!existingAccount.isEmpty()) {
           throw new AccountAlreadyExistsException("An account with this email address already exists!");
       }
+      
+      String gamerPassword = gamer.getPassword();
+      String passwordSalt = passwordUtils.getSalt(30);
+      String securedPassword = passwordUtils.generateSecurePassword(gamerPassword, passwordSalt);
+      gamer.setPasswordSalt(passwordSalt);
+      gamer.setPassword(securedPassword);
+      
       em.persist(gamer);
     }
 
