@@ -16,6 +16,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import static java.lang.Integer.parseInt;
 
 @Stateless
 @Path("/gamers")
@@ -72,6 +73,17 @@ public class GamersResource {
                         .entity(basicResponse.buildResponse(Response.Status.BAD_REQUEST.getStatusCode(), 
                                 AccountManagementMessages.WRONG_CREDENTIALS.getMessageDescription()))
                         .build();        
+    }
+    
+    @DELETE
+    @Path("/delete-account/{gamerId}")
+    public Response deleteGamerAccount(@PathParam("gamerId") String gamerId) throws IOException {
+        Gamer gamer = gamersRepo.getGamerDetails(parseInt(gamerId));
+        gamersRepo.deleteGamer(gamer.getId());
+        return Response.ok()
+                .entity(basicResponse.buildResponse(Response.Status.OK.getStatusCode(),
+                        AccountManagementMessages.ACCOUNT_DELETED_SUCCESSFULLY.getMessageDescription()))
+                .build();
     }
     
     private JsonNode readTreeJsonGamerAccount(String jsonGamerAccount) throws IOException {

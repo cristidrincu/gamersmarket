@@ -13,6 +13,7 @@ public enum AccountManagementMessages {
     NO_ACCOUNT_FOUND("No account found with provided credentials."),
     ACCOUNT_ALREADY_EXISTS("An account already exits with the given credentials."),
     ACCOUNT_CREATED_SUCCESSFULLY("Account created successfully."),
+    ACCOUNT_DELETED_SUCCESSFULLY("Account deleted successfully"),
     WRONG_CREDENTIALS("Wrong email or password.");
     
     private final String messageDescription;
