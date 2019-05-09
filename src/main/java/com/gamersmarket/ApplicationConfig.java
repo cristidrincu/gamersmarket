@@ -4,6 +4,7 @@ import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 import com.gamersmarket.boundary.*;
 import com.gamersmarket.common.mappers.AccountAlreadyExistsExceptionMapper;
 import com.gamersmarket.common.mappers.InvalidJsonExceptionMapper;
+import com.gamersmarket.common.mappers.NoAccountExistsExceptionMapper;
 import com.gamersmarket.common.providers.CORSFilterProvider;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -25,6 +26,7 @@ public class ApplicationConfig extends ResourceConfig {
                 GamersResource.class,
                 HardwareOfferResource.class,
                 InvalidJsonExceptionMapper.class,
+                NoAccountExistsExceptionMapper.class,
                 AccountAlreadyExistsExceptionMapper.class,
                 ValidationExceptionMapper.class
         );
