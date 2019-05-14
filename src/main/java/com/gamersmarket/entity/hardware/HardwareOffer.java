@@ -39,6 +39,9 @@ public class HardwareOffer implements Serializable {
 
     @Column(name = "buyer_requests_review")
     private int buyerRequestsReview;
+    
+    @Column(name = "hardware_offer_state")
+    private String hardwareOfferState;
 
     @ManyToOne
     @JoinColumn(name = "selling_gamer_id")
@@ -107,6 +110,14 @@ public class HardwareOffer implements Serializable {
     public void setBuyerRequestsReview(int buyerRequestsReview) {
         this.buyerRequestsReview = buyerRequestsReview;
     }
+
+    public String getHardwareOfferState() {
+        return hardwareOfferState;
+    }
+
+    public void setHardwareOfferState(String hardwareOfferState) {
+        this.hardwareOfferState = hardwareOfferState;
+    }        
 
     public HardwareItem getHardwareItem() {
         return hardwareItem;
