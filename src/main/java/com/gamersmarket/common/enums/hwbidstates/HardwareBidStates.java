@@ -1,4 +1,4 @@
-package com.gamersmarket.common.enums;
+package com.gamersmarket.common.enums.hwbidstates;
 
 public enum HardwareBidStates {
     ACTIVE("active"),
