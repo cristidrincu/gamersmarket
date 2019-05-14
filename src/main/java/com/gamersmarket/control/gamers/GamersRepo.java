@@ -1,7 +1,7 @@
 package com.gamersmarket.control.gamers;
 
 import com.gamersmarket.common.enums.messages.AccountManagementMessages;
-import com.gamersmarket.common.enums.HardwareBidStates;
+import com.gamersmarket.common.enums.hwbidstates.HardwareBidStates;
 import com.gamersmarket.common.interfaces.GamersRepository;
 import com.gamersmarket.common.utils.PasswordUtils;
 import com.gamersmarket.common.utils.exceptions.NoAccountExistsException;
@@ -78,5 +78,5 @@ public class GamersRepo implements GamersRepository<Gamer> {
                 .setParameter(HardwareBid.PARAM_GAMER_ID, gamerId)
                 .setParameter(HardwareBid.PARAM_BID_STATE, HardwareBidStates.CANCELLED.getStatus())
                 .getResultList();
-    }          
+    }                
 }
