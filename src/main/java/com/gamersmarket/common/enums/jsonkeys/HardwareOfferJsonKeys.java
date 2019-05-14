@@ -8,7 +8,8 @@ public enum HardwareOfferJsonKeys {
     BUYING_GAMER_ID("buyingGamerId"),
     APPROVER_GAMER_ID("approverGamerId"),
     WINNER_BID_ID("winnerBidId"),
-    HARDWARE_ITEM_ID("hwItemId");
+    HARDWARE_ITEM_ID("hwItemId"),
+    HARDWARE_OFFER_STATE("hwOfferState");
 
     private final String jsonKeyDescription;
 

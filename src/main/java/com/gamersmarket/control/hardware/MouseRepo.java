@@ -2,6 +2,8 @@ package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.control.gamers.GamersRepo;
+import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.EntityManager;
@@ -16,6 +18,9 @@ public class MouseRepo implements HardwareRepository<Mouse> {
     
     @Inject
     private HardwareTypeRepo hardwareTypeRepo;
+    
+    @Inject
+    private GamersRepo gamersRepo;
 
     @Override
     public List<Mouse> getItems() {
@@ -38,9 +43,11 @@ public class MouseRepo implements HardwareRepository<Mouse> {
         em.remove(mouse);        
     }
     
-    public void persistItemWithHardwareType(Mouse mouse, int hardwareTypeId) {
+    public void persistItemWithHardwareType(Mouse mouse, int hardwareTypeId, int gamerId) {
         HardwareType hardwareType = hardwareTypeRepo.getItem(hardwareTypeId);
+        Gamer gamer = gamersRepo.getGamerDetails(gamerId);       
         mouse.setHardwareType(hardwareType);
+        mouse.setGamer(gamer);
         addItem(mouse);
     }
 }

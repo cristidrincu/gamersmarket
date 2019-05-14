@@ -1,12 +1,16 @@
 package com.gamersmarket.control.hardware;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.enums.hwofferstates.HardwareOfferStates;
 import com.gamersmarket.common.enums.jsonkeys.HardwareOfferJsonKeys;
 import com.gamersmarket.common.interfaces.HardwareRepository;
 import com.gamersmarket.common.utils.template.hardware.HardwareOfferTemplate;
+import com.gamersmarket.control.gamers.GamersRepo;
+import com.gamersmarket.control.pricing.HardwarePricingRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.HardwareOffer;
+import com.gamersmarket.entity.pricing.HardwarePricing;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -22,6 +26,15 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
 
     @Inject
     private HardwareOfferTemplate hardwareOfferTemplate;
+    
+    @Inject
+    GamersRepo gamersRepo;
+    
+    @Inject
+    HardwareItemRepo hwItemRepo;
+    
+    @Inject
+    HardwarePricingRepo hardwarePricingRepo;
     
     public HardwareOfferRepo() {}
 
@@ -47,19 +60,25 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
         em.remove(hardwareOffer);
     }
 
-    public void buildInitialHardwareOffer(JsonNode initialHardwareOfferJson) {
+    public void buildInitialHardwareOffer(JsonNode initialHardwareOfferJson, JsonNode hwPricingNode) {
         Map<String, Object> initialHardwareOfferDependencies = hardwareOfferTemplate.buildInitialHardwareOffer(initialHardwareOfferJson);
 
         int approvedByUs = (int) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.APPROVED_BY_US.getJsonKeyDescription());
         int buyerRequestsReview = (int) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.BUYER_REQUESTS_REVIEW.getJsonKeyDescription());
+        String hardwareOfferState = (String) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.HARDWARE_OFFER_STATE.getJsonKeyDescription());
 
         Gamer sellingGamer = (Gamer) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.SELLING_GAMER_ID.getJsonKeyDescription());
         HardwareItem hwItem = (HardwareItem) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.HARDWARE_ITEM_ID.getJsonKeyDescription());
+        HardwarePricing hardwarePricing = new HardwarePricing(hwPricingNode);
 
         HardwareOffer hardwareOffer = new HardwareOffer(approvedByUs, buyerRequestsReview);
         hardwareOffer.setSellingGamer(sellingGamer);
         hardwareOffer.setHardwareItem(hwItem);
+        hardwareOffer.setHardwareOfferState(hardwareOfferState);
+                
+        hardwarePricing.setHardwareItem(hwItem);
 
+        hardwarePricingRepo.addPricing(hardwarePricing);
         em.persist(hardwareOffer);
     }
 
@@ -76,8 +95,15 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
         hardwareOffer.setBuyingGamer(buyingGamer);
         hardwareOffer.setApproverGamer(approverGamer);
         hardwareOffer.setWinnerBid(bidWinner);
+        hardwareOffer.setHardwareOfferState(HardwareOfferStates.ACTIVE.getHardwareOfferState());
         hardwareOffer.setUpdatedOn(new Date());
 
         em.merge(hardwareOffer);
+    }
+    
+    public void cancelHardwareOffer(int hardwareOfferId) {
+        HardwareOffer hwOffer = getItem(hardwareOfferId);
+        hwOffer.setHardwareOfferState(HardwareOfferStates.CANCELLED.getHardwareOfferState());
+        em.merge(hwOffer);
     }
 }

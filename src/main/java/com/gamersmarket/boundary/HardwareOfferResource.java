@@ -2,8 +2,12 @@ package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.messages.HardwareOfferMessages;
-import com.gamersmarket.common.utils.BasicResponse;
+import com.gamersmarket.common.providers.ObjectMapperProvider;
+import com.gamersmarket.common.utils.CustomBasicResponse;
 import com.gamersmarket.control.hardware.HardwareOfferRepo;
+import com.gamersmarket.entity.hardware.HardwareOffer;
+import java.io.IOException;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,37 +22,39 @@ import javax.ws.rs.core.Response;
 public class HardwareOfferResource {
 
     @Inject
-    BasicResponse basicResponse;
+    CustomBasicResponse basicResponse;
 
     @Inject
     HardwareOfferRepo hardwareOfferRepo;
+    
+    @Inject
+    ObjectMapperProvider provider;
 
     @GET
-    public Response getHardwareOffers() {
-        return Response.ok().entity("Hello from hardware offers endpoint").build();
+    public Response getHardwareOffers() {        
+        String responseMessageDescription = HardwareOfferMessages.FETCH_ALL_HARDWARE_OFFERS.getMessageDescription();
+        List<HardwareOffer> hwOffers = hardwareOfferRepo.getItems();                
+        return Response.ok().entity(basicResponse.buildResponseHardwareOffers(Response.Status.OK.getStatusCode(), responseMessageDescription, hwOffers)).build();
     }
 
     @POST
     @Path("/initial-offer")
-    public Response addInitialHardwareOffer(JsonNode hardwareOfferJson) {
-        hardwareOfferRepo.buildInitialHardwareOffer(hardwareOfferJson);
-        return Response.ok()
-                .entity(
-                        basicResponse.buildResponse(Response.Status.OK.getStatusCode(),
-                        HardwareOfferMessages.INITIAL_HARDWARE_OFFER_SUCCESS_MESSAGE.getMessageDescription()))
-                .build();
+    public Response addInitialHardwareOffer(String jsonObject) throws IOException {
+        JsonNode rootNode = provider.getContext(HardwareOfferResource.class).readTree(jsonObject);
+        JsonNode hwPricingNode = rootNode.get("hwPricing");               
+        String responseMessageDescription = HardwareOfferMessages.INITIAL_HARDWARE_OFFER_SUCCESS_MESSAGE.getMessageDescription();
+
+        hardwareOfferRepo.buildInitialHardwareOffer(rootNode, hwPricingNode);
+        return Response.ok().entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(), responseMessageDescription)).build();
     }
 
     @POST
     @Path("/final-offer")
-    public Response addFinalHardwareOffer(JsonNode hardwareOfferJson) {
-        //TODO - when adding a hardware item, we need to add the minPrice, maxPrice etc to the json and create a new hardware item price - otherwise eclipse link complains
-        hardwareOfferRepo.buildFinalHardwareOffer(hardwareOfferJson);
-
-        return Response.ok()
-                .entity(
-                        basicResponse.buildResponse(Response.Status.OK.getStatusCode(), 
-                        HardwareOfferMessages.FINAL_HARDWARE_OFFER_SUCCESS_MESSAGE.getMessageDescription()))
-                .build();
+    public Response addFinalHardwareOffer(String jsonObject) throws IOException {        
+        JsonNode rootNode = provider.getContext(HardwareOfferResource.class).readTree(jsonObject);
+        String responseMessageDescription = HardwareOfferMessages.FINAL_HARDWARE_OFFER_SUCCESS_MESSAGE.getMessageDescription();
+        
+        hardwareOfferRepo.buildFinalHardwareOffer(rootNode);
+        return Response.ok().entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(), responseMessageDescription)).build();
     }
 }

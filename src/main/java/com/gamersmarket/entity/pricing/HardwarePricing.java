@@ -2,10 +2,8 @@ package com.gamersmarket.entity.pricing;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.entity.gamers.Gamer;
+import com.gamersmarket.common.enums.jsonkeys.HardwarePricingJsonKeys;
 import com.gamersmarket.entity.hardware.HardwareItem;
-import com.gamersmarket.entity.manufacturer.Manufacturer;
-import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +12,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "hardware_item_pricing")
+@Table(name = "hw_item_pricing")
 @NamedQueries({
     @NamedQuery(name = HardwarePricing.GET_HARDWARE_PRICING_LIST, query = "select p from HardwarePricing p"),
     @NamedQuery(name = HardwarePricing.GET_HARDWARE_PRICING, query = "select p from HardwarePricing p where p.id = :id")
@@ -44,19 +42,11 @@ public class HardwarePricing implements Serializable {
     @Column(name = "has_warranty")
     private int hasWarranty;
 
-    private int age;
-
-    @ManyToOne
-    @JoinColumn(name = "manufacturer_id")
-    private Manufacturer manufacturer;
+    private int age;   
 
     @ManyToOne
     @JoinColumn(name = "hw_item_id")
-    private HardwareItem hardwareItem;
-
-    @ManyToOne
-    @JoinColumn(name = "gamer_id")
-    private Gamer gamer;
+    private HardwareItem hardwareItem;    
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_on")
@@ -80,11 +70,11 @@ public class HardwarePricing implements Serializable {
     }
 
     public HardwarePricing(JsonNode hardwarePricingNode) {
-        this.age = hardwarePricingNode.get("age").asInt();
-        this.hasWarranty = hardwarePricingNode.get("hasWarranty").asInt();
-        this.minPrice = hardwarePricingNode.get("minPrice").asInt();
-        this.recommendedPrice = hardwarePricingNode.get("recommendedPrice").asInt();
-        this.sellPeriodHours = hardwarePricingNode.get("sellPeriodHouse").asInt();
+        this.age = hardwarePricingNode.get(HardwarePricingJsonKeys.PRODUCT_AGE.getJsonKeyDescription()).asInt();
+        this.hasWarranty = hardwarePricingNode.get(HardwarePricingJsonKeys.HAS_WARRANTY.getJsonKeyDescription()).asInt();
+        this.minPrice = hardwarePricingNode.get(HardwarePricingJsonKeys.MIN_PRICE.getJsonKeyDescription()).asInt();
+        this.recommendedPrice = hardwarePricingNode.get(HardwarePricingJsonKeys.RECOMMENDED_PRICE.getJsonKeyDescription()).asInt();
+        this.sellPeriodHours = hardwarePricingNode.get(HardwarePricingJsonKeys.SELL_PERIOD_HOURS.getJsonKeyDescription()).asInt();
         this.updatedOn = new Date();
     }
 
@@ -150,15 +140,7 @@ public class HardwarePricing implements Serializable {
 
     public void setUpdatedOn(Date updatedOn) {
         this.updatedOn = updatedOn;
-    }
-
-    public Manufacturer getManufacturer() {
-        return manufacturer;
-    }
-
-    public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
-    }
+    }   
 
     public HardwareItem getHardwareItem() {
         return hardwareItem;
@@ -166,15 +148,7 @@ public class HardwarePricing implements Serializable {
 
     public void setHardwareItem(HardwareItem hardwareItem) {
         this.hardwareItem = hardwareItem;
-    }
-
-    public Gamer getGamer() {
-        return gamer;
-    }
-
-    public void setGamer(Gamer gamer) {
-        this.gamer = gamer;
-    }
+    }   
 
     @Override
     public boolean equals(Object o) {

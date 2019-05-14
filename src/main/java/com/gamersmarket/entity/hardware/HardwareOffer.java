@@ -2,8 +2,6 @@ package com.gamersmarket.entity.hardware;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.gamersmarket.common.deserializers.OfferDeserializer;
 import com.gamersmarket.entity.gamers.Gamer;
 
 import javax.persistence.*;
@@ -14,7 +12,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "hardware_offer")
-@JsonDeserialize(using = OfferDeserializer.class)
 @NamedQueries({
         @NamedQuery(name = HardwareOffer.FIND_HARDWARE_OFFER, query = HardwareOffer.FIND_HARDWARE_OFFER_QUERY),
         @NamedQuery(name = HardwareOffer.FIND_HARDWARE_OFFERS, query = HardwareOffer.FIND_HARDWARE_OFFERS_QUERY)
@@ -41,7 +38,7 @@ public class HardwareOffer implements Serializable {
     private int buyerRequestsReview;
     
     @Column(name = "hardware_offer_state")
-    private String hardwareOfferState;
+    private String hardwareOfferState;        
 
     @ManyToOne
     @JoinColumn(name = "selling_gamer_id")
@@ -78,12 +75,20 @@ public class HardwareOffer implements Serializable {
     public HardwareOffer(JsonNode jsonNode) {
         this.approvedByUs = jsonNode.get("approvedByUs").asInt();
         this.buyerRequestsReview = jsonNode.get("buyerRequestsReview").asInt();
+        this.hardwareOfferState = jsonNode.get("hwOfferState").asText();
         this.updatedOn = new Date();
     }
 
     public HardwareOffer(int approvedByUs, int buyerRequestsReview) {
         this.approvedByUs = approvedByUs;
         this.buyerRequestsReview = buyerRequestsReview;
+        this.updatedOn = new Date();
+    }
+    
+    public HardwareOffer(int approvedByUs, int buyerRequestsReview, String hardwareOfferState) {
+        this.approvedByUs = approvedByUs;
+        this.buyerRequestsReview = buyerRequestsReview;
+        this.hardwareOfferState = hardwareOfferState;
         this.updatedOn = new Date();
     }
 

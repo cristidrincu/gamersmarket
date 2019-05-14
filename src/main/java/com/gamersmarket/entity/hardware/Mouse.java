@@ -8,7 +8,6 @@ import com.gamersmarket.common.deserializers.MouseDeserializer;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "hw_item_mouse")
@@ -29,11 +28,7 @@ public class Mouse extends HardwareItem implements Serializable {
     public static final String GET_MOUSE_DETAILS = "Mouse.getMouseDetails";
 
     public static final String GET_MICE_QUERY = "select m from Mouse m";
-    public static final String GET_MOUSE_DETAILS_QUERY = "select m from Mouse m where m.id = :" + MOUSE_PARAM_ID;      
-
-    @Id
-    @NotNull
-    private int id;        
+    public static final String GET_MOUSE_DETAILS_QUERY = "select m from Mouse m where m.id = :" + MOUSE_PARAM_ID;    
 
     @Column(name = "connection_type")
     private String connectionType;
@@ -69,9 +64,8 @@ public class Mouse extends HardwareItem implements Serializable {
         super();
     }
     
-    public Mouse(Mouse mouse, String name, String manufacturerCode) {        
-        super(name, manufacturerCode);
-        this.id = mouse.getId();
+    public Mouse(Mouse mouse, String manufacturer, String name, String manufacturerCode) {        
+        super(manufacturer, name, manufacturerCode);        
         this.connectionType = mouse.getConnectionType();
         this.sensorTechnology = mouse.getSensorTechnology();
         this.buttons = mouse.getButtons();
@@ -86,7 +80,7 @@ public class Mouse extends HardwareItem implements Serializable {
     }
 
     public Mouse(JsonNode mouseNode) {
-        super(mouseNode.get("manufacturerCode").asText(), mouseNode.get("name").asText());
+        super(mouseNode.get("manufacturer").asText(), mouseNode.get("manufacturerCode").asText(), mouseNode.get("name").asText());
         this.connectionType = mouseNode.get(MouseJsonKeys.CONNECTION_TYPE.getJsonKeyDescription()).asText();
         this.sensorTechnology = mouseNode.get(MouseJsonKeys.SENSOR_TECHNOLOGY.getJsonKeyDescription()).asText();
         this.buttons = mouseNode.get(MouseJsonKeys.BUTTONS.getJsonKeyDescription()).asInt();
@@ -98,15 +92,7 @@ public class Mouse extends HardwareItem implements Serializable {
         this.weight = mouseNode.get(MouseJsonKeys.WEIGHT.getJsonKeyDescription()).asText();
         this.dpi = mouseNode.get(MouseJsonKeys.DPI.getJsonKeyDescription()).asInt();
         this.isWireless = mouseNode.get(MouseJsonKeys.IS_WIRELESS.getJsonKeyDescription()).asInt();      
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    }   
 
     public String getConnectionType() {
         return connectionType;

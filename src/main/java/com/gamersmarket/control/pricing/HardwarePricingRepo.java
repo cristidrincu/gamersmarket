@@ -19,7 +19,7 @@ public class HardwarePricingRepo implements PricingRepository<HardwarePricing> {
 
     @Override
     public void addPricing(HardwarePricing pricing) {
-        em.persist(new HardwarePricing(pricing));
+        em.persist(pricing);
     }
 
     @Override

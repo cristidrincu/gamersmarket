@@ -5,9 +5,8 @@
  */
 package com.gamersmarket.common.mappers;
 
-import com.gamersmarket.common.utils.BasicResponse;
+import com.gamersmarket.common.utils.CustomBasicResponse;
 import com.gamersmarket.common.utils.exceptions.NoAccountExistsException;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -17,14 +16,13 @@ import javax.ws.rs.ext.ExceptionMapper;
  */
 public class NoAccountExistsExceptionMapper implements ExceptionMapper<NoAccountExistsException> {
 
-    @Inject
-    BasicResponse basicResponse;
+    CustomBasicResponse basicResponse;
     
     @Override
     public Response toResponse(NoAccountExistsException e) {
         return Response.status(Response.Status.BAD_REQUEST)
                 .header("X-No-Account-Exists", e.getMessage())
-                .entity(basicResponse.buildResponse(Response.Status.BAD_REQUEST.getStatusCode(), "No account found with the credentials provided."))
+                .entity(basicResponse.buildDefaultResponse(Response.Status.BAD_REQUEST.getStatusCode(), "No account found with the credentials provided."))
                 .build();
     }
     

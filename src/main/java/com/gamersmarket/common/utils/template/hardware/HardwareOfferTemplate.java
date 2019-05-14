@@ -26,8 +26,9 @@ public class HardwareOfferTemplate {
 
         int approvedByUs = hardwareOfferJson.get(HardwareOfferJsonKeys.APPROVED_BY_US.getJsonKeyDescription()).asInt();
         int buyerRequestsReview = hardwareOfferJson.get(HardwareOfferJsonKeys.BUYER_REQUESTS_REVIEW.getJsonKeyDescription()).asInt();
+        String hardwareOfferState = hardwareOfferJson.get(HardwareOfferJsonKeys.HARDWARE_OFFER_STATE.getJsonKeyDescription()).asText();
         int sellingGamerId = hardwareOfferJson.get(HardwareOfferJsonKeys.SELLING_GAMER_ID.getJsonKeyDescription()).asInt();
-        int hwItemId = hardwareOfferJson.get(HardwareOfferJsonKeys.HARDWARE_ITEM_ID.getJsonKeyDescription()).asInt();
+        int hwItemId = hardwareOfferJson.get(HardwareOfferJsonKeys.HARDWARE_ITEM_ID.getJsonKeyDescription()).asInt();        
 
         Gamer sellingGamer = gamersRepo.getGamerDetails(sellingGamerId);
         HardwareItem hardwareItem = hardwareItemRepo.getItem(hwItemId);
@@ -36,6 +37,7 @@ public class HardwareOfferTemplate {
         initialHardwareOfferDependencies.put(HardwareOfferJsonKeys.BUYER_REQUESTS_REVIEW.getJsonKeyDescription(), buyerRequestsReview);
         initialHardwareOfferDependencies.put(HardwareOfferJsonKeys.SELLING_GAMER_ID.getJsonKeyDescription(), sellingGamer);
         initialHardwareOfferDependencies.put(HardwareOfferJsonKeys.HARDWARE_ITEM_ID.getJsonKeyDescription(), hardwareItem);
+        initialHardwareOfferDependencies.put(HardwareOfferJsonKeys.HARDWARE_OFFER_STATE.getJsonKeyDescription(), hardwareOfferState);
 
         return initialHardwareOfferDependencies;
     }
@@ -46,6 +48,7 @@ public class HardwareOfferTemplate {
         int buyingGamerId = hardwareOfferJson.get(HardwareOfferJsonKeys.BUYING_GAMER_ID.getJsonKeyDescription()).asInt();
         int approverGamerId = hardwareOfferJson.get(HardwareOfferJsonKeys.APPROVER_GAMER_ID.getJsonKeyDescription()).asInt();
         int winnerBidId = hardwareOfferJson.get(HardwareOfferJsonKeys.WINNER_BID_ID.getJsonKeyDescription()).asInt();
+        String hardwareOfferState = hardwareOfferJson.get(HardwareOfferJsonKeys.HARDWARE_OFFER_STATE.getJsonKeyDescription()).asText();
 
         Gamer buyingGamer = gamersRepo.getGamerDetails(buyingGamerId);
         Gamer approverGamer = gamersRepo.getGamerDetails(approverGamerId);
@@ -54,6 +57,7 @@ public class HardwareOfferTemplate {
         hardwareOfferDependencies.put(HardwareOfferJsonKeys.BUYING_GAMER_ID.getJsonKeyDescription(), buyingGamer);
         hardwareOfferDependencies.put(HardwareOfferJsonKeys.APPROVER_GAMER_ID.getJsonKeyDescription(), approverGamer);
         hardwareOfferDependencies.put(HardwareOfferJsonKeys.WINNER_BID_ID.getJsonKeyDescription(), winnerBid);
+        hardwareOfferDependencies.put(HardwareOfferJsonKeys.HARDWARE_OFFER_STATE.getJsonKeyDescription(), hardwareOfferState);
 
         return hardwareOfferDependencies;
     }

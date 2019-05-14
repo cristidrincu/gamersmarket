@@ -6,7 +6,7 @@ import com.gamersmarket.common.enums.jsonkeys.GamerJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.common.utils.AccountManagement;
 import com.gamersmarket.common.utils.Authentication;
-import com.gamersmarket.common.utils.BasicResponse;
+import com.gamersmarket.common.utils.CustomBasicResponse;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 
@@ -37,7 +37,7 @@ public class GamersResource {
     ObjectMapperProvider provider;
     
     @Inject
-    BasicResponse basicResponse;
+    CustomBasicResponse basicResponse;
 
     @GET
     @Path("{id}")
@@ -47,32 +47,27 @@ public class GamersResource {
 
     @POST
     public Response createGamerAccount(String jsonGamerAccount) throws IOException {
-        JsonNode rootNode = readTreeJsonGamerAccount(jsonGamerAccount);        
+        JsonNode rootNode = readTreeJsonGamerAccount(jsonGamerAccount);  
+        String responseMessageSuccess = AccountManagementMessages.ACCOUNT_CREATED_SUCCESSFULLY.getMessageDescription();
         Gamer gamer = new Gamer(rootNode.get(GamerJsonKeys.ROOT_NODE.getJsonKeyDescription()));
         accountManagement.createAccount(gamer);
         
-        return Response.ok()
-                .entity(basicResponse.buildResponse(Response.Status.OK.getStatusCode(),
-                        AccountManagementMessages.ACCOUNT_CREATED_SUCCESSFULLY.getMessageDescription()))
-                .build();
+        return Response.ok().entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(), responseMessageSuccess)).build();
     }
     
     @POST
     @Path("/authenticate")
     public Response authenticateGamer(String jsonGamerAccount) throws IOException {
         JsonNode rootNode = readTreeJsonGamerAccount(jsonGamerAccount);        
+        String responeMessageSuccess = AccountManagementMessages.ACCOUNT_FETCHED_SUCCESSFULLY.getMessageDescription();
+        String responseMessageError = AccountManagementMessages.WRONG_CREDENTIALS.getMessageDescription();
         String emailAddress = rootNode.get(GamerJsonKeys.EMAIL_ADDRESS.getJsonKeyDescription()).asText();
         String password = rootNode.get(GamerJsonKeys.PASSWORD.getJsonKeyDescription()).asText();        
         Gamer gamer = gamersRepo.getGamerDetails(emailAddress);        
         
         return auth.authenticateUser(gamer, password) ?
-                Response.ok()
-                        .entity(gamer)
-                        .build() : 
-                Response.ok()
-                        .entity(basicResponse.buildResponse(Response.Status.BAD_REQUEST.getStatusCode(), 
-                                AccountManagementMessages.WRONG_CREDENTIALS.getMessageDescription()))
-                        .build();        
+                Response.ok().entity(basicResponse.buildResponseGamer(Response.Status.OK.getStatusCode(), responeMessageSuccess, gamer)).build() : 
+                Response.ok().entity(basicResponse.buildDefaultResponse(Response.Status.BAD_REQUEST.getStatusCode(), responseMessageError)).build();        
     }
     
     @DELETE
@@ -81,7 +76,7 @@ public class GamersResource {
         Gamer gamer = gamersRepo.getGamerDetails(parseInt(gamerId));
         gamersRepo.deleteGamer(gamer.getId());
         return Response.ok()
-                .entity(basicResponse.buildResponse(Response.Status.OK.getStatusCode(),
+                .entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(),
                         AccountManagementMessages.ACCOUNT_DELETED_SUCCESSFULLY.getMessageDescription()))
                 .build();
     }

@@ -6,9 +6,7 @@ import com.gamersmarket.common.enums.jsonkeys.KeyboardJsonKeys;
 import com.gamersmarket.common.deserializers.KeyboardDeserializer;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Objects;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -31,11 +29,7 @@ public class Keyboard extends HardwareItem implements Serializable {
     public static final String FIND_KEYBOARD_BY_ID = "find_keyboard_by_id";
 
     public static final String FIND_ALL_KEYBOARDS_QUERY = "select keyboard from Keyboard keyboard";
-    public static final String FIND_KEYBOARD_BY_ID_QUERY = "select keyboard from Keyboard keyboard where keyboard.id = :" + KEYBOARD_PARAM_ID;
-
-    @Id
-    @NotNull    
-    private int id;
+    public static final String FIND_KEYBOARD_BY_ID_QUERY = "select keyboard from Keyboard keyboard where keyboard.id = :" + KEYBOARD_PARAM_ID;    
 
     @Column(name = "keyboard_type")
     private String keyboardType;
@@ -75,9 +69,9 @@ public class Keyboard extends HardwareItem implements Serializable {
 
     public Keyboard() {}
 
-    public Keyboard(Keyboard keyboard, String name, String manufacturerCode) {
-        super(name, manufacturerCode);
-        this.id = keyboard.getId();
+    public Keyboard(Keyboard keyboard, String manufacturer, String name, String manufacturerCode) {
+        super(manufacturer, name, manufacturerCode);        
+        
         this.keyboardType = keyboard.getKeyboardType();
         this.keyboardColour = keyboard.getKeyboardColour();
         this.hasNumericalKeys = keyboard.getHasNumericalKeys();
@@ -95,7 +89,8 @@ public class Keyboard extends HardwareItem implements Serializable {
     }
 
     public Keyboard(JsonNode keyboardNode) {
-        super(keyboardNode.get("manufacturerCode").asText(), keyboardNode.get("name").asText());
+        super(keyboardNode.get("manufacturer").asText(), keyboardNode.get("manufacturerCode").asText(), keyboardNode.get("name").asText());
+        
         this.keyboardType = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_TYPE.getJsonKeyDescription()).asText();
         this.keyboardColour = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_COLOUR.getJsonKeyDescription()).asText();
         this.hasNumericalKeys = keyboardNode.get(KeyboardJsonKeys.HAS_NUMERICAL_KEYS.getJsonKeyDescription()).asInt();
@@ -108,17 +103,7 @@ public class Keyboard extends HardwareItem implements Serializable {
         this.keyboardKeysLayout = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_KEYS_LAYOUT.getJsonKeyDescription()).asText();
         this.hasIllumination = keyboardNode.get(KeyboardJsonKeys.HAS_ILLUMINATION.getJsonKeyDescription()).asInt();
         this.ledColour = keyboardNode.get(KeyboardJsonKeys.LED_COLOUR.getJsonKeyDescription()).asText();
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
+    }   
 
     public String getKeyboardType() {
         return keyboardType;
@@ -214,26 +199,11 @@ public class Keyboard extends HardwareItem implements Serializable {
 
     public void setLedColour(String ledColour) {
         this.ledColour = ledColour;
-    }      
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Keyboard keyboard = (Keyboard) o;
-        return id == keyboard.id &&
-                createdOn.equals(keyboard.createdOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createdOn);
-    }
+    }          
 
     @Override
     public String toString() {
-        return "Keyboard{" +
-                "id=" + id +
+        return "Keyboard{" +                
                 ", keyboardType='" + keyboardType + '\'' +
                 ", keyboardColour='" + keyboardColour + '\'' +
                 ", hasNumericalKeys=" + hasNumericalKeys +

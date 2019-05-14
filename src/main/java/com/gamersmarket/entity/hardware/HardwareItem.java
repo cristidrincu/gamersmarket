@@ -2,6 +2,7 @@ package com.gamersmarket.entity.hardware;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.jsonkeys.HardwareItemJsonKeys;
+import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.*;
@@ -37,6 +38,9 @@ public class HardwareItem implements Serializable {
     @SequenceGenerator(name = "sq_hardware_item_mouse", sequenceName = "sq_hardware_item")
     private int id;
 
+    @Column
+    private String manufacturer;
+    
     @Column(name = "manufacturer_code")
     @Size(min = 10, max = 255, message = "Manufacturer code must be between 10 and 255 characters.")
     private String manufacturerCode;
@@ -58,9 +62,14 @@ public class HardwareItem implements Serializable {
     @JoinColumn(name = "hardware_type_id")
     private HardwareType hardwareType;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Gamer gamer;
+    
     public HardwareItem() {}
     
-    public HardwareItem(String manufacturerCode, String name) {                
+    public HardwareItem(String manufacturer, String manufacturerCode, String name) {                
+        this.manufacturer = manufacturer;
         this.manufacturerCode = manufacturerCode;
         this.name = name;
         this.createdOn = new Date();        
@@ -68,6 +77,8 @@ public class HardwareItem implements Serializable {
 
     public HardwareItem(HardwareItem hardwareItem) {
         this.id = hardwareItem.getId();
+        this.gamer = hardwareItem.getGamer();
+        this.manufacturer = hardwareItem.getManufacturer();
         this.manufacturerCode = hardwareItem.getManufacturerCode();
         this.name = hardwareItem.getName();
         this.createdOn = hardwareItem.getCreatedOn();
@@ -76,10 +87,11 @@ public class HardwareItem implements Serializable {
     }
 
     public HardwareItem(JsonNode hwItemNode) {
+        this.manufacturer = hwItemNode.get(HardwareItemJsonKeys.MANUFACTURER.getJsonKeyDescription()).asText();
         this.manufacturerCode = hwItemNode.get(HardwareItemJsonKeys.MANUFACTURER_CODE.getJsonKeyDescription()).asText();
         this.name = hwItemNode.get(HardwareItemJsonKeys.HW_ITEM_NAME.getJsonKeyDescription()).asText();
         this.updatedOn = new Date();
-    }
+    }        
 
     public int getId() {
         return id;
@@ -88,6 +100,14 @@ public class HardwareItem implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }        
 
     public String getManufacturerCode() {
         return manufacturerCode;
@@ -113,6 +133,14 @@ public class HardwareItem implements Serializable {
         this.hardwareType = hardwareType;
     }
 
+    public Gamer getGamer() {
+        return gamer;
+    }
+
+    public void setGamer(Gamer gamer) {
+        this.gamer = gamer;
+    }   
+    
     public Date getCreatedOn() {
         return createdOn;
     }

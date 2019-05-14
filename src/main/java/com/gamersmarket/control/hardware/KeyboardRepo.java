@@ -1,6 +1,8 @@
 package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.control.gamers.GamersRepo;
+import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.hardware.Keyboard;
 import com.gamersmarket.entity.types.HardwareType;
 
@@ -16,6 +18,9 @@ public class KeyboardRepo implements HardwareRepository<Keyboard> {
     
     @Inject
     private HardwareTypeRepo hardwareTypeRepo;
+    
+    @Inject
+    private GamersRepo gamersRepo;
     
     @Override
     public List<Keyboard> getItems() {
@@ -40,9 +45,11 @@ public class KeyboardRepo implements HardwareRepository<Keyboard> {
        em.remove(keyboard);
     }
     
-    public void persistItemWithHardwareType(Keyboard keyboard, int hardwareTypeId) {
+    public void persistItemWithHardwareType(Keyboard keyboard, int hardwareTypeId, int gamerId) {
         HardwareType hardwareType = hardwareTypeRepo.getItem(hardwareTypeId);
+        Gamer gamer = gamersRepo.getGamerDetails(gamerId);
         keyboard.setHardwareType(hardwareType);
+        keyboard.setGamer(gamer);
         addItem(keyboard);
     }
 }

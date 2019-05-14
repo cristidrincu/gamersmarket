@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.jsonkeys.MouseJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
-import com.gamersmarket.common.utils.BasicResponse;
+import com.gamersmarket.common.utils.CustomBasicResponse;
 import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.control.hardware.MouseRepo;
@@ -36,7 +36,7 @@ public class MouseResource {
     ObjectMapperProvider provider;
     
     @Inject
-    BasicResponse basicResponse;
+    CustomBasicResponse basicResponse;
 
     @GET
     public Response getMice() {
@@ -62,8 +62,9 @@ public class MouseResource {
         
         Mouse mouse = new Mouse(rootNode.get(MouseJsonKeys.ROOT_NODE.getJsonKeyDescription()));        
         int hwTypeId = rootNode.get("hwType").get("id").asInt();
+        int gamerId = rootNode.get("gamer").get("id").asInt();
         
-        mouseRepo.persistItemWithHardwareType(mouse, hwTypeId);
+        mouseRepo.persistItemWithHardwareType(mouse, hwTypeId, gamerId);
         return Response.ok().entity("Mouse saved successfully").build();
     }
     

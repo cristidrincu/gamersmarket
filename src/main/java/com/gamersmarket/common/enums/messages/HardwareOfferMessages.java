@@ -10,7 +10,7 @@ package com.gamersmarket.common.enums.messages;
  * @author cristiandrincu
  */
 public enum HardwareOfferMessages {
-   
+    FETCH_ALL_HARDWARE_OFFERS("Hardware offers fetched successfully."),
     INITIAL_HARDWARE_OFFER_SUCCESS_MESSAGE("Initial hardware offer created successfully"),
     FINAL_HARDWARE_OFFER_SUCCESS_MESSAGE("Final hardware offer created successfully");
     

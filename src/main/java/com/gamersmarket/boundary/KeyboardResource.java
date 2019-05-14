@@ -8,7 +8,7 @@ package com.gamersmarket.boundary;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.jsonkeys.KeyboardJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
-import com.gamersmarket.common.utils.BasicResponse;
+import com.gamersmarket.common.utils.CustomBasicResponse;
 import com.gamersmarket.control.hardware.KeyboardRepo;
 import com.gamersmarket.entity.hardware.Keyboard;
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class KeyboardResource {
     ObjectMapperProvider provider;
     
     @Inject
-    BasicResponse basicResponse;
+    CustomBasicResponse basicResponse;
     
     @GET
     public Response getKeyboards() {
@@ -51,17 +51,19 @@ public class KeyboardResource {
     @Path("{id}/basic-details")
     public Response getKeyboardBasicDetails(@PathParam("id") int id) {
         Keyboard keyboard = keyboardRepo.getItem(id);
-        return Response.ok(basicResponse.buildResponse(Response.Status.OK.getStatusCode(), "Keyboard basic details fetched successfully!", keyboard)).build();
+        return Response.ok(basicResponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(), "Keyboard basic details fetched successfully!", keyboard)).build();
     }
     
     @POST
     public Response addKeyboard(String jsonObject) throws IOException {
         JsonNode rootNode = provider.getContext(KeyboardResource.class).readTree(jsonObject);
         Keyboard keyboard = new Keyboard(rootNode.get(KeyboardJsonKeys.ROOT_NODE.getJsonKeyDescription()));
+        
         int hwTypeId = rootNode.get("hwType").get("id").asInt();
+        int gamerId = rootNode.get("gamer").get("id").asInt();
         
-        keyboardRepo.persistItemWithHardwareType(keyboard, hwTypeId);        
+        keyboardRepo.persistItemWithHardwareType(keyboard, hwTypeId, gamerId);        
         
-        return Response.ok().entity(basicResponse.buildResponse(200, "Keyboard saved successfully!", keyboard)).build();
+        return Response.ok().entity(basicResponse.buildResponseHardwareItem(200, "Keyboard saved successfully!", keyboard)).build();
     }
 }

@@ -11,7 +11,8 @@ package com.gamersmarket.common.enums.jsonkeys;
  */
 public enum HardwareItemJsonKeys {
     MANUFACTURER_CODE("manufacturerCode"),
-    HW_ITEM_NAME("name");
+    HW_ITEM_NAME("name"), 
+    MANUFACTURER("manufacturer");
     
     private final String jsonKeyDescription;
     
