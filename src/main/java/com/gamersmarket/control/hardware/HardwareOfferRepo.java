@@ -3,7 +3,9 @@ package com.gamersmarket.control.hardware;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.hwofferstates.HardwareOfferStates;
 import com.gamersmarket.common.enums.jsonkeys.HardwareOfferJsonKeys;
+import com.gamersmarket.common.enums.messages.NoResultsFoundMessages;
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.common.utils.exceptions.NoEntityFoundException;
 import com.gamersmarket.common.utils.template.hardware.HardwareOfferTemplate;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.control.pricing.HardwarePricingRepo;
@@ -18,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.NoResultException;
 
 public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
 
@@ -45,8 +48,11 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
 
     @Override
     public HardwareOffer getItem(int hardwareId) {
-        return em.createNamedQuery(HardwareOffer.FIND_HARDWARE_OFFER, HardwareOffer.class)
-                .setParameter(HardwareOffer.HARDWARE_OFFER_ID, hardwareId).getSingleResult();
+        try {
+            return em.createNamedQuery(HardwareOffer.FIND_HARDWARE_OFFER, HardwareOffer.class).setParameter(HardwareOffer.HARDWARE_OFFER_ID, hardwareId).getSingleResult();
+        } catch (NoResultException e) {
+            throw new NoEntityFoundException(NoResultsFoundMessages.HARDWARE_OFFER_NOT_FOUND_BY_ID.getErrorMessage());
+        }        
     }
 
     @Override
