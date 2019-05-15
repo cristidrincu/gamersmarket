@@ -31,7 +31,7 @@ public class Gamer implements Serializable {
 
     @Id
     @NotNull
-    @GeneratedValue(generator = "sq_hardware_item")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_gamer_generator")
     @SequenceGenerator(name = "sq_gamer_generator", sequenceName = "sq_hardware_item")
     private int id;
 
