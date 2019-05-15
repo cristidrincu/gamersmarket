@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.common.deserializers.HardwareBidDeserializer;
+import com.gamersmarket.common.enums.jsonkeys.HardwareBidJsonKeys;
 import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.hardware.HardwareOffer;
 
@@ -31,6 +32,8 @@ public class HardwareBid implements Serializable {
 
     @Id
     @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hardware_bid_generator")   
+    @SequenceGenerator(name = "hardware_bid_generator", sequenceName = "sq_hardware_bid", initialValue = 80, allocationSize = 50)
     private int id;
 
     private double amount;
@@ -66,8 +69,8 @@ public class HardwareBid implements Serializable {
     }
 
     public HardwareBid(JsonNode hardwareBidNode) {
-        this.amount = hardwareBidNode.get("amount").asDouble();
-        this.bidState = hardwareBidNode.get("bidState").asText();
+        this.amount = hardwareBidNode.get(HardwareBidJsonKeys.AMOUNT.getJsonKeyDescription()).asDouble();
+        this.bidState = hardwareBidNode.get(HardwareBidJsonKeys.BID_STATE.getJsonKeyDescription()).asText();
     }
 
     public int getId() {
