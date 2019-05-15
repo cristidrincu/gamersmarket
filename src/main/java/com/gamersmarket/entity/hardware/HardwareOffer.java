@@ -14,15 +14,19 @@ import java.util.Objects;
 @Table(name = "hardware_offer")
 @NamedQueries({
         @NamedQuery(name = HardwareOffer.FIND_HARDWARE_OFFER, query = HardwareOffer.FIND_HARDWARE_OFFER_QUERY),
-        @NamedQuery(name = HardwareOffer.FIND_HARDWARE_OFFERS, query = HardwareOffer.FIND_HARDWARE_OFFERS_QUERY)
+        @NamedQuery(name = HardwareOffer.FIND_HARDWARE_OFFERS, query = HardwareOffer.FIND_HARDWARE_OFFERS_QUERY),
+        @NamedQuery(name = HardwareOffer.FIND_HARDWARE_OFFERS_BASED_ON_STATE, query = HardwareOffer.FIND_HARDWARE_OFFERS_BASED_ON_STATE_QUERY)
 })
 public class HardwareOffer implements Serializable {
 
     public static final String HARDWARE_OFFER_ID = "id";
+    public static final String HARDWARE_OFFER_STATE_PARAM = "hardwareOfferState";
     public static final String FIND_HARDWARE_OFFER = "findHardwareOffer";
     public static final String FIND_HARDWARE_OFFER_QUERY = "select hwOffer from HardwareOffer hwOffer where hwOffer.id = :" + HARDWARE_OFFER_ID;
     public static final String FIND_HARDWARE_OFFERS = "findHardwareOffers";
     public static final String FIND_HARDWARE_OFFERS_QUERY = "select hwOffer from HardwareOffer hwOffer";
+    public static final String FIND_HARDWARE_OFFERS_BASED_ON_STATE = "findActiveHardwareOffers";
+    public static final String FIND_HARDWARE_OFFERS_BASED_ON_STATE_QUERY = "select hwOffer from HardwareOffer hwOffer where hwOffer.hardwareOfferState = :" + HARDWARE_OFFER_STATE_PARAM;
     private static final long serialVersionUID = 6420963588097220101L;
 
     @Id
