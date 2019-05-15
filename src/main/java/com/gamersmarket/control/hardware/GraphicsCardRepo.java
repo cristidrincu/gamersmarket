@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GraphicsCardRepo implements HardwareRepository<GraphicsCard> {  
 
-    @PersistenceContext
+    @PersistenceContext(name = "gamersMarket")
     private EntityManager em;   
 
     @Override
@@ -26,6 +26,11 @@ public class GraphicsCardRepo implements HardwareRepository<GraphicsCard> {
     @Override
     public void addItem(GraphicsCard hardwareItem) {
         em.persist(hardwareItem);
+    }
+    
+    @Override
+    public void updateItem(GraphicsCard graphicsCard) {
+        em.merge(graphicsCard);
     }
 
     @Override

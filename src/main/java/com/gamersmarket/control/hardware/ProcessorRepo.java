@@ -6,9 +6,14 @@ import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.Processor;
 
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 public class ProcessorRepo implements HardwareRepository<Processor>, HardwareItemRepository<Processor> {
 
+    @PersistenceContext(name = "gamersMarket")
+    private EntityManager em;
+    
     @Override
     public List<Processor> getItems() {
         return null;
@@ -21,7 +26,12 @@ public class ProcessorRepo implements HardwareRepository<Processor>, HardwareIte
 
     @Override
     public void addItem(Processor hardwareItem) {
-
+        em.persist(hardwareItem);
+    }
+    
+    @Override
+    public void updateItem(Processor hardwareItem) {
+        em.merge(hardwareItem);
     }
 
     @Override

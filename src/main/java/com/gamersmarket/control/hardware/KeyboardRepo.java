@@ -38,6 +38,11 @@ public class KeyboardRepo implements HardwareRepository<Keyboard> {
     public void addItem(Keyboard hardwareItem) {
        em.persist(hardwareItem); 
     }
+    
+    @Override
+    public void updateItem(Keyboard hardwareItem) {
+        em.merge(hardwareItem);
+    }
 
     @Override
     public void deleteItem(int hardwareId) {

@@ -36,6 +36,11 @@ public class MouseRepo implements HardwareRepository<Mouse> {
     public void addItem(Mouse hardwareItem) {
         em.persist(hardwareItem);       
     }
+    
+    @Override
+    public void updateItem(Mouse hardwareItem) {
+        em.merge(hardwareItem);
+    }
 
     @Override    
     public void deleteItem(int hardwareId) {

@@ -24,7 +24,7 @@ import javax.persistence.NoResultException;
 
 public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
 
-    @PersistenceContext
+    @PersistenceContext(name = "gamersMarket")
     private EntityManager em;
 
     @Inject
@@ -56,8 +56,13 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
     }
 
     @Override
-    public void addItem(HardwareOffer hardwareItem) {
-        em.persist(hardwareItem);
+    public void addItem(HardwareOffer hardwareOffer) {
+        em.persist(hardwareOffer);
+    }
+    
+    @Override
+    public void updateItem(HardwareOffer hardwareOffer) {
+        em.merge(hardwareOffer);
     }
 
     @Override
@@ -74,10 +79,11 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
         String hardwareOfferState = (String) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.HARDWARE_OFFER_STATE.getJsonKeyDescription());
 
         Gamer sellingGamer = (Gamer) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.SELLING_GAMER_ID.getJsonKeyDescription());
-        HardwareItem hwItem = (HardwareItem) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.HARDWARE_ITEM_ID.getJsonKeyDescription());
-        HardwarePricing hardwarePricing = new HardwarePricing(hwPricingNode);
+        HardwareItem hwItem = (HardwareItem) initialHardwareOfferDependencies.get(HardwareOfferJsonKeys.HARDWARE_ITEM_ID.getJsonKeyDescription());        
 
         HardwareOffer hardwareOffer = new HardwareOffer(approvedByUs, buyerRequestsReview);
+        HardwarePricing hardwarePricing = new HardwarePricing(hwPricingNode);
+        
         hardwareOffer.setSellingGamer(sellingGamer);
         hardwareOffer.setHardwareItem(hwItem);
         hardwareOffer.setHardwareOfferState(hardwareOfferState);
@@ -85,7 +91,7 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
         hardwarePricing.setHardwareItem(hwItem);
 
         hardwarePricingRepo.addPricing(hardwarePricing);
-        em.persist(hardwareOffer);
+        addItem(hardwareOffer);
     }
 
     public void buildFinalHardwareOffer(JsonNode completeHardwareOfferJson) {
@@ -104,10 +110,16 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
         hardwareOffer.setHardwareOfferState(HardwareOfferStates.ACTIVE.getHardwareOfferState());
         hardwareOffer.setUpdatedOn(new Date());
 
-        em.merge(hardwareOffer);
+        updateItem(hardwareOffer);
     }
     
-    public void cancelHardwareOffer(int hardwareOfferId) {
+    public void hardwareOfferEnterPendingState(int hardwareOfferId) {
+        HardwareOffer hwOffer = getItem(hardwareOfferId);
+        hwOffer.setHardwareOfferState(HardwareOfferStates.PENDING.getHardwareOfferState());
+        em.merge(hwOffer);
+    }
+    
+    public void hardwareOfferEnterCancelledState(int hardwareOfferId) {
         HardwareOffer hwOffer = getItem(hardwareOfferId);
         hwOffer.setHardwareOfferState(HardwareOfferStates.CANCELLED.getHardwareOfferState());
         em.merge(hwOffer);

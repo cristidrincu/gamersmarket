@@ -28,6 +28,11 @@ public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
     public void addItem(HardwareType hardwareItem) {
         em.persist(hardwareItem);
     }
+    
+    @Override
+    public void updateItem(HardwareType hardwareType) {
+        em.merge(hardwareType);
+    }
 
     @Override
     public void deleteItem(int hardwareId) {
