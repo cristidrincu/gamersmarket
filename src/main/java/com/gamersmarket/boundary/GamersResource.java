@@ -58,12 +58,13 @@ public class GamersResource {
     @POST
     @Path("/authenticate")
     public Response authenticateGamer(String jsonGamerAccount) throws IOException {
-        JsonNode rootNode = readTreeJsonGamerAccount(jsonGamerAccount);        
-        String responeMessageSuccess = AccountManagementMessages.ACCOUNT_FETCHED_SUCCESSFULLY.getMessageDescription();
-        String responseMessageError = AccountManagementMessages.WRONG_CREDENTIALS.getMessageDescription();
+        JsonNode rootNode = readTreeJsonGamerAccount(jsonGamerAccount);                
         String emailAddress = rootNode.get(GamerJsonKeys.EMAIL_ADDRESS.getJsonKeyDescription()).asText();
         String password = rootNode.get(GamerJsonKeys.PASSWORD.getJsonKeyDescription()).asText();        
         Gamer gamer = gamersRepo.getGamerDetails(emailAddress);        
+        
+        String responeMessageSuccess = AccountManagementMessages.ACCOUNT_FETCHED_SUCCESSFULLY.getMessageDescription();
+        String responseMessageError = AccountManagementMessages.WRONG_CREDENTIALS.getMessageDescription();
         
         return auth.authenticateUser(gamer, password) ?
                 Response.ok().entity(basicResponse.buildResponseGamer(Response.Status.OK.getStatusCode(), responeMessageSuccess, gamer)).build() : 
