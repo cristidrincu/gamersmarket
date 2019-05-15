@@ -13,6 +13,8 @@ import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.HardwareOffer;
 import com.gamersmarket.entity.pricing.HardwarePricing;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -49,7 +51,8 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
     @Override
     public HardwareOffer getItem(int hardwareId) {
         try {
-            return em.createNamedQuery(HardwareOffer.FIND_HARDWARE_OFFER, HardwareOffer.class).setParameter(HardwareOffer.HARDWARE_OFFER_ID, hardwareId).getSingleResult();
+            return em.createNamedQuery(HardwareOffer.FIND_HARDWARE_OFFER, HardwareOffer.class)
+                    .setParameter(HardwareOffer.HARDWARE_OFFER_ID, hardwareId).getSingleResult();
         } catch (NoResultException e) {
             throw new NoEntityFoundException(NoResultsFoundMessages.HARDWARE_OFFER_NOT_FOUND_BY_ID.getErrorMessage());
         }        
@@ -111,6 +114,18 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
         hardwareOffer.setUpdatedOn(new Date());
 
         updateItem(hardwareOffer);
+    }
+    
+    public List<HardwareOffer> getHardwareOffersBasedOnState(String hwOfferState) {
+        return em.createNamedQuery(HardwareOffer.FIND_HARDWARE_OFFERS_BASED_ON_STATE, HardwareOffer.class)
+                 .setParameter(HardwareOffer.HARDWARE_OFFER_STATE_PARAM, hwOfferState)
+                 .getResultList();
+    }
+    
+    public void hardwareOfferEnterActiveState(int hardwareOfferId) {
+        HardwareOffer hwOffer = getItem(hardwareOfferId);
+        hwOffer.setHardwareOfferState(HardwareOfferStates.ACTIVE.getHardwareOfferState());
+        em.merge(hwOffer);
     }
     
     public void hardwareOfferEnterPendingState(int hardwareOfferId) {
