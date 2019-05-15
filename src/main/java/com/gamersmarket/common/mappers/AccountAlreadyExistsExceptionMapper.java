@@ -2,13 +2,15 @@ package com.gamersmarket.common.mappers;
 
 import com.gamersmarket.common.utils.CustomBasicResponse;
 import com.gamersmarket.common.utils.exceptions.AccountAlreadyExistsException;
+import javax.inject.Inject;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 public class AccountAlreadyExistsExceptionMapper implements ExceptionMapper<AccountAlreadyExistsException> {
 
-    CustomBasicResponse basicResponse;
+    @Inject
+    private CustomBasicResponse basicResponse;
 
     @Override
     public Response toResponse(AccountAlreadyExistsException e) {

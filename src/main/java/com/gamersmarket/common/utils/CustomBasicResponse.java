@@ -67,6 +67,10 @@ public class CustomBasicResponse {
         this.hardwareOffers = hardwareOffers;
     }                    
     
+    public CustomBasicResponse buildDefaultResponse(int status) {
+        return this.buildStatus(status);
+    }
+    
     public CustomBasicResponse buildDefaultResponse(String message) {
         return this.buildMessage(message);
     }

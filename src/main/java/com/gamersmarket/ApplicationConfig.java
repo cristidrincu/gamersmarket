@@ -5,6 +5,7 @@ import com.gamersmarket.boundary.*;
 import com.gamersmarket.common.mappers.AccountAlreadyExistsExceptionMapper;
 import com.gamersmarket.common.mappers.InvalidJsonExceptionMapper;
 import com.gamersmarket.common.mappers.NoAccountExistsExceptionMapper;
+import com.gamersmarket.common.mappers.NoEntityFoundExceptionMapper;
 import com.gamersmarket.common.providers.CORSFilterProvider;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -20,6 +21,7 @@ public class ApplicationConfig extends ResourceConfig {
         registerClasses(
                 HardwareTypeResource.class,
                 HardwareItemResource.class,
+                HardwareBidResource.class,
                 MouseResource.class,
                 KeyboardResource.class,
                 GraphicCardResource.class,
@@ -28,6 +30,7 @@ public class ApplicationConfig extends ResourceConfig {
                 InvalidJsonExceptionMapper.class,
                 NoAccountExistsExceptionMapper.class,
                 AccountAlreadyExistsExceptionMapper.class,
+                NoEntityFoundExceptionMapper.class,
                 ValidationExceptionMapper.class
         );
 

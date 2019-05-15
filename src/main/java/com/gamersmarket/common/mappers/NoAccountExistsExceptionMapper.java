@@ -7,6 +7,7 @@ package com.gamersmarket.common.mappers;
 
 import com.gamersmarket.common.utils.CustomBasicResponse;
 import com.gamersmarket.common.utils.exceptions.NoAccountExistsException;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -16,7 +17,8 @@ import javax.ws.rs.ext.ExceptionMapper;
  */
 public class NoAccountExistsExceptionMapper implements ExceptionMapper<NoAccountExistsException> {
 
-    CustomBasicResponse basicResponse;
+    @Inject
+    private CustomBasicResponse basicResponse;
     
     @Override
     public Response toResponse(NoAccountExistsException e) {
