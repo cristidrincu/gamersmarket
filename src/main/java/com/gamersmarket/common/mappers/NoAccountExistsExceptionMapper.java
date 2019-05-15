@@ -24,7 +24,7 @@ public class NoAccountExistsExceptionMapper implements ExceptionMapper<NoAccount
     public Response toResponse(NoAccountExistsException e) {
         return Response.status(Response.Status.BAD_REQUEST)
                 .header("X-No-Account-Exists", e.getMessage())
-                .entity(basicResponse.buildDefaultResponse(Response.Status.BAD_REQUEST.getStatusCode(), "No account found with the credentials provided."))
+                .entity(basicResponse.buildDefaultResponse(Response.Status.BAD_REQUEST.getStatusCode(), e.getMessage()))
                 .build();
     }
     

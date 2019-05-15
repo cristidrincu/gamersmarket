@@ -16,7 +16,7 @@ public class AccountAlreadyExistsExceptionMapper implements ExceptionMapper<Acco
     public Response toResponse(AccountAlreadyExistsException e) {
         return Response.status(Response.Status.BAD_REQUEST)
                 .header("X-Account-Already-Exists", e.getMessage())
-                .entity(basicResponse.buildDefaultResponse(Response.Status.BAD_REQUEST.getStatusCode(), "An account with this email address already exists."))
+                .entity(basicResponse.buildDefaultResponse(Response.Status.BAD_REQUEST.getStatusCode(), e.getMessage()))
                 .build();
     }
 }
