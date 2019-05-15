@@ -36,6 +36,12 @@ public class HardwareOfferResource {
         List<HardwareOffer> hwOffers = hardwareOfferRepo.getItems();                
         return Response.ok().entity(basicResponse.buildResponseHardwareOffers(Response.Status.OK.getStatusCode(), responseMessageDescription, hwOffers)).build();
     }
+    
+    @GET
+    @Path("/state")
+    public Response getHardwareOffersBasedOnState(@QueryParam("state") String hwOfferState) {
+        return Response.ok().entity(hardwareOfferRepo.getHardwareOffersBasedOnState(hwOfferState)).build();
+    }
 
     @POST
     @Path("/initial-offer")
