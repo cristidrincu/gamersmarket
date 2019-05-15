@@ -34,8 +34,8 @@ public class HardwareItem implements Serializable {
 
     @Id
     @NotNull
-    @GeneratedValue(generator = "sq_hardware_item")
-    @SequenceGenerator(name = "sq_hardware_item_mouse", sequenceName = "sq_hardware_item")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_hardware_item_generator")
+    @SequenceGenerator(name = "sq_hardware_item_generator", sequenceName = "sq_hardware_item")
     private int id;
 
     @Column
