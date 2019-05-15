@@ -75,11 +75,9 @@ public class GamersResource {
     @Path("/delete-account/{gamerId}")
     public Response deleteGamerAccount(@PathParam("gamerId") String gamerId) throws IOException {
         Gamer gamer = gamersRepo.getGamerDetails(parseInt(gamerId));
+        String responseMessage = AccountManagementMessages.ACCOUNT_DELETED_SUCCESSFULLY.getMessageDescription();
         gamersRepo.deleteGamer(gamer.getId());
-        return Response.ok()
-                .entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(),
-                        AccountManagementMessages.ACCOUNT_DELETED_SUCCESSFULLY.getMessageDescription()))
-                .build();
+        return Response.ok().entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(), responseMessage)).build();
     }
     
     private JsonNode readTreeJsonGamerAccount(String jsonGamerAccount) throws IOException {
