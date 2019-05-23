@@ -31,10 +31,7 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
     private HardwareOfferTemplate hardwareOfferTemplate;
     
     @Inject
-    GamersRepo gamersRepo;
-    
-    @Inject
-    HardwareItemRepo hwItemRepo;
+    GamersRepo gamersRepo;        
     
     @Inject
     HardwarePricingRepo hardwarePricingRepo;
@@ -136,5 +133,10 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
         HardwareOffer hwOffer = getItem(hardwareOfferId);
         hwOffer.setHardwareOfferState(HardwareOfferStates.CANCELLED.getHardwareOfferState());
         em.merge(hwOffer);
+    }
+
+    @Override
+    public void persistItemWithHardwareType(HardwareOffer hardwareItem, int hardwareTypeId, int gamerId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

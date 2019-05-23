@@ -7,6 +7,7 @@ import com.gamersmarket.common.deserializers.KeyboardDeserializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -89,8 +90,7 @@ public class Keyboard extends HardwareItem implements Serializable {
     }
 
     public Keyboard(JsonNode keyboardNode) {
-        super(keyboardNode.get("manufacturer").asText(), keyboardNode.get("manufacturerCode").asText(), keyboardNode.get("name").asText());
-        
+        super(keyboardNode.get("manufacturer").asText(), keyboardNode.get("name").asText());        
         this.keyboardType = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_TYPE.getJsonKeyDescription()).asText();
         this.keyboardColour = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_COLOUR.getJsonKeyDescription()).asText();
         this.hasNumericalKeys = keyboardNode.get(KeyboardJsonKeys.HAS_NUMERICAL_KEYS.getJsonKeyDescription()).asInt();
@@ -103,6 +103,7 @@ public class Keyboard extends HardwareItem implements Serializable {
         this.keyboardKeysLayout = keyboardNode.get(KeyboardJsonKeys.KEYBOARD_KEYS_LAYOUT.getJsonKeyDescription()).asText();
         this.hasIllumination = keyboardNode.get(KeyboardJsonKeys.HAS_ILLUMINATION.getJsonKeyDescription()).asInt();
         this.ledColour = keyboardNode.get(KeyboardJsonKeys.LED_COLOUR.getJsonKeyDescription()).asText();
+        this.updatedOn = new Date();
     }   
 
     public String getKeyboardType() {

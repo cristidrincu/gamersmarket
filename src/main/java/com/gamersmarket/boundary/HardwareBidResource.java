@@ -8,6 +8,7 @@ package com.gamersmarket.boundary;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.jsonkeys.HardwareBidJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
+import com.gamersmarket.common.utils.JsonUtils;
 import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
 import com.gamersmarket.control.bidding.HardwareBidRepo;
 import com.gamersmarket.entity.bid.HardwareBid;
@@ -44,6 +45,9 @@ public class HardwareBidResource {
     @Inject
     CustomBasicResponse basicResponse;
     
+    @Inject
+    JsonUtils jsonUtils;
+    
     @GET
     @Path("{userId}/{hardwareBidId}")
     public Response getHardwareBidsForGamer(@PathParam("userId") String userId, @PathParam("hardwareBidId") String hardwareBidId) {
@@ -53,8 +57,8 @@ public class HardwareBidResource {
     @POST
     public Response placeHardwareBid(String jsonHardwareBid) throws IOException {
        JsonNode rootNode = provider.getContext(HardwareBidResource.class).readTree(jsonHardwareBid);
-       int hardwareOfferId = rootNode.get(HardwareBidJsonKeys.HARDWARE_OFFER_ID.getJsonKeyDescription()).asInt();
-       int bidderId = rootNode.get(HardwareBidJsonKeys.BIDDER_ID.getJsonKeyDescription()).asInt();       
+       int hardwareOfferId = jsonUtils.readHardwareOfferIdFromNode(jsonHardwareBid);
+       int bidderId = jsonUtils.readBidderIdFromNode(jsonHardwareBid);
               
        HardwareBid hardwareBid = hardwareBidRepo.addBid(rootNode, hardwareOfferId, bidderId);
        return Response.ok()

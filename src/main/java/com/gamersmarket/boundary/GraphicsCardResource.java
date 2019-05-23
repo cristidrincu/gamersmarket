@@ -1,7 +1,8 @@
 package com.gamersmarket.boundary;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.utils.JsonUtils;
 import com.gamersmarket.entity.hardware.GraphicsCard;
-import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.control.hardware.GraphicsCardRepo;
 import com.gamersmarket.common.utils.template.hardware.GraphicsCardTemplate;
 
@@ -16,13 +17,16 @@ import java.io.IOException;
 @Path("/graphic-cards")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class GraphicCardResource {
+public class GraphicsCardResource {
 
     @Inject
     GraphicsCardRepo graphicsCardRepo;
 
     @Inject
     GraphicsCardTemplate graphicsCardTemplate;
+    
+    @Inject
+    JsonUtils jsonUtils;
 
     @GET
     @Path("{id}")
@@ -33,11 +37,13 @@ public class GraphicCardResource {
 
     @POST
     public Response addGraphicCard(String jsonObject) throws IOException {
-        GraphicsCard graphicsCard = graphicsCardTemplate.getSpecificHardwareItem(jsonObject);
-        HardwareItem hwItem = graphicsCardTemplate.getHardwareItem(jsonObject);
-        int hwTypeId = graphicsCardTemplate.getHardwareTypeId(jsonObject);
+        JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
+        
+        GraphicsCard graphicsCard = new GraphicsCard(rootNode.get("graphicsCard"));        
+        int hwTypeId = jsonUtils.readHwTypeIdFromNode(jsonObject);
+        int gamerId = jsonUtils.readGamerIdFromNode(jsonObject);
 
-        graphicsCardRepo.persistItemWithHardwareType(graphicsCard, hwItem, hwTypeId);
+        graphicsCardRepo.persistItemWithHardwareType(graphicsCard, hwTypeId, gamerId);
 
         return Response.ok().entity("Graphics card saved successfully.").build();
     }

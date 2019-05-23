@@ -57,10 +57,9 @@ public class GamersResource {
     
     @POST
     @Path("/authenticate")
-    public Response authenticateGamer(String jsonGamerAccount) throws IOException {
-        JsonNode rootNode = jsonUtils.readJsonTree(jsonGamerAccount);                
-        String emailAddress = rootNode.get(GamerJsonKeys.EMAIL_ADDRESS.getJsonKeyDescription()).asText();
-        String password = rootNode.get(GamerJsonKeys.PASSWORD.getJsonKeyDescription()).asText();        
+    public Response authenticateGamer(String jsonGamerAccount) throws IOException {                       
+        String emailAddress = jsonUtils.readEmailAddressFromNode(jsonGamerAccount);
+        String password = jsonUtils.readPasswordFromNode(jsonGamerAccount);
         Gamer gamer = gamersRepo.getGamerDetails(emailAddress);        
         
         String responeMessageSuccess = AccountManagementMessages.ACCOUNT_FETCHED_SUCCESSFULLY.getMessageDescription();

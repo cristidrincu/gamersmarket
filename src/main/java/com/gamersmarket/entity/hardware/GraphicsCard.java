@@ -1,40 +1,30 @@
 package com.gamersmarket.entity.hardware;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.common.enums.jsonkeys.GraphicsCardJsonKeys;
 import com.gamersmarket.common.deserializers.GraphicCardDeserializer;
-import com.gamersmarket.common.utils.DateValidator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "hw_item_graphics_card")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorValue("GraphicsCard")
 @JsonDeserialize(using = GraphicCardDeserializer.class)
 @NamedQueries({
         @NamedQuery(name = GraphicsCard.GET_ITEM, query = "select gc from GraphicsCard gc where gc.id = :id"),
         @NamedQuery(name = GraphicsCard.GET_ITEMS, query = "select gc from GraphicsCard gc")
 })
-public class GraphicsCard implements Serializable {
+public class GraphicsCard extends HardwareItem implements Serializable {
 
     private static final long serialVersionUID = -5008414667559835805L;
     public static final String GET_ITEM = "GraphicsCard.getItem";
-    public static final String GET_ITEMS = "GraphicsCard.getItems";
-
-    @Id
-    @NotNull
-    @GeneratedValue(generator = "sq_hardware_item")
-    @SequenceGenerator(name = "sq_hardware_item_graphics_card", sequenceName = "sq_hardware_item")
-    private int id;
+    public static final String GET_ITEMS = "GraphicsCard.getItems";   
 
     @Column(name = "gc_interface")
     @Size(min = 10, max = 40, message = "The graphics card interface name must be between 10 and 40 characters long.")
@@ -134,26 +124,18 @@ public class GraphicsCard implements Serializable {
     private int gcDisplayPorts;
 
     @Column(name = "gc_hdtv_support")
-    private boolean gcHdtvSupport;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date createdOn = new Date();
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date updatedOn;
+    private boolean gcHdtvSupport;   
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hardware_item_id")
     private HardwareItem hardwareItem;
 
-    public GraphicsCard() {}
-
-    public GraphicsCard(GraphicsCard graphicsCard) {
-        this.id = graphicsCard.getId();
+    public GraphicsCard() {
+        super();
+    }   
+    
+    public GraphicsCard(GraphicsCard graphicsCard, String manufacturer, String name, String manufacturerCode) {  
+        super(manufacturer, name, manufacturerCode);
         this.graphicsCardInterface = graphicsCard.getGraphicsCardInterface();
         this.maxResolution = graphicsCard.getMaxResolution();
         this.graphicsCardModel = graphicsCard.getGraphicsCardModel();
@@ -190,48 +172,14 @@ public class GraphicsCard implements Serializable {
     }
 
     public GraphicsCard(JsonNode graphicsCardNode) {
+        super(graphicsCardNode.get("manufacturer").asText(), graphicsCardNode.get("name").asText());
         this.graphicsCardInterface = graphicsCardNode.get(GraphicsCardJsonKeys.GRAPHICS_CARD_INTERFACE.getJsonKeyDescription()).asText();
         this.maxResolution = graphicsCardNode.get(GraphicsCardJsonKeys.MAX_RESOLUTION.getJsonKeyDescription()).asText();
-        this.graphicsCardModel = graphicsCardNode.get(GraphicsCardJsonKeys.GRAPHICS_CARD_MODEL.getJsonKeyDescription()).asText();
-        this.cooling = graphicsCardNode.get(GraphicsCardJsonKeys.COOLING.getJsonKeyDescription()).asText();
+        this.graphicsCardModel = graphicsCardNode.get(GraphicsCardJsonKeys.GRAPHICS_CARD_MODEL.getJsonKeyDescription()).asText();        
         this.recommendedForGaming = graphicsCardNode.get(GraphicsCardJsonKeys.RECOMMENDED_FOR_GAMING.getJsonKeyDescription()).asInt();
-        this.chipsetProducer = graphicsCardNode.get(GraphicsCardJsonKeys.CHIPSET_PRODUCER.getJsonKeyDescription()).asText();
-        this.gcSeries = graphicsCardNode.get(GraphicsCardJsonKeys.SERIES.getJsonKeyDescription()).asText();
-        this.nanometers = graphicsCardNode.get(GraphicsCardJsonKeys.NANOMETERS.getJsonKeyDescription()).asText();
-        this.graphicsProcessor = graphicsCardNode.get(GraphicsCardJsonKeys.PROCESSOR.getJsonKeyDescription()).asText();
-        this.gcReleaseDate = DateValidator.parseDate(graphicsCardNode.get(GraphicsCardJsonKeys.RELEASE_DATE.getJsonKeyDescription()), "yyyy-mm-dd");
-        this.pixelShaderVersion = graphicsCardNode.get(GraphicsCardJsonKeys.PIXEL_SHADER_VERSION.getJsonKeyDescription()).asText();
-        this.vertexShaderVersion = graphicsCardNode.get(GraphicsCardJsonKeys.VERTEX_SHADER_VERSION.getJsonKeyDescription()).asText();
-        this.gcPixelFillRate = graphicsCardNode.get(GraphicsCardJsonKeys.PIXEL_FILL_RATE.getJsonKeyDescription()).asText();
-        this.gcTextureFillRate = graphicsCardNode.get(GraphicsCardJsonKeys.TEXTURE_FILL_RATE.getJsonKeyDescription()).asText();
-        this.gcTextureUnits = graphicsCardNode.get(GraphicsCardJsonKeys.TEXTURE_UNITS.getJsonKeyDescription()).asInt();
-        this.gcRasterOperators = graphicsCardNode.get(GraphicsCardJsonKeys.RASTER_OPERATORS.getJsonKeyDescription()).asInt();
-        this.gcTransistorsNumber = graphicsCardNode.get(GraphicsCardJsonKeys.TRANSISTORS_NUMBER.getJsonKeyDescription()).asInt();
-        this.gcCudaCores = graphicsCardNode.get(GraphicsCardJsonKeys.CURA_CORES.getJsonKeyDescription()).asInt();
-        this.gcOCMaximumBandwith = graphicsCardNode.get(GraphicsCardJsonKeys.OC_MAXIMUM_BANDWIDTH.getJsonKeyDescription()).asText();
-        this.memoryType = graphicsCardNode.get(GraphicsCardJsonKeys.MEMORY_TYPE.getJsonKeyDescription()).asText();
-        this.memoryCapacity = graphicsCardNode.get(GraphicsCardJsonKeys.MEMORY_CAPACITY.getJsonKeyDescription()).asText();
-        this.memoryBus = graphicsCardNode.get(GraphicsCardJsonKeys.MEMORY_BUS.getJsonKeyDescription()).asText();
-        this.memoryFrequency = graphicsCardNode.get(GraphicsCardJsonKeys.MEMORY_FREQUENCY.getJsonKeyDescription()).asText();
-        this.memoryBandwidth = graphicsCardNode.get(GraphicsCardJsonKeys.MEMORY_BANDWIDTH.getJsonKeyDescription()).asText();
-        this.gcDirectXSupport = graphicsCardNode.get(GraphicsCardJsonKeys.DIRECT_X_SUPPORT.getJsonKeyDescription()).asText();
-        this.gcOpenGLSupport = graphicsCardNode.get(GraphicsCardJsonKeys.OPEN_GL_SUPPORT.getJsonKeyDescription()).asText();
-        this.gcVulkanSupport = graphicsCardNode.get(GraphicsCardJsonKeys.VULKAN_SUPPORT.getJsonKeyDescription()).asBoolean();
-        this.gcGSyncSupport = graphicsCardNode.get(GraphicsCardJsonKeys.G_SYNC_SUPPORT.getJsonKeyDescription()).asBoolean();
-        this.gcVRReadySupport = graphicsCardNode.get(GraphicsCardJsonKeys.VR_READY_SUPPORT.getJsonKeyDescription()).asBoolean();
-        this.gcHdmiPorts = graphicsCardNode.get(GraphicsCardJsonKeys.HDMI_PORTS.getJsonKeyDescription()).asInt();
-        this.gcDisplayPorts = graphicsCardNode.get(GraphicsCardJsonKeys.DISPLAY_PORTS.getJsonKeyDescription()).asInt();
-        this.gcHdtvSupport = graphicsCardNode.get(GraphicsCardJsonKeys.HDTV_SUPPORT.getJsonKeyDescription()).asBoolean();
+        this.chipsetProducer = graphicsCardNode.get(GraphicsCardJsonKeys.CHIPSET_PRODUCER.getJsonKeyDescription()).asText();        
         this.updatedOn = new Date();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    }    
 
     public String getGraphicsCardInterface() {
         return graphicsCardInterface;
@@ -487,23 +435,7 @@ public class GraphicsCard implements Serializable {
 
     public void setGcHdtvSupport(boolean gcHdtvSupport) {
         this.gcHdtvSupport = gcHdtvSupport;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
+    }    
 
     public HardwareItem getHardwareItem() {
         return hardwareItem;
@@ -511,26 +443,11 @@ public class GraphicsCard implements Serializable {
 
     public void setHardwareItem(HardwareItem hardwareItem) {
         this.hardwareItem = hardwareItem;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GraphicsCard that = (GraphicsCard) o;
-        return id == that.id &&
-                createdOn.equals(that.createdOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createdOn);
-    }
+    }    
 
     @Override
     public String toString() {
-        return "GraphicsCard{" +
-                "id=" + id +
+        return "GraphicsCard{" +                
                 ", graphicsCardInterface='" + graphicsCardInterface + '\'' +
                 ", maxResolution='" + maxResolution + '\'' +
                 ", graphicsCardModel='" + graphicsCardModel + '\'' +

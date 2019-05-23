@@ -3,15 +3,25 @@ package com.gamersmarket.control.hardware;
 import com.gamersmarket.entity.hardware.GraphicsCard;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.control.gamers.GamersRepo;
+import com.gamersmarket.entity.gamers.Gamer;
+import com.gamersmarket.entity.types.HardwareType;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import javax.inject.Inject;
 
 public class GraphicsCardRepo implements HardwareRepository<GraphicsCard> {  
 
     @PersistenceContext(name = "gamersMarket")
-    private EntityManager em;   
+    private EntityManager em;  
+    
+    @Inject
+    HardwareTypeRepo hwTypeRepo;
+    
+    @Inject
+    GamersRepo gamersRepo;
 
     @Override
     public List<GraphicsCard> getItems() {
@@ -41,5 +51,14 @@ public class GraphicsCardRepo implements HardwareRepository<GraphicsCard> {
     
     public void persistItemWithHardwareType(GraphicsCard graphicsCard, HardwareItem hardwareItemJson, int hardwareTypeId) {                        
         addItem(graphicsCard);
+    }
+
+    @Override
+    public void persistItemWithHardwareType(GraphicsCard graphicsCard, int hardwareTypeId, int gamerId) {
+        HardwareType hwType = hwTypeRepo.getItem(hardwareTypeId);
+        Gamer gamer = gamersRepo.getGamerDetails(gamerId);        
+        graphicsCard.setHardwareType(hwType);
+        graphicsCard.setGamer(gamer);        
+        addItem(graphicsCard);    
     }
 }

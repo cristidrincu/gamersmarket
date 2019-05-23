@@ -48,6 +48,7 @@ public class MouseRepo implements HardwareRepository<Mouse> {
         em.remove(mouse);        
     }
     
+    @Override
     public void persistItemWithHardwareType(Mouse mouse, int hardwareTypeId, int gamerId) {
         HardwareType hardwareType = hardwareTypeRepo.getItem(hardwareTypeId);
         Gamer gamer = gamersRepo.getGamerDetails(gamerId);       

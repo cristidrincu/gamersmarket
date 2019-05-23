@@ -1,44 +1,33 @@
 package com.gamersmarket.entity.hardware;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.gamersmarket.common.enums.jsonkeys.ProcessorJsonKeys;
 import com.gamersmarket.common.deserializers.ProcessorDeserializer;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "hw_item_processor")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@PrimaryKeyJoinColumn(name = "id")
+@DiscriminatorValue("Processor")
 @JsonDeserialize(using = ProcessorDeserializer.class)
 @NamedQueries({
         @NamedQuery(name = Processor.FIND_ALL_PROCESSORS, query = Processor.FIND_ALL_PROCESSORS_QUERY),
         @NamedQuery(name = Processor.FIND_PROCESSOR_BY_ID, query = Processor.FIND_PROCESSOR_BY_ID_QUERY)
 })
-public class Processor implements Serializable {
+public class Processor extends HardwareItem implements Serializable {
 
     private static final long serialVersionUID = -8016496843122720880L;
 
-    private static final String PARAM_ID = "id";
+    private static final String PARAM_PROCESSOR_ID = "id";
 
     public static final String FIND_ALL_PROCESSORS = "find_all_processors";
     public static final String FIND_PROCESSOR_BY_ID = "find_processor";
 
     public static final String FIND_ALL_PROCESSORS_QUERY = "select proc from Processor proc";
-    public static final String FIND_PROCESSOR_BY_ID_QUERY = "select proc from Processor proc where proc.id = :" + PARAM_ID;
-
-    @Id
-    @NotNull
-    @GeneratedValue(generator = "sq_hardware_item")
-    @SequenceGenerator(name = "sq_hardware_item_graphics_card", sequenceName = "sq_hardware_item")
-    private int id;
+    public static final String FIND_PROCESSOR_BY_ID_QUERY = "select proc from Processor proc where proc.id = :" + PARAM_PROCESSOR_ID;   
 
     @Column(name = "proc_recommended_for_gaming")
     private int recommendedForGaming;
@@ -98,26 +87,18 @@ public class Processor implements Serializable {
     private String procPciExpressRevision;
 
     @Column(name = "proc_max_pci_express_lanes")
-    private String procMaxPciExpressLanes;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date createdOn = new Date();
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_on")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-    private Date updatedOn;
+    private String procMaxPciExpressLanes;   
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hardware_item_id")
     private HardwareItem hardwareItem;
 
-    public Processor() {}
+    public Processor() {
+        super();
+    }
 
-    public Processor(Processor processor) {
-        this.id = processor.getId();
+    public Processor(Processor processor, String manufacturer, String name, String manufacturerCode) { 
+        super(manufacturer, name, manufacturerCode);
         this.recommendedForGaming = processor.getRecommendedForGaming();
         this.procSocket = processor.getProcSocket();
         this.procSeries = processor.getProcSeries();
@@ -136,11 +117,11 @@ public class Processor implements Serializable {
         this.procSupportedRamFrequency = processor.getProcSupportedRamFrequency();
         this.procSupportedRamChannel = processor.getProcSupportedRamChannel();
         this.procPciExpressRevision = processor.getProcPciExpressRevision();
-        this.procMaxPciExpressLanes = processor.getProcMaxPciExpressLanes();
-        this.updatedOn = new Date();
+        this.procMaxPciExpressLanes = processor.getProcMaxPciExpressLanes();        
     }
 
     public Processor(JsonNode processorJsonNode) {
+        super(processorJsonNode.get("manufacturer").asText(), processorJsonNode.get("name").asText());
         this.recommendedForGaming = processorJsonNode.get(ProcessorJsonKeys.RECOMMENDED_FOR_GAMING.getJsonKeyDescription()).asInt();
         this.procSocket = processorJsonNode.get(ProcessorJsonKeys.SOCKET.getJsonKeyDescription()).asText();
         this.procSeries = processorJsonNode.get(ProcessorJsonKeys.PROC_SERIES.getJsonKeyDescription()).asText();
@@ -159,17 +140,8 @@ public class Processor implements Serializable {
         this.procSupportedRamFrequency = processorJsonNode.get(ProcessorJsonKeys.PROC_SUPPORTED_RAM_FREQUENCY.getJsonKeyDescription()).asText();
         this.procSupportedRamChannel = processorJsonNode.get(ProcessorJsonKeys.PROC_SUPPORTED_RAM_CHANNEL.getJsonKeyDescription()).asText();
         this.procPciExpressRevision = processorJsonNode.get(ProcessorJsonKeys.PROC_PCI_EXPRESS_REVISION.getJsonKeyDescription()).asText();
-        this.procMaxPciExpressLanes = processorJsonNode.get(ProcessorJsonKeys.PROC_PCI_EXPRESS_LANES.getJsonKeyDescription()).asText();
-        this.updatedOn = new Date();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+        this.procMaxPciExpressLanes = processorJsonNode.get(ProcessorJsonKeys.PROC_PCI_EXPRESS_LANES.getJsonKeyDescription()).asText();        
+    }   
 
     public int getRecommendedForGaming() {
         return recommendedForGaming;
@@ -329,23 +301,7 @@ public class Processor implements Serializable {
 
     public void setProcMaxPciExpressLanes(String procMaxPciExpressLanes) {
         this.procMaxPciExpressLanes = procMaxPciExpressLanes;
-    }
-
-    public Date getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Date createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Date getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
-    }
+    }    
 
     public HardwareItem getHardwareItem() {
         return hardwareItem;
@@ -353,26 +309,11 @@ public class Processor implements Serializable {
 
     public void setHardwareItem(HardwareItem hardwareItem) {
         this.hardwareItem = hardwareItem;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Processor processor = (Processor) o;
-        return id == processor.id &&
-                createdOn.equals(processor.createdOn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, createdOn);
-    }
+    }   
 
     @Override
     public String toString() {
-        return "Processor{" +
-                "id=" + id +
+        return "Processor{" +                
                 ", recommendedForGaming=" + recommendedForGaming +
                 ", procSocket='" + procSocket + '\'' +
                 ", procSeries='" + procSeries + '\'' +

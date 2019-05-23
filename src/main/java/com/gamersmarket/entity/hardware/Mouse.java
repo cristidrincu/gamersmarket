@@ -8,6 +8,7 @@ import com.gamersmarket.common.deserializers.MouseDeserializer;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "hw_item_mouse")
@@ -77,10 +78,11 @@ public class Mouse extends HardwareItem implements Serializable {
         this.weight = mouse.getWeight();
         this.dpi = mouse.getDpi();
         this.isWireless = mouse.getIsWireless();
+        this.updatedOn = new Date();
     }
 
     public Mouse(JsonNode mouseNode) {
-        super(mouseNode.get("manufacturer").asText(), mouseNode.get("manufacturerCode").asText(), mouseNode.get("name").asText());
+        super(mouseNode.get("manufacturer").asText(), mouseNode.get("name").asText());
         this.connectionType = mouseNode.get(MouseJsonKeys.CONNECTION_TYPE.getJsonKeyDescription()).asText();
         this.sensorTechnology = mouseNode.get(MouseJsonKeys.SENSOR_TECHNOLOGY.getJsonKeyDescription()).asText();
         this.buttons = mouseNode.get(MouseJsonKeys.BUTTONS.getJsonKeyDescription()).asInt();
@@ -91,7 +93,8 @@ public class Mouse extends HardwareItem implements Serializable {
         this.cableLength = mouseNode.get(MouseJsonKeys.CABLE_LENGTH.getJsonKeyDescription()).asText();
         this.weight = mouseNode.get(MouseJsonKeys.WEIGHT.getJsonKeyDescription()).asText();
         this.dpi = mouseNode.get(MouseJsonKeys.DPI.getJsonKeyDescription()).asInt();
-        this.isWireless = mouseNode.get(MouseJsonKeys.IS_WIRELESS.getJsonKeyDescription()).asInt();      
+        this.isWireless = mouseNode.get(MouseJsonKeys.IS_WIRELESS.getJsonKeyDescription()).asInt();  
+        this.updatedOn = new Date();
     }   
 
     public String getConnectionType() {

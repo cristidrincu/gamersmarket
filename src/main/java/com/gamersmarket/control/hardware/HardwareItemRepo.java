@@ -39,4 +39,9 @@ public class HardwareItemRepo implements HardwareRepository<HardwareItem> {
         HardwareItem hwItem = getItem(hardwareId);
         em.remove(hwItem);        
     }   
+
+    @Override
+    public void persistItemWithHardwareType(HardwareItem hardwareItem, int hardwareTypeId, int gamerId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

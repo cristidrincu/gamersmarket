@@ -40,5 +40,10 @@ public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
                 .setParameter(HardwareType.PARAM_ID, hardwareId)
                 .getSingleResult();
         em.remove(hwType);
+    }        
+
+    @Override
+    public void persistItemWithHardwareType(HardwareType hardwareItem, int hardwareTypeId, int gamerId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

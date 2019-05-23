@@ -8,4 +8,5 @@ public interface HardwareRepository<T> {
     void addItem(T hardwareItem);
     void updateItem(T hardwareItem);
     void deleteItem(int hardwareId);
+    void persistItemWithHardwareType(T hardwareItem, int hardwareTypeId, int gamerId);
 }

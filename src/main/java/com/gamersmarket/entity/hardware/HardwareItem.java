@@ -68,11 +68,15 @@ public class HardwareItem implements Serializable {
     
     public HardwareItem() {}
     
+    public HardwareItem(String manufacturer, String name) {
+        this.manufacturer = manufacturer;
+        this.name = name;
+    }
+    
     public HardwareItem(String manufacturer, String manufacturerCode, String name) {                
         this.manufacturer = manufacturer;
         this.manufacturerCode = manufacturerCode;
         this.name = name;
-        this.createdOn = new Date();        
     }
 
     public HardwareItem(HardwareItem hardwareItem) {
@@ -81,9 +85,8 @@ public class HardwareItem implements Serializable {
         this.manufacturer = hardwareItem.getManufacturer();
         this.manufacturerCode = hardwareItem.getManufacturerCode();
         this.name = hardwareItem.getName();
-        this.createdOn = hardwareItem.getCreatedOn();
-        this.updatedOn = new Date();
-        this.hardwareType = hardwareItem.getHardwareType();
+        this.hardwareType = hardwareItem.getHardwareType();        
+        this.updatedOn = new Date();        
     }
 
     public HardwareItem(JsonNode hwItemNode) {
