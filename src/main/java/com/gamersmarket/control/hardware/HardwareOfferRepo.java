@@ -13,8 +13,6 @@ import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.HardwareOffer;
 import com.gamersmarket.entity.pricing.HardwarePricing;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
