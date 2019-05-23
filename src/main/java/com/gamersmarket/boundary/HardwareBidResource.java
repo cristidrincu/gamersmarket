@@ -56,7 +56,7 @@ public class HardwareBidResource {
        int hardwareOfferId = rootNode.get(HardwareBidJsonKeys.HARDWARE_OFFER_ID.getJsonKeyDescription()).asInt();
        int bidderId = rootNode.get(HardwareBidJsonKeys.BIDDER_ID.getJsonKeyDescription()).asInt();       
               
-       HardwareBid hardwareBid = hardwareBidRepo.placeBid(rootNode, hardwareOfferId, bidderId);
+       HardwareBid hardwareBid = hardwareBidRepo.addBid(rootNode, hardwareOfferId, bidderId);
        return Response.ok()
                .entity(basicResponse.buildHardwareOfferBid(Response.Status.OK.getStatusCode(), "Hardware bid placed successfully.", hardwareBid))
                .build();
