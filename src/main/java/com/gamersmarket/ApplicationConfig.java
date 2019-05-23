@@ -19,12 +19,13 @@ import javax.ws.rs.ApplicationPath;
 public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig() {
-        registerClasses(HardwareTypeResource.class,
-                HardwareItemResource.class,
+        registerClasses(
+                HardwareTypeResource.class,                
                 HardwareBidResource.class,
                 MouseResource.class,
                 KeyboardResource.class,
-                GraphicCardResource.class,
+                GraphicsCardResource.class,
+                ProcessorResource.class,
                 GamersResource.class,
                 HardwareOfferResource.class,
                 InvalidJsonExceptionMapper.class,
