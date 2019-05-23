@@ -3,6 +3,7 @@ package com.gamersmarket;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 import com.gamersmarket.boundary.*;
 import com.gamersmarket.common.mappers.AccountAlreadyExistsExceptionMapper;
+import com.gamersmarket.common.mappers.HardwareBidAmountExceptionMapper;
 import com.gamersmarket.common.mappers.InvalidJsonExceptionMapper;
 import com.gamersmarket.common.mappers.NoAccountExistsExceptionMapper;
 import com.gamersmarket.common.mappers.NoEntityFoundExceptionMapper;
@@ -18,8 +19,7 @@ import javax.ws.rs.ApplicationPath;
 public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig() {
-        registerClasses(
-                HardwareTypeResource.class,
+        registerClasses(HardwareTypeResource.class,
                 HardwareItemResource.class,
                 HardwareBidResource.class,
                 MouseResource.class,
@@ -31,7 +31,8 @@ public class ApplicationConfig extends ResourceConfig {
                 NoAccountExistsExceptionMapper.class,
                 AccountAlreadyExistsExceptionMapper.class,
                 NoEntityFoundExceptionMapper.class,
-                ValidationExceptionMapper.class
+                ValidationExceptionMapper.class,
+                HardwareBidAmountExceptionMapper.class
         );
 
         register(CORSFilterProvider.class);
