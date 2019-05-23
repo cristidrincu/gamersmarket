@@ -1,5 +1,7 @@
 package com.gamersmarket.boundary;
 
+import com.gamersmarket.common.enums.messages.HardwareItemMessages;
+import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.control.hardware.HardwareItemRepo;
 
@@ -17,6 +19,9 @@ public class HardwareItemResource {
 
     @Inject
     HardwareItemRepo hardwareItemRepo;
+    
+    @Inject
+    CustomHardwareItemBasicResponse customHardwareItemBasicResponse;
 
     @GET
     public Response getHardwareItems() {
@@ -27,6 +32,9 @@ public class HardwareItemResource {
     @Path("{id}")
     public Response getHardwareItem(@PathParam("id") int hardwareItemId) {
         HardwareItem retrievedHardwareItem = hardwareItemRepo.getItem(hardwareItemId);
-        return Response.ok().entity(retrievedHardwareItem).build();
+        String responseMessage = HardwareItemMessages.HARDWARE_ITEM_RETRIEVED_SUCCESSFULLY.getMessage();
+        return Response.ok()
+                .entity(customHardwareItemBasicResponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(), responseMessage, retrievedHardwareItem))
+                .build();
     }
 }
