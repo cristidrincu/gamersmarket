@@ -5,7 +5,7 @@
  */
 package com.gamersmarket.common.mappers;
 
-import com.gamersmarket.common.utils.CustomBasicResponse;
+import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
 import com.gamersmarket.common.utils.exceptions.NoAccountExistsException;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;

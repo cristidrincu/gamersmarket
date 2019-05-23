@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.jsonkeys.MouseJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
-import com.gamersmarket.common.utils.CustomBasicResponse;
+import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
 import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.control.hardware.MouseRepo;

@@ -3,10 +3,10 @@ package com.gamersmarket.boundary;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.messages.AccountManagementMessages;
 import com.gamersmarket.common.enums.jsonkeys.GamerJsonKeys;
-import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.common.utils.AccountManagement;
 import com.gamersmarket.common.utils.Authentication;
-import com.gamersmarket.common.utils.CustomBasicResponse;
+import com.gamersmarket.common.utils.JsonUtils;
+import com.gamersmarket.common.utils.customresponse.CustomGamerBasicResponse;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 
@@ -31,13 +31,13 @@ public class GamersResource {
     Authentication auth;
     
     @Inject
-    AccountManagement accountManagement;
-
-    @Inject
-    ObjectMapperProvider provider;
+    AccountManagement accountManagement;   
     
     @Inject
-    CustomBasicResponse basicResponse;
+    CustomGamerBasicResponse basicResponse;
+    
+    @Inject
+    JsonUtils jsonUtils;
 
     @GET
     @Path("{id}")
@@ -47,7 +47,7 @@ public class GamersResource {
 
     @POST
     public Response createGamerAccount(String jsonGamerAccount) throws IOException {
-        JsonNode rootNode = readTreeJsonGamerAccount(jsonGamerAccount);  
+        JsonNode rootNode = jsonUtils.readJsonTree(jsonGamerAccount);  
         String responseMessageSuccess = AccountManagementMessages.ACCOUNT_CREATED_SUCCESSFULLY.getMessageDescription();
         Gamer gamer = new Gamer(rootNode.get(GamerJsonKeys.ROOT_NODE.getJsonKeyDescription()));
         accountManagement.createAccount(gamer);
@@ -58,7 +58,7 @@ public class GamersResource {
     @POST
     @Path("/authenticate")
     public Response authenticateGamer(String jsonGamerAccount) throws IOException {
-        JsonNode rootNode = readTreeJsonGamerAccount(jsonGamerAccount);                
+        JsonNode rootNode = jsonUtils.readJsonTree(jsonGamerAccount);                
         String emailAddress = rootNode.get(GamerJsonKeys.EMAIL_ADDRESS.getJsonKeyDescription()).asText();
         String password = rootNode.get(GamerJsonKeys.PASSWORD.getJsonKeyDescription()).asText();        
         Gamer gamer = gamersRepo.getGamerDetails(emailAddress);        
@@ -78,9 +78,5 @@ public class GamersResource {
         String responseMessage = AccountManagementMessages.ACCOUNT_DELETED_SUCCESSFULLY.getMessageDescription();
         gamersRepo.deleteGamer(gamer.getId());
         return Response.ok().entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(), responseMessage)).build();
-    }
-    
-    private JsonNode readTreeJsonGamerAccount(String jsonGamerAccount) throws IOException {
-        return provider.getContext(GamersResource.class).readTree(jsonGamerAccount);
-    }
+    }    
 }

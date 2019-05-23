@@ -8,7 +8,7 @@ package com.gamersmarket.boundary;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.jsonkeys.HardwareBidJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
-import com.gamersmarket.common.utils.CustomBasicResponse;
+import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
 import com.gamersmarket.control.bidding.HardwareBidRepo;
 import com.gamersmarket.entity.bid.HardwareBid;
 import java.io.IOException;

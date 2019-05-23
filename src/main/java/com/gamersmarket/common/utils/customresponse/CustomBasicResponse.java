@@ -1,5 +1,6 @@
-package com.gamersmarket.common.utils;
+package com.gamersmarket.common.utils.customresponse;
 
+import com.gamersmarket.entity.bid.HardwareBid;
 import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.entity.hardware.HardwareOffer;
@@ -13,6 +14,7 @@ public class CustomBasicResponse {
     
     private HardwareItem hardwareItem;
     private Gamer gamer;
+    private HardwareBid hardwareBid;
     private List<? extends HardwareItem> hardwareItems;    
     private List<HardwareOffer> hardwareOffers;
 
@@ -49,6 +51,14 @@ public class CustomBasicResponse {
 
     public void setGamer(Gamer gamer) {
         this.gamer = gamer;
+    }
+
+    public HardwareBid getHardwareBid() {
+        return hardwareBid;
+    }
+
+    public void setHardwareBid(HardwareBid hardwareBid) {
+        this.hardwareBid = hardwareBid;
     }        
 
     public List<? extends HardwareItem> getHardwareItems() {
@@ -87,6 +97,10 @@ public class CustomBasicResponse {
         return this.buildStatus(statusCode).buildMessage(message).buildGamerDetails(gamer);                
     }
     
+    public CustomBasicResponse buildHardwareOfferBid(int statusCode, String message, HardwareBid hardwareBid) {
+        return this.buildStatus(statusCode).buildMessage(message).buildHardwareBidDetails(hardwareBid);
+    }
+    
     public CustomBasicResponse buildResponseHardwareItems(int statusCode, String message, List<? extends HardwareItem> hwItems) {
         return this.buildStatus(statusCode).buildMessage(message).buildHardwareItems(hwItems);                
     }
@@ -112,6 +126,11 @@ public class CustomBasicResponse {
     
     private CustomBasicResponse buildGamerDetails(Gamer gamer) {
         setGamer(gamer);
+        return this;
+    }
+    
+    private CustomBasicResponse buildHardwareBidDetails(HardwareBid hardwareBid) {
+        setHardwareBid(hardwareBid);
         return this;
     }
     

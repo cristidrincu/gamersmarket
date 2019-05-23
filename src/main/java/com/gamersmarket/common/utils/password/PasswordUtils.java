@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamersmarket.common.utils;
+package com.gamersmarket.common.utils.password;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

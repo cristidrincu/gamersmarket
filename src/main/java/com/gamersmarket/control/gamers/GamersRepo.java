@@ -3,7 +3,7 @@ package com.gamersmarket.control.gamers;
 import com.gamersmarket.common.enums.messages.AccountManagementMessages;
 import com.gamersmarket.common.enums.hwbidstates.HardwareBidStates;
 import com.gamersmarket.common.interfaces.GamersRepository;
-import com.gamersmarket.common.utils.PasswordUtils;
+import com.gamersmarket.common.utils.password.PasswordUtils;
 import com.gamersmarket.common.utils.exceptions.NoAccountExistsException;
 import com.gamersmarket.entity.bid.HardwareBid;
 import com.gamersmarket.entity.gamers.Gamer;
