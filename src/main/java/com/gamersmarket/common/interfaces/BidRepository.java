@@ -5,6 +5,9 @@
  */
 package com.gamersmarket.common.interfaces;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import java.util.List;
+
 /**
  *
  * @author cristiandrincu
@@ -12,10 +15,11 @@ package com.gamersmarket.common.interfaces;
 public interface BidRepository<T> {
     
     T getBid(int bidId);
-    T getBid(String bidState);
+    List<T> getBids(String bidState);
     void addBid(T bid);    
+    T addBid(JsonNode hardwareBidNode, int hardwareOfferId, int bidderId);
     void editBid(T bid);
-    void editBid(int bidId);
+    void editBid(int bidId, JsonNode updatedBid);
     void deleteBid(int bidId);
     void deleteBid(T bid);
 }

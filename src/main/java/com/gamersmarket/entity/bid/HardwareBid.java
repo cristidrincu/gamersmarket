@@ -18,7 +18,9 @@ import java.util.Objects;
 @Table(name = "hardware_bid")
 @NamedQueries({
     @NamedQuery(name = HardwareBid.GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE, query = HardwareBid.GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE_QUERY),
-    @NamedQuery(name = HardwareBid.GET_HARDWARE_BID_BASED_ON_ID, query = HardwareBid.GET_HARDWARE_BID_BASED_ON_ID_QUERY)
+    @NamedQuery(name = HardwareBid.GET_HARDWARE_BID_BASED_ON_ID, query = HardwareBid.GET_HARDWARE_BID_BASED_ON_ID_QUERY),
+    @NamedQuery(name = HardwareBid.GET_HARDWARE_BIDS_BASED_ON_STATE, query = HardwareBid.GET_HARDWARE_BIDS_BASED_ON_STATE_QUERY),
+    @NamedQuery(name = HardwareBid.GET_HIGHEST_BID_PER_HARDWARE_OFFER_ID, query = HardwareBid.GET_HIGHEST_HARDWARE_BID_PER_HARDWARE_OFFER_ID_QUERY)
         
 })
 @JsonDeserialize(using = HardwareBidDeserializer.class)
@@ -26,13 +28,23 @@ public class HardwareBid implements Serializable {
 
     private static final long serialVersionUID = -2355384513180239447L;
     public static final String PARAM_HARDWARE_BID_ID = "hardwareBidId";
+    public static final String PARAM_HARDWARE_OFFER_ID = "hardwareOfferId";
     public static final String PARAM_GAMER_ID = "id";
     public static final String PARAM_BID_STATE = "bidState";
-    public static final String GET_HARDWARE_BID_BASED_ON_ID = "getHardwareBidBasedOnId";
-    public static final String GET_HARDWARE_BID_BASED_ON_ID_QUERY = "select hwBid from HardwareBid hwBid where hwBid.id = :" + PARAM_HARDWARE_BID_ID;
+    
+    public static final String GET_HARDWARE_BID_BASED_ON_ID = "getHardwareBidBasedOnId";    
+    public static final String GET_HARDWARE_BID_BASED_ON_ID_QUERY = "select hwBid from HardwareBid hwBid where hwBid.id =:" + PARAM_HARDWARE_BID_ID;
+    
     public static final String GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE = "getHardwareBidsBasedOnState";
-    public static final String GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE_QUERY = "select hwBid from HardwareBid hwBid where hwBid.bidder.id = :" 
-            + PARAM_GAMER_ID + " and hwBid.bidState = :" + PARAM_BID_STATE;
+    public static final String GET_HARDWARE_BIDS_FOR_GAMER_BASED_ON_BID_STATE_QUERY = "select hwBid from HardwareBid hwBid where hwBid.bidder.id =:"             
+            + PARAM_GAMER_ID + " and hwBid.bidState =:" + PARAM_BID_STATE;
+    
+    public static final String GET_HARDWARE_BIDS_BASED_ON_STATE = "getHardwareBidBasedOnState";
+    public static final String GET_HARDWARE_BIDS_BASED_ON_STATE_QUERY = "select hwBid from HardwareBid hwBid where hwBid.bidState =:" + PARAM_BID_STATE;
+    
+    public static final String GET_HIGHEST_BID_PER_HARDWARE_OFFER_ID = "getHighestHardwareBidPerHardwareOffer";
+    public static final String GET_HIGHEST_HARDWARE_BID_PER_HARDWARE_OFFER_ID_QUERY = "select hwBid from HardwareBid hwBid where hwBid.hardwareOffer.id =:" 
+            + PARAM_HARDWARE_OFFER_ID + " and hwBid.amount = (select max(hwBid.amount) from HardwareBid hwBid)";
 
     @Id
     @NotNull
