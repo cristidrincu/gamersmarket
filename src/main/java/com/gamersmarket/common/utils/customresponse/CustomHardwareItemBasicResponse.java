@@ -44,36 +44,42 @@ public class CustomHardwareItemBasicResponse implements BasicResponse<CustomHard
     }        
     
     @Inject
-    public CustomHardwareItemBasicResponse() {}
-    
-    @Override
-    public CustomHardwareItemBasicResponse buildStatus(int status) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public CustomHardwareItemBasicResponse buildMessage(String message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public CustomHardwareItemBasicResponse() {}        
     
     @Override
     public CustomHardwareItemBasicResponse buildDefaultResponse(int status) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.buildStatus(status);
     }
 
     @Override
     public CustomHardwareItemBasicResponse buildDefaultResponse(String message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.buildMessage(message);
     }
 
     @Override
     public CustomHardwareItemBasicResponse buildDefaultResponse(int status, String message) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.buildStatus(status).buildMessage(message);
     }   
 
     @Override
     public CustomHardwareItemBasicResponse buildEntityDetails(HardwareItem entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.setHardwareItem(entity);
+        return this;
     }
     
+    @Override
+    public CustomHardwareItemBasicResponse buildStatus(int status) {
+        this.setStatus(status);
+        return this;
+    }
+
+    @Override
+    public CustomHardwareItemBasicResponse buildMessage(String message) {
+        this.setMessage(message);
+        return this;
+    }
+    
+    public CustomHardwareItemBasicResponse buildResponseHardwareItem(int status, String message, HardwareItem hwItem) {
+        return this.buildStatus(status).buildMessage(message).buildEntityDetails(hwItem);
+    }    
 }
