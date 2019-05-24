@@ -1,6 +1,7 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.annotations.jerseyfilters.ValidateBasicCredentials;
 import com.gamersmarket.common.enums.messages.AccountManagementMessages;
 import com.gamersmarket.common.enums.jsonkeys.GamerJsonKeys;
 import com.gamersmarket.common.utils.AccountManagement;
@@ -25,19 +26,19 @@ import static java.lang.Integer.parseInt;
 public class GamersResource {
 
     @Inject
-    GamersRepo gamersRepo;
+    private GamersRepo gamersRepo;
     
     @Inject
-    Authentication auth;
+    private Authentication auth;
     
     @Inject
-    AccountManagement accountManagement;   
+    private AccountManagement accountManagement;   
     
     @Inject
-    CustomGamerBasicResponse basicResponse;
+    private CustomGamerBasicResponse basicResponse;
     
     @Inject
-    JsonUtils jsonUtils;
+    private JsonUtils jsonUtils;
 
     @GET
     @Path("{id}")
@@ -56,11 +57,12 @@ public class GamersResource {
     }
     
     @POST
+    @ValidateBasicCredentials
     @Path("/authenticate")
     public Response authenticateGamer(String jsonGamerAccount) throws IOException {                       
         String emailAddress = jsonUtils.readEmailAddressFromNode(jsonGamerAccount);
         String password = jsonUtils.readPasswordFromNode(jsonGamerAccount);
-        Gamer gamer = gamersRepo.getGamerDetails(emailAddress);        
+        Gamer gamer = gamersRepo.getGamerDetails(emailAddress);
         
         String responeMessageSuccess = AccountManagementMessages.ACCOUNT_FETCHED_SUCCESSFULLY.getMessageDescription();
         String responseMessageError = AccountManagementMessages.WRONG_CREDENTIALS.getMessageDescription();

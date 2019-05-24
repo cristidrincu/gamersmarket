@@ -6,7 +6,11 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.annotations.jerseyfilters.ValidateSecondaryFieldsForHardwareItem;
+import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
+import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
+import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
 import com.gamersmarket.control.hardware.ProcessorRepo;
 import com.gamersmarket.entity.hardware.Processor;
 import java.io.IOException;
@@ -31,10 +35,13 @@ import javax.ws.rs.core.Response;
 public class ProcessorResource {
  
     @Inject
-    ProcessorRepo processorRepo;        
+    private ProcessorRepo processorRepo;        
     
     @Inject
-    JsonUtils jsonUtils;
+    private JsonUtils jsonUtils;
+    
+    @Inject
+    private CustomHardwareItemBasicResponse basicReponse;
     
     @GET
     public Response getProcessors() {
@@ -42,6 +49,7 @@ public class ProcessorResource {
     }
     
     @POST
+    @ValidateSecondaryFieldsForHardwareItem
     public Response addProcessor(String jsonObject) throws IOException {
         JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         
@@ -51,6 +59,7 @@ public class ProcessorResource {
         
         processorRepo.persistItemWithHardwareType(processor, hwTypeId, gamerId);
         
-        return Response.ok().entity("Processor created successfully.").build();
+        return Response.ok().entity(basicReponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(),
+                HardwareItemMessages.HARDWARE_ITEM_CREATED_SUCCESSFULLY.getMessage(), processor)).build();
     }
 }

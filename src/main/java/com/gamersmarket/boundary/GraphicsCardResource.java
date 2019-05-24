@@ -1,10 +1,12 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.annotations.jerseyfilters.ValidateSecondaryFieldsForHardwareItem;
+import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
+import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
 import com.gamersmarket.entity.hardware.GraphicsCard;
 import com.gamersmarket.control.hardware.GraphicsCardRepo;
-import com.gamersmarket.common.utils.template.hardware.GraphicsCardTemplate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -20,13 +22,13 @@ import java.io.IOException;
 public class GraphicsCardResource {
 
     @Inject
-    GraphicsCardRepo graphicsCardRepo;
-
-    @Inject
-    GraphicsCardTemplate graphicsCardTemplate;
+    private GraphicsCardRepo graphicsCardRepo; 
     
     @Inject
-    JsonUtils jsonUtils;
+    private CustomHardwareItemBasicResponse basicResponse;
+    
+    @Inject
+    private JsonUtils jsonUtils;
 
     @GET
     @Path("{id}")
@@ -36,6 +38,7 @@ public class GraphicsCardResource {
     }
 
     @POST
+    @ValidateSecondaryFieldsForHardwareItem
     public Response addGraphicCard(String jsonObject) throws IOException {
         JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         
@@ -45,6 +48,7 @@ public class GraphicsCardResource {
 
         graphicsCardRepo.persistItemWithHardwareType(graphicsCard, hwTypeId, gamerId);
 
-        return Response.ok().entity("Graphics card saved successfully.").build();
+        return Response.ok().entity(basicResponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(), 
+                HardwareItemMessages.HARDWARE_ITEM_CREATED_SUCCESSFULLY.getMessage(), graphicsCard)).build();
     }
 }

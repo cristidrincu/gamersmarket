@@ -2,14 +2,14 @@ package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.annotations.jerseyfilters.ValidateSecondaryFieldsForHardwareItem;
 import com.gamersmarket.common.enums.jsonkeys.MouseJsonKeys;
-import com.gamersmarket.common.providers.ObjectMapperProvider;
+import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
-import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
+import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
 import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.control.hardware.MouseRepo;
-import com.gamersmarket.common.utils.template.hardware.MouseTemplate;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -25,19 +25,16 @@ import java.io.IOException;
 public class MouseResource {
 
     @Inject
-    MouseRepo mouseRepo;
+    private MouseRepo mouseRepo;    
 
     @Inject
-    MouseTemplate getMouseTemplate;
-
-    @Inject
-    MouseDetailsDTO mouseDetailsDTO;        
+    private MouseDetailsDTO mouseDetailsDTO;        
     
     @Inject
-    CustomBasicResponse basicResponse;
+    private CustomHardwareItemBasicResponse basicResponse;
     
     @Inject
-    JsonUtils jsonUtils;
+    private JsonUtils jsonUtils;
 
     @GET
     public Response getMice() {
@@ -58,6 +55,7 @@ public class MouseResource {
     }
 
     @POST
+    @ValidateSecondaryFieldsForHardwareItem
     public Response addMouse(String jsonObject) throws IOException {        
         JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         
@@ -66,13 +64,15 @@ public class MouseResource {
         int gamerId = jsonUtils.readGamerIdFromNode(jsonObject);
         
         mouseRepo.persistItemWithHardwareType(mouse, hwTypeId, gamerId);
-        return Response.ok().entity("Mouse saved successfully").build();
+        return Response.ok().entity(basicResponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(), 
+                HardwareItemMessages.HARDWARE_ITEM_CREATED_SUCCESSFULLY.getMessage(), mouse)).build();
     }
     
     @DELETE
     @Path("/remove/{id}")
     public Response deleteMouse(@PathParam("id") String mouseId) {
         mouseRepo.deleteItem(Integer.parseInt(mouseId));
-        return Response.ok().entity("Mouse deleted successfully!").build();
+        return Response.ok().entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(),
+                HardwareItemMessages.HARDWARE_ITEM_DELETED_SUCCESSFULLY.getMessage())).build();
     }
 }

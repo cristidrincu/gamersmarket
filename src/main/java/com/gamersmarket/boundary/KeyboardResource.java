@@ -6,9 +6,11 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.annotations.jerseyfilters.ValidateSecondaryFieldsForHardwareItem;
 import com.gamersmarket.common.enums.jsonkeys.KeyboardJsonKeys;
-import com.gamersmarket.common.providers.ObjectMapperProvider;
-import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
+import com.gamersmarket.common.enums.messages.HardwareItemMessages;
+import com.gamersmarket.common.utils.JsonUtils;
+import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
 import com.gamersmarket.control.hardware.KeyboardRepo;
 import com.gamersmarket.entity.hardware.Keyboard;
 import java.io.IOException;
@@ -34,13 +36,13 @@ import javax.ws.rs.core.Response;
 public class KeyboardResource {
     
     @Inject
-    KeyboardRepo keyboardRepo;
+    private KeyboardRepo keyboardRepo;
     
     @Inject
-    ObjectMapperProvider provider;
+    private JsonUtils jsonUtils;
     
     @Inject
-    CustomBasicResponse basicResponse;
+    private CustomHardwareItemBasicResponse basicResponse;
     
     @GET
     public Response getKeyboards() {
@@ -51,19 +53,22 @@ public class KeyboardResource {
     @Path("{id}/basic-details")
     public Response getKeyboardBasicDetails(@PathParam("id") int id) {
         Keyboard keyboard = keyboardRepo.getItem(id);
-        return Response.ok(basicResponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(), "Keyboard basic details fetched successfully!", keyboard)).build();
+        return Response.ok(basicResponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(),
+                HardwareItemMessages.HARDWARE_ITEM_RETRIEVED_SUCCESSFULLY.getMessage(), keyboard)).build();
     }
     
     @POST
+    @ValidateSecondaryFieldsForHardwareItem
     public Response addKeyboard(String jsonObject) throws IOException {
-        JsonNode rootNode = provider.getContext(KeyboardResource.class).readTree(jsonObject);
+        JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         Keyboard keyboard = new Keyboard(rootNode.get(KeyboardJsonKeys.ROOT_NODE.getJsonKeyDescription()));
         
-        int hwTypeId = rootNode.get("hwType").get("id").asInt();
-        int gamerId = rootNode.get("gamer").get("id").asInt();
+        int hwTypeId = jsonUtils.readHwTypeIdFromNode(jsonObject);
+        int gamerId = jsonUtils.readGamerIdFromNode(jsonObject);
         
         keyboardRepo.persistItemWithHardwareType(keyboard, hwTypeId, gamerId);        
         
-        return Response.ok().entity(basicResponse.buildResponseHardwareItem(200, "Keyboard saved successfully!", keyboard)).build();
+        return Response.ok().entity(basicResponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(), 
+                HardwareItemMessages.HARDWARE_ITEM_CREATED_SUCCESSFULLY.getMessage(), keyboard)).build();
     }
 }
