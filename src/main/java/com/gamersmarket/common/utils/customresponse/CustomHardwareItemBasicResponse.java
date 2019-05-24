@@ -19,6 +19,9 @@ public class CustomHardwareItemBasicResponse implements BasicResponse<CustomHard
     private String message;   
     private HardwareItem hardwareItem;
 
+    @Inject
+    public CustomHardwareItemBasicResponse() {}
+    
     public int getStatus() {
         return status;
     }
@@ -41,10 +44,7 @@ public class CustomHardwareItemBasicResponse implements BasicResponse<CustomHard
 
     public void setHardwareItem(HardwareItem hardwareItem) {
         this.hardwareItem = hardwareItem;
-    }        
-    
-    @Inject
-    public CustomHardwareItemBasicResponse() {}        
+    }         
     
     @Override
     public CustomHardwareItemBasicResponse buildDefaultResponse(int status) {
