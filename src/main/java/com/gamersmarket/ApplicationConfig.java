@@ -5,13 +5,14 @@ import com.gamersmarket.boundary.*;
 import com.gamersmarket.common.mappers.AccountAlreadyExistsExceptionMapper;
 import com.gamersmarket.common.mappers.HardwareBidAmountExceptionMapper;
 import com.gamersmarket.common.mappers.InvalidJsonExceptionMapper;
+import com.gamersmarket.common.mappers.JsonParsingExceptionMapper;
 import com.gamersmarket.common.mappers.NoAccountExistsExceptionMapper;
 import com.gamersmarket.common.mappers.NoEntityFoundExceptionMapper;
 import com.gamersmarket.common.providers.CORSFilterProvider;
+import com.gamersmarket.common.providers.filters.JsonFilterProvider;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
-import org.glassfish.jersey.server.validation.internal.ValidationExceptionMapper;
 
 import javax.ws.rs.ApplicationPath;
 
@@ -31,12 +32,13 @@ public class ApplicationConfig extends ResourceConfig {
                 InvalidJsonExceptionMapper.class,
                 NoAccountExistsExceptionMapper.class,
                 AccountAlreadyExistsExceptionMapper.class,
-                NoEntityFoundExceptionMapper.class,
-                ValidationExceptionMapper.class,
-                HardwareBidAmountExceptionMapper.class
+                NoEntityFoundExceptionMapper.class,                
+                HardwareBidAmountExceptionMapper.class,
+                JsonParsingExceptionMapper.class
         );
 
         register(CORSFilterProvider.class);
+        register(JsonFilterProvider.class);
         register(ObjectMapperProvider.class);       
         register(JacksonFeatures.class);
         property(ServerProperties.MOXY_JSON_FEATURE_DISABLE, true);
