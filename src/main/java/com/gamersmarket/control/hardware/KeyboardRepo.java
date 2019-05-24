@@ -50,6 +50,7 @@ public class KeyboardRepo implements HardwareRepository<Keyboard> {
        em.remove(keyboard);
     }
     
+    @Override
     public void persistItemWithHardwareType(Keyboard keyboard, int hardwareTypeId, int gamerId) {
         HardwareType hardwareType = hardwareTypeRepo.getItem(hardwareTypeId);
         Gamer gamer = gamersRepo.getGamerDetails(gamerId);
