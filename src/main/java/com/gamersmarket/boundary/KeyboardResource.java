@@ -6,7 +6,6 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.annotations.jerseyfilters.ValidateSecondaryFieldsForHardwareItem;
 import com.gamersmarket.common.enums.jsonkeys.KeyboardJsonKeys;
 import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
@@ -24,6 +23,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import com.gamersmarket.common.annotations.jerseyfilters.ValidateMouseJsonPayload;
 
 /**
  *
@@ -58,7 +58,7 @@ public class KeyboardResource {
     }
     
     @POST
-    @ValidateSecondaryFieldsForHardwareItem
+    @ValidateMouseJsonPayload
     public Response addKeyboard(String jsonObject) throws IOException {
         JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         Keyboard keyboard = new Keyboard(rootNode.get(KeyboardJsonKeys.ROOT_NODE.getJsonKeyDescription()));

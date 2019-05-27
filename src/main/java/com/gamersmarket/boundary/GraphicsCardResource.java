@@ -1,7 +1,6 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.annotations.jerseyfilters.ValidateSecondaryFieldsForHardwareItem;
 import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
 import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
@@ -37,8 +36,7 @@ public class GraphicsCardResource {
         return Response.ok().entity(retrievedGraphicsCard).build();
     }
 
-    @POST
-    @ValidateSecondaryFieldsForHardwareItem
+    @POST    
     public Response addGraphicCard(String jsonObject) throws IOException {
         JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         

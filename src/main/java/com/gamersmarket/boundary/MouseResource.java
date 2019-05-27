@@ -2,7 +2,6 @@ package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.annotations.jerseyfilters.ValidateSecondaryFieldsForHardwareItem;
 import com.gamersmarket.common.enums.jsonkeys.MouseJsonKeys;
 import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
@@ -17,6 +16,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import com.gamersmarket.common.annotations.jerseyfilters.ValidateMouseJsonPayload;
 
 @Stateless
 @Path("/gaming-mouse")
@@ -34,7 +34,7 @@ public class MouseResource {
     private CustomHardwareItemBasicResponse basicResponse;
     
     @Inject
-    private JsonUtils jsonUtils;
+    private JsonUtils jsonUtils;        
 
     @GET
     public Response getMice() {
@@ -55,19 +55,19 @@ public class MouseResource {
     }
 
     @POST
-    @ValidateSecondaryFieldsForHardwareItem
+    @ValidateMouseJsonPayload
     public Response addMouse(String jsonObject) throws IOException {        
         JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         
         Mouse mouse = new Mouse(rootNode.get(MouseJsonKeys.ROOT_NODE.getJsonKeyDescription()));        
         int hwTypeId = jsonUtils.readHwTypeIdFromNode(jsonObject);
         int gamerId = jsonUtils.readGamerIdFromNode(jsonObject);
-        
+
         mouseRepo.persistItemWithHardwareType(mouse, hwTypeId, gamerId);
         return Response.ok().entity(basicResponse.buildResponseHardwareItem(Response.Status.OK.getStatusCode(), 
-                HardwareItemMessages.HARDWARE_ITEM_CREATED_SUCCESSFULLY.getMessage(), mouse)).build();
-    }
-    
+            HardwareItemMessages.HARDWARE_ITEM_CREATED_SUCCESSFULLY.getMessage(), mouse)).build();
+        }
+        
     @DELETE
     @Path("/remove/{id}")
     public Response deleteMouse(@PathParam("id") String mouseId) {

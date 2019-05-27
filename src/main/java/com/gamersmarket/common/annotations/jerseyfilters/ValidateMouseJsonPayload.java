@@ -18,6 +18,6 @@ import javax.ws.rs.NameBinding;
 @NameBinding
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface ValidateSecondaryFieldsForHardwareItem {
+public @interface ValidateMouseJsonPayload {
     
 }

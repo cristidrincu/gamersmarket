@@ -6,10 +6,8 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.annotations.jerseyfilters.ValidateSecondaryFieldsForHardwareItem;
 import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
-import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
 import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
 import com.gamersmarket.control.hardware.ProcessorRepo;
 import com.gamersmarket.entity.hardware.Processor;
@@ -48,8 +46,7 @@ public class ProcessorResource {
         return Response.ok().entity("Hello from processors endpoint").build();
     }
     
-    @POST
-    @ValidateSecondaryFieldsForHardwareItem
+    @POST    
     public Response addProcessor(String jsonObject) throws IOException {
         JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         
