@@ -7,6 +7,7 @@ package com.gamersmarket.common.utils.customresponse;
 
 import com.gamersmarket.common.interfaces.BasicResponse;
 import com.gamersmarket.entity.hardware.HardwareItem;
+import java.util.Set;
 import javax.inject.Inject;
 
 /**
@@ -18,6 +19,7 @@ public class CustomHardwareItemBasicResponse implements BasicResponse<CustomHard
     private int status;
     private String message;   
     private HardwareItem hardwareItem;
+    private Set<String> errorList;
 
     @Inject
     public CustomHardwareItemBasicResponse() {}
@@ -44,7 +46,15 @@ public class CustomHardwareItemBasicResponse implements BasicResponse<CustomHard
 
     public void setHardwareItem(HardwareItem hardwareItem) {
         this.hardwareItem = hardwareItem;
-    }         
+    }
+
+    public Set<String> getErrorList() {
+        return errorList;
+    }
+
+    public void setErrorList(Set<String> errorList) {
+        this.errorList = errorList;
+    }        
     
     @Override
     public CustomHardwareItemBasicResponse buildDefaultResponse(int status) {
@@ -79,7 +89,16 @@ public class CustomHardwareItemBasicResponse implements BasicResponse<CustomHard
         return this;
     }
     
+    public CustomHardwareItemBasicResponse buildErrorList(Set<String> errors) {
+        this.setErrorList(errors);
+        return this;
+    }
+    
     public CustomHardwareItemBasicResponse buildResponseHardwareItem(int status, String message, HardwareItem hwItem) {
         return this.buildStatus(status).buildMessage(message).buildEntityDetails(hwItem);
-    }    
+    }
+
+    public CustomHardwareItemBasicResponse buildValidationErrors(int status, String message, Set<String> errorList) {
+        return this.buildStatus(status).buildMessage(message).buildErrorList(errorList);
+    }
 }

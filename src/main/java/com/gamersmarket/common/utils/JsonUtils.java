@@ -33,7 +33,7 @@ public class JsonUtils {
     
     public JsonNode readJsonTree(String json) throws IOException {
         return provider.getContext(JsonUtils.class).readTree(json);
-    }
+    }   
     
     public int readHwTypeIdFromNode(String json) throws IOException {
         JsonNode hwTypeNode = readJsonTree(json).get(SecondaryFieldsHardwareItem.HW_TYPE_ROOT_NODE.getJsonKeyDescription());

@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "hw_item_mouse")
@@ -32,14 +34,20 @@ public class Mouse extends HardwareItem implements Serializable {
     public static final String GET_MOUSE_DETAILS_QUERY = "select m from Mouse m where m.id = :" + MOUSE_PARAM_ID;    
 
     @Column(name = "connection_type")
+    @Size(min = 5, max = 50, message = "Connection type must be between 5 and 50 characters.")
     private String connectionType;
-
+    
     @Column(name = "sensor_technology")
+    @Size(min = 5, max = 50, message = "Sensor technology must be between 5 and 50 characters.")
     private String sensorTechnology;
-
+    
+    @Min(value = 2, message = "The minimum number of buttons for a mouse must be 2.")
+    @Max(value = 5, message = "The maximum number of buttons for a mouse must be 5. ")
     private int buttons;
 
     @Column(name = "scrolling_buttons")
+    @Min(value = 1, message = "The minimum number of scrolling buttons for a mouse must be 1.")
+    @Max(value = 3, message = "The maximum number of scrolling buttons for a mouse must be 3.")
     private int scrollingButtons;
 
     @Size(min = 4, max = 50, message = "Colour name must be between 10 and 50 characters long.")

@@ -39,13 +39,14 @@ public class HardwareItem implements Serializable {
     private int id;
 
     @Column
+    @Size(min = 10, max = 100, message = "Manufacturer name must be betweeen 10 and 100 characters.")
     private String manufacturer;
     
     @Column(name = "manufacturer_code")
     @Size(min = 10, max = 255, message = "Manufacturer code must be between 10 and 255 characters.")
     private String manufacturerCode;
 
-    @Size(min = 10, max = 255, message = "Hardware item name must be between 10 and 50 characters.")
+    @Size(min = 10, max = 255, message = "Hardware item name must be between 10 and 255 characters.")
     private String name;
 
     @Temporal(TemporalType.TIMESTAMP)
