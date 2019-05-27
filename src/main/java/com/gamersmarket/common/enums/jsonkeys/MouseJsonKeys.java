@@ -1,7 +1,13 @@
 package com.gamersmarket.common.enums.jsonkeys;
 
+import java.util.EnumSet;
+import java.util.HashSet;
+
 public enum MouseJsonKeys {   
     ROOT_NODE("mouse"),
+    MANUFACTURER("manufacturer"),
+    MANUFACTURER_CODE("manufacturerCode"),
+    NAME("name"),
     CONNECTION_TYPE("connectionType"),
     SENSOR_TECHNOLOGY("sensorTechnology"),
     BUTTONS("buttons"),
@@ -16,11 +22,17 @@ public enum MouseJsonKeys {
 
     private final String jsonKeyDescription;
 
-    private MouseJsonKeys(String jsonKeyDescription) {
+    MouseJsonKeys(String jsonKeyDescription) {
         this.jsonKeyDescription = jsonKeyDescription;
     }
 
     public String getJsonKeyDescription() {
         return jsonKeyDescription;
+    }
+    
+    public static HashSet<String> getMouseKeyConstantsAsSet() {
+        HashSet<String> keys = new HashSet<>();
+        EnumSet.allOf(MouseJsonKeys.class).forEach(key -> keys.add(key.getJsonKeyDescription()));        
+        return keys;
     }        
 }
