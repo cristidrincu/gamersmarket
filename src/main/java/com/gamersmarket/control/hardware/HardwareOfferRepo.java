@@ -5,6 +5,7 @@ import com.gamersmarket.common.enums.hwofferstates.HardwareOfferStates;
 import com.gamersmarket.common.enums.jsonkeys.HardwareOfferJsonKeys;
 import com.gamersmarket.common.enums.messages.NoResultsFoundMessages;
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.common.utils.exceptions.EntityValidationException;
 import com.gamersmarket.common.utils.exceptions.NoEntityFoundException;
 import com.gamersmarket.common.utils.template.hardware.HardwareOfferTemplate;
 import com.gamersmarket.control.gamers.GamersRepo;
@@ -18,9 +19,12 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.persistence.NoResultException;
+import javax.validation.ConstraintViolationException;
 
 public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
 
@@ -55,7 +59,14 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
 
     @Override
     public void addItem(HardwareOffer hardwareOffer) {
-        em.persist(hardwareOffer);
+        try {
+            em.persist(hardwareOffer);
+        } catch (ConstraintViolationException e) {
+            Set<String> violations = new HashSet<>();
+            e.getConstraintViolations().forEach(violation -> violations.add(violation.getMessageTemplate()));
+            throw new EntityValidationException("The entity you are trying to persist does not pass bean validation.", violations);
+       }
+        
     }
     
     @Override

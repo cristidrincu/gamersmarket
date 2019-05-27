@@ -2,10 +2,14 @@ package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.entity.types.HardwareType;
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.common.utils.exceptions.EntityValidationException;
+import java.util.HashSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
+import javax.validation.ConstraintViolationException;
 
 public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
 
@@ -26,7 +30,13 @@ public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
 
     @Override
     public void addItem(HardwareType hardwareItem) {
-        em.persist(hardwareItem);
+        try {
+            em.persist(hardwareItem);
+        } catch (ConstraintViolationException e) {
+            Set<String> violations = new HashSet<>();
+            e.getConstraintViolations().forEach(violation -> violations.add(violation.getMessageTemplate()));
+            throw new EntityValidationException("The entity you are trying to persist does not pass bean validation.", violations);
+       }        
     }
     
     @Override

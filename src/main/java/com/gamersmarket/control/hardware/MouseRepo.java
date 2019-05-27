@@ -1,15 +1,22 @@
 package com.gamersmarket.control.hardware;
 
+import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.common.utils.exceptions.EntityValidationException;
+import com.gamersmarket.common.utils.exceptions.NoEntityFoundException;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.types.HardwareType;
+import java.util.HashSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
+import javax.validation.ConstraintViolationException;
 
 public class MouseRepo implements HardwareRepository<Mouse> {   
 
@@ -29,12 +36,22 @@ public class MouseRepo implements HardwareRepository<Mouse> {
 
     @Override
     public Mouse getItem(int hardwareId) {
-        return em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter(Mouse.MOUSE_PARAM_ID, hardwareId).getSingleResult();
+        try {
+            return em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter(Mouse.MOUSE_PARAM_ID, hardwareId).getSingleResult();
+        } catch (NoResultException e) {
+            throw new NoEntityFoundException(HardwareItemMessages.HARDWARE_ITEM_NOT_FOUND_BY_ID.getMessage());
+        }        
     }
 
     @Override
     public void addItem(Mouse hardwareItem) {
-        em.persist(hardwareItem);       
+        try {
+            em.persist(hardwareItem);
+        } catch (ConstraintViolationException e) {            
+            Set<String> violations = new HashSet<>();
+            e.getConstraintViolations().forEach(violation -> violations.add(violation.getMessageTemplate()));
+            throw new EntityValidationException("The entity you are trying to persist does not pass bean validation.", violations);
+        }        
     }
     
     @Override

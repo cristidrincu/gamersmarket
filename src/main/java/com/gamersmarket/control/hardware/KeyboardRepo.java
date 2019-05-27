@@ -1,15 +1,19 @@
 package com.gamersmarket.control.hardware;
 
 import com.gamersmarket.common.interfaces.HardwareRepository;
+import com.gamersmarket.common.utils.exceptions.EntityValidationException;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.hardware.Keyboard;
 import com.gamersmarket.entity.types.HardwareType;
+import java.util.HashSet;
 
 import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
 
 public class KeyboardRepo implements HardwareRepository<Keyboard> {
 
@@ -36,7 +40,13 @@ public class KeyboardRepo implements HardwareRepository<Keyboard> {
 
     @Override
     public void addItem(Keyboard hardwareItem) {
-       em.persist(hardwareItem); 
+       try {
+           em.persist(hardwareItem); 
+       } catch (ConstraintViolationException e) {
+            Set<String> violations = new HashSet<>();
+            e.getConstraintViolations().forEach(violation -> violations.add(violation.getMessageTemplate()));
+            throw new EntityValidationException("The entity you are trying to persist does not pass bean validation.", violations);
+       }       
     }
     
     @Override
