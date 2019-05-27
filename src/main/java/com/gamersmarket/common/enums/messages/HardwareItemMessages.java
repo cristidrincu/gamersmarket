@@ -12,7 +12,8 @@ package com.gamersmarket.common.enums.messages;
 public enum HardwareItemMessages {
     HARDWARE_ITEM_RETRIEVED_SUCCESSFULLY("Hardware item retrieved successfully."),
     HARDWARE_ITEM_CREATED_SUCCESSFULLY("Hardware item created successfully."),
-    HARDWARE_ITEM_DELETED_SUCCESSFULLY("Hardware item deleted successfully.");
+    HARDWARE_ITEM_DELETED_SUCCESSFULLY("Hardware item deleted successfully."),
+    HARDWARE_ITEM_NOT_FOUND_BY_ID("No hardware offer found with provided id.");
     
     private final String message;
     
