@@ -3,6 +3,7 @@ package com.gamersmarket;
 import com.fasterxml.jackson.jaxrs.annotation.JacksonFeatures;
 import com.gamersmarket.boundary.*;
 import com.gamersmarket.common.mappers.AccountAlreadyExistsExceptionMapper;
+import com.gamersmarket.common.mappers.EntityValidationExceptionMapper;
 import com.gamersmarket.common.mappers.HardwareBidAmountExceptionMapper;
 import com.gamersmarket.common.mappers.InvalidJsonExceptionMapper;
 import com.gamersmarket.common.mappers.JsonParsingExceptionMapper;
@@ -11,6 +12,7 @@ import com.gamersmarket.common.mappers.NoEntityFoundExceptionMapper;
 import com.gamersmarket.common.providers.CORSFilterProvider;
 import com.gamersmarket.common.providers.filters.JsonFilterProvider;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
+import com.gamersmarket.common.providers.filters.MousePayloadFilterProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
@@ -32,15 +34,17 @@ public class ApplicationConfig extends ResourceConfig {
                 InvalidJsonExceptionMapper.class,
                 NoAccountExistsExceptionMapper.class,
                 AccountAlreadyExistsExceptionMapper.class,
+                EntityValidationExceptionMapper.class,
                 NoEntityFoundExceptionMapper.class,                
                 HardwareBidAmountExceptionMapper.class,
                 JsonParsingExceptionMapper.class
         );
-
-        register(CORSFilterProvider.class);
-        register(JsonFilterProvider.class);
+        
         register(ObjectMapperProvider.class);       
         register(JacksonFeatures.class);
+        register(CORSFilterProvider.class);
+        register(JsonFilterProvider.class);
+        register(MousePayloadFilterProvider.class);
         property(ServerProperties.MOXY_JSON_FEATURE_DISABLE, true);
     }
 }
