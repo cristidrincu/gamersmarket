@@ -1,6 +1,8 @@
 package com.gamersmarket.control.hardware;
 
+import com.gamersmarket.common.enums.messages.BeanValidationMessages;
 import com.gamersmarket.common.enums.messages.HardwareItemMessages;
+import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.common.interfaces.HardwareRepository;
 import com.gamersmarket.common.utils.exceptions.EntityValidationException;
@@ -18,7 +20,7 @@ import javax.inject.Inject;
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
 
-public class MouseRepo implements HardwareRepository<Mouse> {   
+public class MouseRepo implements HardwareRepository<Mouse>, BeanValidation {   
 
     @PersistenceContext(name = "gamersMarket")
     private EntityManager em;
@@ -47,10 +49,9 @@ public class MouseRepo implements HardwareRepository<Mouse> {
     public void addItem(Mouse hardwareItem) {
         try {
             em.persist(hardwareItem);
-        } catch (ConstraintViolationException e) {            
-            Set<String> violations = new HashSet<>();
-            e.getConstraintViolations().forEach(violation -> violations.add(violation.getMessageTemplate()));
-            throw new EntityValidationException("The entity you are trying to persist does not pass bean validation.", violations);
+        } catch (ConstraintViolationException e) {                        
+            throw new EntityValidationException(BeanValidationMessages.FAILED_CONSTRAINT_VALIDATION.getMessage(), 
+                    collectConstraintViolationErrors(e));
         }        
     }
     
@@ -72,5 +73,12 @@ public class MouseRepo implements HardwareRepository<Mouse> {
         mouse.setHardwareType(hardwareType);
         mouse.setGamer(gamer);
         addItem(mouse);
+    }
+
+    @Override
+    public Set<String> collectConstraintViolationErrors(ConstraintViolationException e) {
+        Set<String> constraintViolations = new HashSet<>();
+        e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
+        return constraintViolations;
     }
 }

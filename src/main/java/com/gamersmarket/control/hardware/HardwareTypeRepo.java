@@ -1,5 +1,7 @@
 package com.gamersmarket.control.hardware;
 
+import com.gamersmarket.common.enums.messages.BeanValidationMessages;
+import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.entity.types.HardwareType;
 import com.gamersmarket.common.interfaces.HardwareRepository;
 import com.gamersmarket.common.utils.exceptions.EntityValidationException;
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolationException;
 
-public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
+public class HardwareTypeRepo implements HardwareRepository<HardwareType>, BeanValidation {
 
     @PersistenceContext(name = "gamersMarket")
     private EntityManager em;
@@ -32,10 +34,9 @@ public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
     public void addItem(HardwareType hardwareItem) {
         try {
             em.persist(hardwareItem);
-        } catch (ConstraintViolationException e) {
-            Set<String> violations = new HashSet<>();
-            e.getConstraintViolations().forEach(violation -> violations.add(violation.getMessageTemplate()));
-            throw new EntityValidationException("The entity you are trying to persist does not pass bean validation.", violations);
+        } catch (ConstraintViolationException e) {            
+            throw new EntityValidationException(BeanValidationMessages.FAILED_CONSTRAINT_VALIDATION.getMessage(), 
+                    collectConstraintViolationErrors(e));
        }        
     }
     
@@ -54,6 +55,13 @@ public class HardwareTypeRepo implements HardwareRepository<HardwareType> {
 
     @Override
     public void persistItemWithHardwareType(HardwareType hardwareItem, int hardwareTypeId, int gamerId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Set<String> collectConstraintViolationErrors(ConstraintViolationException e) {
+        Set<String> constraintViolations = new HashSet<>();
+        e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
+        return constraintViolations;
     }
 }

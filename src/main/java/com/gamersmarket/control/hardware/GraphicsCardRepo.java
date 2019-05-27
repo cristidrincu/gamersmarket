@@ -1,5 +1,7 @@
 package com.gamersmarket.control.hardware;
 
+import com.gamersmarket.common.enums.messages.BeanValidationMessages;
+import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.entity.hardware.GraphicsCard;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.common.interfaces.HardwareRepository;
@@ -16,7 +18,7 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
 
-public class GraphicsCardRepo implements HardwareRepository<GraphicsCard> {  
+public class GraphicsCardRepo implements HardwareRepository<GraphicsCard>, BeanValidation {  
 
     @PersistenceContext(name = "gamersMarket")
     private EntityManager em;  
@@ -41,10 +43,9 @@ public class GraphicsCardRepo implements HardwareRepository<GraphicsCard> {
     public void addItem(GraphicsCard hardwareItem) {
         try {
             em.persist(hardwareItem);
-        } catch (ConstraintViolationException e) {
-            Set<String> violations = new HashSet<>();
-            e.getConstraintViolations().forEach(violation -> violations.add(violation.getMessageTemplate()));
-            throw new EntityValidationException("The entity you are trying to persist does not pass bean validation.", violations);
+        } catch (ConstraintViolationException e) {            
+            throw new EntityValidationException(BeanValidationMessages.FAILED_CONSTRAINT_VALIDATION.getMessage(), 
+                    collectConstraintViolationErrors(e));
        }        
     }
     
@@ -70,5 +71,12 @@ public class GraphicsCardRepo implements HardwareRepository<GraphicsCard> {
         graphicsCard.setHardwareType(hwType);
         graphicsCard.setGamer(gamer);        
         addItem(graphicsCard);    
+    }
+
+    @Override
+    public Set<String> collectConstraintViolationErrors(ConstraintViolationException e) {
+        Set<String> constraintViolations = new HashSet<>();
+        e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
+        return constraintViolations;
     }
 }

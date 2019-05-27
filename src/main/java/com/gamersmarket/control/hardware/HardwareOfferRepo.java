@@ -3,7 +3,9 @@ package com.gamersmarket.control.hardware;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.hwofferstates.HardwareOfferStates;
 import com.gamersmarket.common.enums.jsonkeys.HardwareOfferJsonKeys;
+import com.gamersmarket.common.enums.messages.BeanValidationMessages;
 import com.gamersmarket.common.enums.messages.NoResultsFoundMessages;
+import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.common.interfaces.HardwareRepository;
 import com.gamersmarket.common.utils.exceptions.EntityValidationException;
 import com.gamersmarket.common.utils.exceptions.NoEntityFoundException;
@@ -26,7 +28,7 @@ import java.util.Set;
 import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolationException;
 
-public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
+public class HardwareOfferRepo implements HardwareRepository<HardwareOffer>, BeanValidation {
 
     @PersistenceContext(name = "gamersMarket")
     private EntityManager em;
@@ -61,12 +63,10 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
     public void addItem(HardwareOffer hardwareOffer) {
         try {
             em.persist(hardwareOffer);
-        } catch (ConstraintViolationException e) {
-            Set<String> violations = new HashSet<>();
-            e.getConstraintViolations().forEach(violation -> violations.add(violation.getMessageTemplate()));
-            throw new EntityValidationException("The entity you are trying to persist does not pass bean validation.", violations);
-       }
-        
+        } catch (ConstraintViolationException e) {            
+            throw new EntityValidationException(BeanValidationMessages.FAILED_CONSTRAINT_VALIDATION.getMessage(),
+                    collectConstraintViolationErrors(e));
+       }        
     }
     
     @Override
@@ -149,5 +149,12 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer> {
     @Override
     public void persistItemWithHardwareType(HardwareOffer hardwareItem, int hardwareTypeId, int gamerId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<String> collectConstraintViolationErrors(ConstraintViolationException e) {
+        Set<String> constraintViolations = new HashSet<>();
+        e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
+        return constraintViolations;
     }
 }
