@@ -74,8 +74,8 @@ public class GamersResource {
     
     @DELETE
     @Path("/delete-account/{gamerId}")
-    public Response deleteGamerAccount(@PathParam("gamerId") String gamerId) throws IOException {
-        Gamer gamer = gamersRepo.getGamerDetails(parseInt(gamerId));
+    public Response deleteGamerAccount(@PathParam("gamerId") int gamerId) throws IOException {
+        Gamer gamer = gamersRepo.getGamerDetails(gamerId);
         String responseMessage = AccountManagementMessages.ACCOUNT_DELETED_SUCCESSFULLY.getMessageDescription();
         gamersRepo.deleteGamer(gamer.getId());
         return Response.ok().entity(basicResponse.buildDefaultResponse(Response.Status.OK.getStatusCode(), responseMessage)).build();
