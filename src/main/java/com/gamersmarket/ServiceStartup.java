@@ -60,9 +60,9 @@ public class ServiceStartup implements Extension {
     private void getObjectMapperModules() {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         List<Module> modules = ObjectMapper.findModules(classLoader);
-        for (Module module : modules) {
+        modules.forEach((module) -> {            
             logger.log(Level.INFO, module.getModuleName());
-        }
+        });
     }
 
     private InputStream readFlywayProperties() throws IOException {
