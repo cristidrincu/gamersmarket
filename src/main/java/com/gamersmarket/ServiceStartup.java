@@ -50,7 +50,7 @@ public class ServiceStartup implements Extension {
                     try {
                         inputStream.close();
                     } catch (IOException ex) {
-                        logger.severe("Could not close input stream... Reason: " + ex.getMessage());
+                        logger.log(Level.SEVERE, "Could not close input stream... Reason: {0}", ex.getMessage());
                     }
                 }
             }
