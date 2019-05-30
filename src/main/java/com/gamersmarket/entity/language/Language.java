@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,8 +29,15 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "languages")
+@NamedQueries({
+    @NamedQuery(name = Language.GET_LANG_BASED_ON_LANG_NAME, query = Language.GET_LANG_BASED_ON_LANG_NAME_QUERY)
+})
 public class Language implements Serializable {
  
+    public static final String LANG_NAME_PARAM = "langParam";
+    public static final String GET_LANG_BASED_ON_LANG_NAME = "getLangBasedOnLangNameParam";
+    public static final String GET_LANG_BASED_ON_LANG_NAME_QUERY = "select lang from Language lang where lang.language =:" + LANG_NAME_PARAM;
+    
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_language_generator")
@@ -55,7 +64,7 @@ public class Language implements Serializable {
         this.language = languageNode.get("language").asText();
         this.updatedOn = new Date();
     }
-    
+
     public int getId() {
         return id;
     }
