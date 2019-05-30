@@ -32,6 +32,7 @@ public class ApplicationConfig extends ResourceConfig {
                 GamersResource.class,
                 HardwareOfferResource.class,
                 LanguageResource.class,
+                TranslationResource.class,
                 InvalidJsonExceptionMapper.class,
                 NoAccountExistsExceptionMapper.class,
                 AccountAlreadyExistsExceptionMapper.class,
