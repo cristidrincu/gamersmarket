@@ -9,6 +9,7 @@ import com.gamersmarket.common.mappers.InvalidJsonExceptionMapper;
 import com.gamersmarket.common.mappers.JsonParsingExceptionMapper;
 import com.gamersmarket.common.mappers.NoAccountExistsExceptionMapper;
 import com.gamersmarket.common.mappers.NoEntityFoundExceptionMapper;
+import com.gamersmarket.common.mappers.PersistenceExceptionMapper;
 import com.gamersmarket.common.providers.CORSFilterProvider;
 import com.gamersmarket.common.providers.filters.JsonFilterProvider;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
@@ -37,7 +38,8 @@ public class ApplicationConfig extends ResourceConfig {
                 NoAccountExistsExceptionMapper.class,
                 AccountAlreadyExistsExceptionMapper.class,
                 EntityValidationExceptionMapper.class,
-                NoEntityFoundExceptionMapper.class,                
+                NoEntityFoundExceptionMapper.class,
+                PersistenceExceptionMapper.class,
                 HardwareBidAmountExceptionMapper.class,
                 JsonParsingExceptionMapper.class
         );
