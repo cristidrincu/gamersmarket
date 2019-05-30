@@ -1,7 +1,7 @@
 package com.gamersmarket.common.mappers;
 
 import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
-import com.gamersmarket.common.utils.exceptions.AccountAlreadyExistsException;
+import com.gamersmarket.common.utils.exceptions.persistence.AccountAlreadyExistsException;
 import javax.inject.Inject;
 
 import javax.ws.rs.core.Response;

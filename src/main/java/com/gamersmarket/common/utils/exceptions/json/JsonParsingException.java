@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamersmarket.common.utils.exceptions;
+package com.gamersmarket.common.utils.exceptions.json;
 
 /**
  *
  * @author cristiandrincu
  */
-public class PersistenceException extends RuntimeException {
-    
-    public PersistenceException(String message) {
+public class JsonParsingException extends RuntimeException {    
+    public JsonParsingException(String message) {
         super(message);
-    }
+    }    
 }

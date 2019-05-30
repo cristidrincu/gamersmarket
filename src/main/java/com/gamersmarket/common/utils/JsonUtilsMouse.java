@@ -8,7 +8,7 @@ package com.gamersmarket.common.utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.jsonkeys.MouseJsonKeys;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
-import com.gamersmarket.common.utils.exceptions.JsonParsingException;
+import com.gamersmarket.common.utils.exceptions.json.JsonParsingException;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashSet;

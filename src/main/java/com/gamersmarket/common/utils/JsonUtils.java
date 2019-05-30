@@ -10,7 +10,7 @@ import com.gamersmarket.common.enums.jsonkeys.GamerJsonKeys;
 import com.gamersmarket.common.enums.jsonkeys.HardwareBidJsonKeys;
 import com.gamersmarket.common.enums.jsonkeys.SecondaryFieldsHardwareItem;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
-import com.gamersmarket.common.utils.exceptions.JsonParsingException;
+import com.gamersmarket.common.utils.exceptions.json.JsonParsingException;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.logging.Level;

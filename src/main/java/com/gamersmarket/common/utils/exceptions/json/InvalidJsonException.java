@@ -1,4 +1,4 @@
-package com.gamersmarket.common.utils.exceptions;
+package com.gamersmarket.common.utils.exceptions.json;
 
 import com.gamersmarket.common.utils.errors.ErrorInfo;
 

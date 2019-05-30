@@ -6,7 +6,7 @@
 package com.gamersmarket.common.mappers;
 
 import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
-import com.gamersmarket.common.utils.exceptions.HardwareBidAmountException;
+import com.gamersmarket.common.utils.exceptions.business.HardwareBidAmountException;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

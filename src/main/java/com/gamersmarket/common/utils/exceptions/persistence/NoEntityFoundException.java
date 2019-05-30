@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamersmarket.common.utils.exceptions;
+package com.gamersmarket.common.utils.exceptions.persistence;
+
+import javax.persistence.NoResultException;
 
 /**
  *
  * @author cristiandrincu
  */
-public class JsonParsingException extends RuntimeException {    
-    public JsonParsingException(String message) {
+public class NoEntityFoundException extends NoResultException {        
+    public NoEntityFoundException(String message) {
         super(message);
-    }    
+    }
 }

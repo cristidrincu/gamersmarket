@@ -7,7 +7,7 @@ package com.gamersmarket.common.utils;
 
 import com.gamersmarket.common.utils.password.PasswordUtils;
 import com.gamersmarket.common.enums.messages.AccountManagementMessages;
-import com.gamersmarket.common.utils.exceptions.AccountAlreadyExistsException;
+import com.gamersmarket.common.utils.exceptions.persistence.AccountAlreadyExistsException;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 import java.util.Objects;

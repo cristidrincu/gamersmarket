@@ -1,4 +1,4 @@
-package com.gamersmarket.common.utils.exceptions;
+package com.gamersmarket.common.utils.exceptions.persistence;
 
 public class AccountAlreadyExistsException extends RuntimeException {
 

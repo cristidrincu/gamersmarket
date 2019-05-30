@@ -4,7 +4,7 @@ import com.gamersmarket.common.enums.messages.BeanValidationMessages;
 import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.entity.types.HardwareType;
 import com.gamersmarket.common.interfaces.HardwareRepository;
-import com.gamersmarket.common.utils.exceptions.EntityValidationException;
+import com.gamersmarket.common.utils.exceptions.persistence.EntityValidationException;
 import java.util.HashSet;
 
 import javax.persistence.EntityManager;

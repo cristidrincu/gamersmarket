@@ -5,11 +5,10 @@
  */
 package com.gamersmarket.control.language;
 
-import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.common.interfaces.LanguageRepository;
-import com.gamersmarket.common.utils.exceptions.DuplicateEntryException;
-import com.gamersmarket.common.utils.exceptions.NoEntityFoundException;
+import com.gamersmarket.common.utils.exceptions.persistence.DuplicateEntryException;
+import com.gamersmarket.common.utils.exceptions.persistence.NoEntityFoundException;
 import com.gamersmarket.entity.language.Language;
 import java.util.List;
 import java.util.Objects;
@@ -60,8 +59,12 @@ public class LanguageRepo implements LanguageRepository, BeanValidation {
 
     @Override
     public void updateLanguage(Language language) {
-        //check if language is already in the database
-        em.merge(language);
+        Language lang = getLanguage(language.getId());
+        if (Objects.nonNull(lang)) {
+            em.merge(language);
+        } else {
+            throw new NoEntityFoundException("The language you are trying to update does not exist.");
+        }        
     }
 
     @Override

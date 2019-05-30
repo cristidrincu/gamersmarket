@@ -6,7 +6,7 @@
 package com.gamersmarket.common.mappers;
 
 import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
-import com.gamersmarket.common.utils.exceptions.EntityValidationException;
+import com.gamersmarket.common.utils.exceptions.persistence.EntityValidationException;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

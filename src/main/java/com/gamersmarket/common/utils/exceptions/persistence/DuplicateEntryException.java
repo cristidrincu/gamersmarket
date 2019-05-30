@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamersmarket.common.utils.exceptions;
+package com.gamersmarket.common.utils.exceptions.persistence;
 
 /**
  *
  * @author cristiandrincu
  */
-public class HardwareBidAmountException extends RuntimeException {
+public class DuplicateEntryException extends PersistenceException {
     
-    public HardwareBidAmountException(String message) {
+    public DuplicateEntryException(String message) {
         super(message);
     }
+    
 }

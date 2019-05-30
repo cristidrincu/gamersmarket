@@ -2,7 +2,7 @@ package com.gamersmarket.common.utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.utils.errors.ErrorBuilder;
 import com.gamersmarket.common.utils.errors.ErrorInfo;
-import com.gamersmarket.common.utils.exceptions.InvalidJsonException;
+import com.gamersmarket.common.utils.exceptions.json.InvalidJsonException;
 
 import javax.ws.rs.core.Response;
 import java.text.ParseException;

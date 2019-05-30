@@ -5,7 +5,7 @@ import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.entity.hardware.GraphicsCard;
 import com.gamersmarket.entity.hardware.HardwareItem;
 import com.gamersmarket.common.interfaces.HardwareRepository;
-import com.gamersmarket.common.utils.exceptions.EntityValidationException;
+import com.gamersmarket.common.utils.exceptions.persistence.EntityValidationException;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 import com.gamersmarket.entity.types.HardwareType;

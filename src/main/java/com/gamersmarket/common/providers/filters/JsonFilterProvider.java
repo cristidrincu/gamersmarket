@@ -7,7 +7,7 @@ package com.gamersmarket.common.providers.filters;
 
 import com.gamersmarket.common.annotations.jerseyfilters.ValidateBasicCredentials;
 import com.gamersmarket.common.utils.JsonUtils;
-import com.gamersmarket.common.utils.exceptions.NoAccountExistsException;
+import com.gamersmarket.common.utils.exceptions.persistence.NoAccountExistsException;
 import com.google.common.base.Charsets;
 import java.io.IOException;
 import java.io.InputStream;
