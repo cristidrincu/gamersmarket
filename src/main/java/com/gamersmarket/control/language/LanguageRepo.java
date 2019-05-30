@@ -5,12 +5,17 @@
  */
 package com.gamersmarket.control.language;
 
+import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.common.interfaces.LanguageRepository;
+import com.gamersmarket.common.utils.exceptions.DuplicateEntryException;
+import com.gamersmarket.common.utils.exceptions.NoEntityFoundException;
 import com.gamersmarket.entity.language.Language;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 
@@ -25,12 +30,17 @@ public class LanguageRepo implements LanguageRepository, BeanValidation {
     
     @Override
     public Language getLanguage(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em.find(Language.class, id);
     }
 
     @Override
-    public Language getLanguage(String languageName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Language getLanguage(String languageName) {        
+        try {
+            return em.createNamedQuery(Language.GET_LANG_BASED_ON_LANG_NAME, Language.class)
+                .setParameter(Language.LANG_NAME_PARAM, languageName).getSingleResult();
+        } catch (NoResultException ex) {
+            throw new NoEntityFoundException("No language found based on provided language name.");
+        }        
     }
 
     @Override
@@ -40,8 +50,12 @@ public class LanguageRepo implements LanguageRepository, BeanValidation {
 
     @Override
     public void addLanguage(Language language) {
-        //check if language is already in the database
-        em.persist(language);
+        Language lang = getLanguage(language.getLanguage());
+        if (Objects.nonNull(lang)) {
+            throw new DuplicateEntryException("The language you are trying to add has already been persisted.");
+        } else {
+            em.persist(language);
+        }        
     }
 
     @Override
