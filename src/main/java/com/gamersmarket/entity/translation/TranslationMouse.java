@@ -11,6 +11,7 @@ import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.entity.language.Language;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -95,7 +96,17 @@ public class TranslationMouse implements Serializable {
     public TranslationMouse() {}
     
     public TranslationMouse(JsonNode translationNode) {
-        this.translationText = translationNode.get("translation").asText();
+        this.connectionTypeTranslation = translationNode.get("connectionTypeTranslation").asText();
+        this.sensonTechnologyTranslation = translationNode.get("sensonTechnologyTranslation").asText();
+        this.buttonsTranslation = translationNode.get("buttonsTranslation").asText();
+        this.scrollingButtonsTranslation = translationNode.get("scrollingButtonsTranslation").asText();
+        this.colourTranslation = translationNode.get("colourTranslation").asText();
+        this.hasIlluminationTranslation = translationNode.get("hasIlluminationTranslation").asText();
+        this.ledColorTranslation = translationNode.get("ledColorTranslation").asText();
+        this.cableLengthTranslation = translationNode.get("cableLengthTranslation").asText();
+        this.weightTranslation = translationNode.get("weightTranslation").asText();
+        this.dpiTranslation = translationNode.get("dpiTranslation").asText();
+        this.isWirelessTranslation = translationNode.get("isWirelessTranslation").asText();        
         this.updatedOn = new Date();
     }
     
