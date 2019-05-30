@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.gamersmarket.common.interfaces;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  *
@@ -12,7 +13,7 @@ package com.gamersmarket.common.interfaces;
 public interface TranslationRepository<T> {
     T getTranslation(T translation);
     T getTranslation(int translationId);  
-    void addTranslation(T translation);
+    void addTranslation(JsonNode translationNode, String language, int mouseId);
     void updateTranslation(T translation);
     void deleteTranslation(int translationId);
 }
