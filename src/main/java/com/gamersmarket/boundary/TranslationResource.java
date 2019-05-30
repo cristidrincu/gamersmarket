@@ -5,8 +5,15 @@
  */
 package com.gamersmarket.boundary;
 
-import com.gamersmarket.common.interfaces.TranslationRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.utils.JsonUtils;
+import com.gamersmarket.control.hardware.MouseRepo;
+import com.gamersmarket.control.language.LanguageRepo;
+import com.gamersmarket.control.translation.MouseTranslationRepo;
+import com.gamersmarket.entity.hardware.Mouse;
+import com.gamersmarket.entity.language.Language;
+import com.gamersmarket.entity.translation.TranslationMouse;
+import java.io.IOException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -25,16 +32,19 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class TranslationResource {
-      
+    
     @Inject
-    private TranslationRepository translationRepository;
+    private MouseTranslationRepo mouseTranslationRepo;        
     
     @Inject
     private JsonUtils jsonUtils;
     
-    @POST
-    @Path("/mouse")
-    public Response addMouseTranslation(String jsonMouseTranslationNode) {
+    @POST    
+    public Response addMouseTranslation(String jsonTranslationNode) throws IOException {
+        JsonNode rootNode = jsonUtils.readJsonTree(jsonTranslationNode);
+        String languageFromJsonPayload = rootNode.get("language").asText();
+        int mouseIdJsonPayload = rootNode.get("mouseId").asInt();
+        mouseTranslationRepo.addTranslation(rootNode, languageFromJsonPayload, mouseIdJsonPayload);
         return Response.ok().entity("Hello").build();
     }
 }
