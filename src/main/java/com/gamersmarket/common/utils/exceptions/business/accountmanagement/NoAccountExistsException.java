@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gamersmarket.common.utils.exceptions.persistence;
+package com.gamersmarket.common.utils.exceptions.business.accountmanagement;
 
-import javax.persistence.NoResultException;
+import com.gamersmarket.common.utils.exceptions.business.AccountManagementException;
 
 /**
  *
  * @author cristiandrincu
  */
-public class NoAccountExistsException extends NoResultException {
+public class NoAccountExistsException extends AccountManagementException {
     public NoAccountExistsException(String message) {
         super(message);
     }

@@ -5,13 +5,13 @@
  */
 package com.gamersmarket.common.utils.exceptions.persistence;
 
-import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 
 /**
  *
  * @author cristiandrincu
  */
-public class NoEntityFoundException extends NoResultException {        
+public class NoEntityFoundException extends PersistenceException {        
     public NoEntityFoundException(String message) {
         super(message);
     }

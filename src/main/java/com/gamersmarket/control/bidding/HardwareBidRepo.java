@@ -8,7 +8,7 @@ package com.gamersmarket.control.bidding;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.messages.HardwareBidMessages;
 import com.gamersmarket.common.interfaces.BidRepository;
-import com.gamersmarket.common.utils.exceptions.business.HardwareBidAmountException;
+import com.gamersmarket.common.utils.exceptions.business.bids.HardwareBidAmountException;
 import com.gamersmarket.common.utils.exceptions.persistence.NoEntityFoundException;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.control.hardware.HardwareOfferRepo;

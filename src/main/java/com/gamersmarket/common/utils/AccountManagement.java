@@ -7,12 +7,12 @@ package com.gamersmarket.common.utils;
 
 import com.gamersmarket.common.utils.password.PasswordUtils;
 import com.gamersmarket.common.enums.messages.AccountManagementMessages;
-import com.gamersmarket.common.utils.exceptions.persistence.AccountAlreadyExistsException;
+import com.gamersmarket.common.utils.exceptions.business.accountmanagement.AccountAlreadyExistsException;
+import com.gamersmarket.common.utils.exceptions.business.accountmanagement.NoAccountExistsException;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 import java.util.Objects;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 /**
  *
@@ -35,7 +35,7 @@ public class AccountManagement {
             if (!Objects.isNull(newGamer)) {
                 throw new AccountAlreadyExistsException(AccountManagementMessages.ACCOUNT_ALREADY_EXISTS.getMessageDescription());
             }
-        } catch (NoResultException e) {
+        } catch (NoAccountExistsException e) {
             String gamerPassword = gamer.getPassword();
             String passwordSalt = passwordUtils.getSalt(30);
             String securedPassword = passwordUtils.generateSecurePassword(gamerPassword, passwordSalt);

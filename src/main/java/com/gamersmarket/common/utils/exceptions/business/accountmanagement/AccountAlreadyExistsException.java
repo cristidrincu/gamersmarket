@@ -1,6 +1,8 @@
-package com.gamersmarket.common.utils.exceptions.persistence;
+package com.gamersmarket.common.utils.exceptions.business.accountmanagement;
 
-public class AccountAlreadyExistsException extends RuntimeException {
+import com.gamersmarket.common.utils.exceptions.business.AccountManagementException;
+
+public class AccountAlreadyExistsException extends AccountManagementException {
 
     private static final long serialVersionUID = -8784986293072127385L;
 
