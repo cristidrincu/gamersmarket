@@ -6,7 +6,7 @@
 package com.gamersmarket.common.mappers;
 
 import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
-import com.gamersmarket.common.utils.exceptions.persistence.NoAccountExistsException;
+import com.gamersmarket.common.utils.exceptions.business.BusinessRuleException;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -15,15 +15,14 @@ import javax.ws.rs.ext.ExceptionMapper;
  *
  * @author cristiandrincu
  */
-public class NoAccountExistsExceptionMapper implements ExceptionMapper<NoAccountExistsException> {
+public class BusinessRuleExceptionMapper implements ExceptionMapper<BusinessRuleException> {
 
     @Inject
     private CustomBasicResponse basicResponse;
     
     @Override
-    public Response toResponse(NoAccountExistsException e) {
-        return Response.status(Response.Status.BAD_REQUEST)
-                .header("X-No-Account-Exists", e.getMessage())
+    public Response toResponse(BusinessRuleException e) {
+        return Response.status(Response.Status.BAD_REQUEST)                
                 .entity(basicResponse.buildDefaultResponse(Response.Status.BAD_REQUEST.getStatusCode(), e.getMessage()))
                 .build();
     }
