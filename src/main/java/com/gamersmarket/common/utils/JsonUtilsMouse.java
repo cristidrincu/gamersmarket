@@ -7,6 +7,7 @@ package com.gamersmarket.common.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.jsonkeys.MouseJsonKeys;
+import com.gamersmarket.common.interfaces.JsonValidator;
 import com.gamersmarket.common.providers.ObjectMapperProvider;
 import com.gamersmarket.common.utils.exceptions.json.JsonParsingException;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import javax.inject.Inject;
  *
  * @author cristiandrincu
  */
-public class JsonUtilsMouse {
+public class JsonUtilsMouse implements JsonValidator {
     
     private static final Logger LOGGER = Logger.getLogger(JsonUtils.class.getName());
     
@@ -41,11 +42,12 @@ public class JsonUtilsMouse {
         }
         
         return mouseNode;
-    }
-    
-    public boolean validateJsonKeysMousePayload(JsonNode mouseJsonNode) throws IOException {              
-        HashSet<String> mouseJsonKeysEnumValues = MouseJsonKeys.getMouseKeyConstantsAsSet();                          
-        Iterator<Map.Entry<String, JsonNode>> mouseNodes = mouseJsonNode.fields();        
+    }              
+
+    @Override
+    public boolean validateJsonKeys(JsonNode jsonNode) {
+         HashSet<String> mouseJsonKeysEnumValues = MouseJsonKeys.getMouseKeyConstantsAsSet();                          
+        Iterator<Map.Entry<String, JsonNode>> mouseNodes = jsonNode.fields();        
         while(mouseNodes.hasNext()) {                        
             if (!mouseJsonKeysEnumValues.contains(mouseNodes.next().getKey())) {                
                 LOGGER.log(Level.SEVERE, "Invalid json payload.");
@@ -54,5 +56,5 @@ public class JsonUtilsMouse {
         }
         
         return true;
-    }        
+    }
 }

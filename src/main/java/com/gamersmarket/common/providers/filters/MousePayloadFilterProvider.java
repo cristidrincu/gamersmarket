@@ -37,7 +37,7 @@ public class MousePayloadFilterProvider implements ContainerRequestFilter {
             String json = IOUtils.toString(request.getEntityStream(), Charsets.UTF_8);
             JsonNode mouseJsonNode = jsonUtilsMouse.readMouseFromNode(json);            
             
-            if (jsonUtilsMouse.validateJsonKeysMousePayload(mouseJsonNode)) {
+            if (jsonUtilsMouse.validateJsonKeys(mouseJsonNode)) {
                 LOGGER.log(Level.INFO, "Mouse json keys are valid. Please check MouseJsonKeys enum for mouse payload json schema.");
                 InputStream parsedJson = IOUtils.toInputStream(json);
                 request.setEntityStream(parsedJson);
