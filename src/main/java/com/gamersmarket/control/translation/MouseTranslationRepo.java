@@ -45,7 +45,15 @@ public class MouseTranslationRepo implements TranslationRepository<TranslationMo
     @Override
     public TranslationMouse getTranslation(int translationId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }          
+    }
+    
+    @Override
+    public TranslationMouse getTranslation(int hardwareItemId, int languageId) {
+        return em.createNamedQuery(TranslationMouse.GET_TRANSLATION_FOR_MOUSE, TranslationMouse.class)
+                .setParameter(TranslationMouse.MOUSE_ID_PARAM, hardwareItemId)
+                .setParameter(TranslationMouse.LANGUAGE_ID_PARAM, languageId)
+                .getSingleResult();
+    }
 
     @Override
     public void addTranslation(JsonNode rootNode, String language, int mouseId) {        
@@ -70,5 +78,5 @@ public class MouseTranslationRepo implements TranslationRepository<TranslationMo
     @Override
     public Set<String> collectConstraintViolationErrors(ConstraintViolationException e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }   
 }

@@ -31,7 +31,7 @@ public class Mouse extends HardwareItem implements Serializable {
     public static final String GET_MOUSE_DETAILS = "Mouse.getMouseDetails";
 
     public static final String GET_MICE_QUERY = "select m from Mouse m";
-    public static final String GET_MOUSE_DETAILS_QUERY = "select m from Mouse m where m.id = :" + MOUSE_PARAM_ID;    
+    public static final String GET_MOUSE_DETAILS_QUERY = "select m from Mouse m where m.id = :" + MOUSE_PARAM_ID;
 
     @Column(name = "connection_type")
     @Size(min = 5, max = 50, message = "Connection type must be between 5 and 50 characters.")
@@ -67,7 +67,7 @@ public class Mouse extends HardwareItem implements Serializable {
     private int dpi;
 
     @Column(name = "is_wireless")
-    private int isWireless;            
+    private int isWireless;       
 
     public Mouse() {
         super();
@@ -191,5 +191,5 @@ public class Mouse extends HardwareItem implements Serializable {
 
     public void setIsWireless(int isWireless) {
         this.isWireless = isWireless;
-    } 
+    }
 }
