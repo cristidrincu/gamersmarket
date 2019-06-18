@@ -157,4 +157,9 @@ public class HardwareOfferRepo implements HardwareRepository<HardwareOffer>, Bea
         e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
         return constraintViolations;
     }
+
+    @Override
+    public HardwareOffer getItem(String language, int hardwareId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

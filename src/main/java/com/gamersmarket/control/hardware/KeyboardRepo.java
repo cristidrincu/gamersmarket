@@ -76,4 +76,9 @@ public class KeyboardRepo implements HardwareRepository<Keyboard>, BeanValidatio
         e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
         return constraintViolations;
     }
+
+    @Override
+    public Keyboard getItem(String language, int hardwareId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

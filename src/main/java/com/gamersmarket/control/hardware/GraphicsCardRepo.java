@@ -79,4 +79,9 @@ public class GraphicsCardRepo implements HardwareRepository<GraphicsCard>, BeanV
         e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
         return constraintViolations;
     }
+
+    @Override
+    public GraphicsCard getItem(String language, int hardwareId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

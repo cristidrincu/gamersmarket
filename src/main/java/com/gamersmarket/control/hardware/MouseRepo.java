@@ -44,6 +44,15 @@ public class MouseRepo implements HardwareRepository<Mouse>, BeanValidation {
             throw new NoEntityFoundException(HardwareItemMessages.HARDWARE_ITEM_NOT_FOUND_BY_ID.getMessage());
         }        
     }
+    
+    @Override
+    public Mouse getItem(String language, int hardwareId) {
+        try {
+            return em.createNamedQuery(Mouse.GET_MOUSE_DETAILS, Mouse.class).setParameter(Mouse.MOUSE_PARAM_ID, hardwareId).getSingleResult();
+        } catch (NoResultException e) {
+            throw new NoEntityFoundException(HardwareItemMessages.HARDWARE_ITEM_NOT_FOUND_BY_ID.getMessage());
+        }
+    }
 
     @Override
     public void addItem(Mouse hardwareItem) {
@@ -80,5 +89,5 @@ public class MouseRepo implements HardwareRepository<Mouse>, BeanValidation {
         Set<String> constraintViolations = new HashSet<>();
         e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
         return constraintViolations;
-    }
+    }   
 }

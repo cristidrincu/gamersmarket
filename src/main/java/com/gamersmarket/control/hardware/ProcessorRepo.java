@@ -74,4 +74,9 @@ public class ProcessorRepo implements HardwareRepository<Processor>, BeanValidat
         e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
         return constraintViolations;
     }
+
+    @Override
+    public Processor getItem(String language, int hardwareId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

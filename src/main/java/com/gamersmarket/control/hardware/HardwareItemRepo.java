@@ -62,4 +62,9 @@ public class HardwareItemRepo implements HardwareRepository<HardwareItem>, BeanV
         e.getConstraintViolations().forEach(violation -> constraintViolations.add(violation.getMessageTemplate()));
         return constraintViolations;
     }
+
+    @Override
+    public HardwareItem getItem(String language, int hardwareId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

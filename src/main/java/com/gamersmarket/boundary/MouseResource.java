@@ -38,13 +38,14 @@ public class MouseResource {
 
     @GET
     public Response getMice() {
-        return Response.ok().entity(mouseDetailsDTO.buildMiceList()).build();
+//        return Response.ok().entity(mouseDetailsDTO.buildMiceList()).build();
+        return Response.ok().entity("here a mouse list lives").build();
     }
     
     @GET
-    @Path("{id}/basic-details")
-    public Response getMouseDetails(@PathParam("id") int id) throws JsonProcessingException {
-        return Response.ok().entity(mouseDetailsDTO.buildMouseDetails(id)).build();
+    @Path("/{language}/{id}/basic-details")
+    public Response getMouseDetails(@PathParam("language") String language, @PathParam("id") int id) throws JsonProcessingException {
+        return Response.ok().entity(mouseDetailsDTO.buildMouseDetails(language, id, jsonUtils)).build();
     }
 
     @GET
