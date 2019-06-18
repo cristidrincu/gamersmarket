@@ -11,7 +11,6 @@ import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.entity.language.Language;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +18,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,14 +32,24 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "translation_mouse")
+@NamedQueries({
+    @NamedQuery(name = TranslationMouse.GET_TRANSLATION_FOR_MOUSE, query = TranslationMouse.GET_TRANSLATION_FOR_MOUSE_QUERY)
+})
 public class TranslationMouse implements Serializable {
-        
+    
+    public static final String LANGUAGE_ID_PARAM = "lang_id";
+    public static final String MOUSE_ID_PARAM = "mouse_id";
+    public static final String GET_TRANSLATION_FOR_MOUSE = "getTranslationForMouse";
+    public static final String GET_TRANSLATION_FOR_MOUSE_QUERY = "select translation from TranslationMouse translation where translation.language.id =:" + LANGUAGE_ID_PARAM
+            + " and translation.mouse.id =:" + MOUSE_ID_PARAM;
+    
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_translation_mouse_generator")
     @SequenceGenerator(name = "sq_translation_mouse_generator", sequenceName = "sq_hardware_item")
     private int id;
     
+    //TODO - drop this column as it's not used in next migration    
     @Column(name = "text")
     private String translationText;        
     
