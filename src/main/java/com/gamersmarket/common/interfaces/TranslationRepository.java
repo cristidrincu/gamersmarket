@@ -12,7 +12,8 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public interface TranslationRepository<T> {
     T getTranslation(T translation);
-    T getTranslation(int translationId);  
+    T getTranslation(int translationId);
+    T getTranslation(int hardwareItemId, int languageId);
     void addTranslation(JsonNode translationNode, String language, int mouseId);
     void updateTranslation(T translation);
     void deleteTranslation(int translationId);
