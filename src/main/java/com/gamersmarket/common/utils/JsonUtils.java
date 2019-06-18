@@ -30,6 +30,10 @@ public class JsonUtils {
     
     @Inject
     public JsonUtils() {}
+
+    public ObjectMapperProvider getProvider() {
+        return provider;
+    }        
     
     public JsonNode readJsonTree(String json) throws IOException {
         return provider.getContext(JsonUtils.class).readTree(json);
