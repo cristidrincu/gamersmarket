@@ -6,7 +6,6 @@
 package com.gamersmarket.common.providers.filters;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.gamersmarket.common.utils.JsonUtils;
 import com.gamersmarket.common.utils.JsonUtilsMouse;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,7 +25,7 @@ import java.io.InputStream;
 @ValidateMouseJsonPayload
 public class MousePayloadFilterProvider implements ContainerRequestFilter {
 
-    private static final Logger LOGGER = Logger.getLogger(JsonUtils.class.getName());        
+    private static final Logger LOGGER = Logger.getLogger(MousePayloadFilterProvider.class.getName());       
     
     @Inject
     private JsonUtilsMouse jsonUtilsMouse;
