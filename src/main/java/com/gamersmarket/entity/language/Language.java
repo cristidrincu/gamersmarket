@@ -64,6 +64,11 @@ public class Language implements Serializable {
         this.language = languageNode.get("language").asText();
         this.updatedOn = new Date();
     }
+    
+    public Language(String language) {
+        this.language = language;
+        this.updatedOn = new Date();
+    }
 
     public int getId() {
         return id;

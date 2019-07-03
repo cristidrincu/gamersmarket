@@ -5,6 +5,7 @@
  */
 package com.gamersmarket.control.language;
 
+import com.gamersmarket.common.enums.language.Languages;
 import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.common.interfaces.LanguageRepository;
 import com.gamersmarket.common.utils.exceptions.persistence.DuplicateEntryException;
@@ -13,6 +14,8 @@ import com.gamersmarket.entity.language.Language;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -24,6 +27,8 @@ import javax.validation.ConstraintViolationException;
  */
 public class LanguageRepo implements LanguageRepository, BeanValidation {
 
+    private static final Logger LOGGER = Logger.getLogger(LanguageRepo.class.getName());       
+    
     @PersistenceContext(name = "gamersMarket")
     private EntityManager em;  
     
@@ -38,7 +43,8 @@ public class LanguageRepo implements LanguageRepository, BeanValidation {
             return em.createNamedQuery(Language.GET_LANG_BASED_ON_LANG_NAME, Language.class)
                 .setParameter(Language.LANG_NAME_PARAM, languageName).getSingleResult();
         } catch (NoResultException ex) {
-            throw new NoEntityFoundException("No language found based on provided language name.");
+            LOGGER.log(Level.WARNING, "No language found based on provided language name. Switching to default language.");
+            return new Language(Languages.DEFAULT_LANGUAGE.getLanguage());
         }        
     }
 
@@ -76,5 +82,4 @@ public class LanguageRepo implements LanguageRepository, BeanValidation {
     public Set<String> collectConstraintViolationErrors(ConstraintViolationException e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

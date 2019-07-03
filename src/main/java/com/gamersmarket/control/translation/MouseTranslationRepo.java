@@ -8,14 +8,18 @@ package com.gamersmarket.control.translation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.interfaces.BeanValidation;
 import com.gamersmarket.common.interfaces.TranslationRepository;
+import com.gamersmarket.common.utils.exceptions.persistence.NoEntityFoundException;
 import com.gamersmarket.control.hardware.MouseRepo;
 import com.gamersmarket.control.language.LanguageRepo;
 import com.gamersmarket.entity.hardware.Mouse;
 import com.gamersmarket.entity.language.Language;
 import com.gamersmarket.entity.translation.TranslationMouse;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 
@@ -25,8 +29,10 @@ import javax.validation.ConstraintViolationException;
  */
 public class MouseTranslationRepo implements TranslationRepository<TranslationMouse>, BeanValidation {
 
+    private static final Logger LOGGER = Logger.getLogger(MouseTranslationRepo.class.getName());
+    
     @PersistenceContext(name = "gamersMarket")
-    private EntityManager em;
+    private EntityManager em;        
     
     @Inject
     private LanguageRepo languageRepo;
@@ -49,10 +55,15 @@ public class MouseTranslationRepo implements TranslationRepository<TranslationMo
     
     @Override
     public TranslationMouse getTranslation(int hardwareItemId, int languageId) {
-        return em.createNamedQuery(TranslationMouse.GET_TRANSLATION_FOR_MOUSE, TranslationMouse.class)
+        try {
+            return em.createNamedQuery(TranslationMouse.GET_TRANSLATION_FOR_MOUSE, TranslationMouse.class)
                 .setParameter(TranslationMouse.MOUSE_ID_PARAM, hardwareItemId)
                 .setParameter(TranslationMouse.LANGUAGE_ID_PARAM, languageId)
                 .getSingleResult();
+        } catch (NoResultException ex) {
+            LOGGER.log(Level.WARNING, "Either no translation was found based on provided language parameter or mouse id is incorrect.");
+            throw new NoEntityFoundException("Either no translation was found based on provided language parameter or mouse id is incorrect.");
+        }        
     }
 
     @Override
