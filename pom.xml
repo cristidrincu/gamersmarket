@@ -23,6 +23,7 @@
         <javax-el.version>3.0.0</javax-el.version>
         <postgress.version>42.2.2</postgress.version>
         <payara.version>4.1.2.181</payara.version>
+        <jjwt.version>0.9.0</jjwt.version>
         <argLine>-Xmx1024M</argLine>
 
         <skip.integration.tests>true</skip.integration.tests>
@@ -180,11 +181,11 @@
             <version>1.0.4</version>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.7.13</version>
-            <scope>test</scope>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -200,14 +201,6 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.2</version>
             </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-            </plugin>
-<!--            <plugin>-->
-<!--                <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                <version>2.22.2</version>-->
-<!--            </plugin>-->
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.2.2</version>
@@ -251,12 +244,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

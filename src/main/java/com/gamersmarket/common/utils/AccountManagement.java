@@ -5,14 +5,15 @@
  */
 package com.gamersmarket.common.utils;
 
-import com.gamersmarket.common.utils.password.PasswordUtils;
 import com.gamersmarket.common.enums.messages.AccountManagementMessages;
 import com.gamersmarket.common.utils.exceptions.business.accountmanagement.AccountAlreadyExistsException;
 import com.gamersmarket.common.utils.exceptions.business.accountmanagement.NoAccountExistsException;
+import com.gamersmarket.common.utils.password.PasswordUtils;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
-import java.util.Objects;
+
 import javax.inject.Inject;
+import java.util.Objects;
 
 /**
  *
@@ -25,9 +26,6 @@ public class AccountManagement {
     
     @Inject
     private PasswordUtils passwordUtils;
-    
-    @Inject
-    public AccountManagement() {};
     
     public void createAccount(Gamer gamer) {         
         try {
