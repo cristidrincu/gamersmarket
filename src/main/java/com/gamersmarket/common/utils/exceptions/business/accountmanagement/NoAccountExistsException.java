@@ -5,8 +5,6 @@
  */
 package com.gamersmarket.common.utils.exceptions.business.accountmanagement;
 
-import com.gamersmarket.common.utils.exceptions.business.AccountManagementException;
-
 /**
  *
  * @author cristiandrincu

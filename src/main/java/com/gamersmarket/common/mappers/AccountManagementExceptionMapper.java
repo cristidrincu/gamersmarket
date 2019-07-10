@@ -1,9 +1,9 @@
 package com.gamersmarket.common.mappers;
 
 import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
-import com.gamersmarket.common.utils.exceptions.business.AccountManagementException;
-import javax.inject.Inject;
+import com.gamersmarket.common.utils.exceptions.business.accountmanagement.AccountManagementException;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 

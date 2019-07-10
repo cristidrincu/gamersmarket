@@ -5,19 +5,20 @@
  */
 package com.gamersmarket.common.providers.filters;
 
-import com.gamersmarket.common.annotations.jerseyfilters.ValidateBasicCredentials;
+import com.gamersmarket.common.annotations.ValidateBasicCredentials;
 import com.gamersmarket.common.utils.JsonUtils;
 import com.gamersmarket.common.utils.exceptions.business.accountmanagement.NoAccountExistsException;
 import com.google.common.base.Charsets;
+import org.apache.commons.io.IOUtils;
+
+import javax.inject.Inject;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import org.apache.commons.io.IOUtils;
 
 /**
  *

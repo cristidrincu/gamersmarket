@@ -6,17 +6,18 @@
 package com.gamersmarket.common.providers.filters;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.annotations.ValidateMouseJsonPayload;
 import com.gamersmarket.common.utils.JsonUtilsMouse;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
+
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-import com.gamersmarket.common.annotations.jerseyfilters.ValidateMouseJsonPayload;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
