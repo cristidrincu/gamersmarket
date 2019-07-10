@@ -2,13 +2,14 @@ package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.annotations.ValidateMouseJsonPayload;
 import com.gamersmarket.common.enums.jsonkeys.MouseJsonKeys;
 import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
 import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
+import com.gamersmarket.control.hardware.MouseRepo;
 import com.gamersmarket.control.hardware.dto.MouseDetailsDTO;
 import com.gamersmarket.entity.hardware.Mouse;
-import com.gamersmarket.control.hardware.MouseRepo;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,7 +17,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import com.gamersmarket.common.annotations.jerseyfilters.ValidateMouseJsonPayload;
 
 @Stateless
 @Path("/gaming-mouse")

@@ -6,24 +6,20 @@
 package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.gamersmarket.common.annotations.ValidateMouseJsonPayload;
 import com.gamersmarket.common.enums.jsonkeys.KeyboardJsonKeys;
 import com.gamersmarket.common.enums.messages.HardwareItemMessages;
 import com.gamersmarket.common.utils.JsonUtils;
 import com.gamersmarket.common.utils.customresponse.CustomHardwareItemBasicResponse;
 import com.gamersmarket.control.hardware.KeyboardRepo;
 import com.gamersmarket.entity.hardware.Keyboard;
-import java.io.IOException;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import com.gamersmarket.common.annotations.jerseyfilters.ValidateMouseJsonPayload;
+import java.io.IOException;
 
 /**
  *

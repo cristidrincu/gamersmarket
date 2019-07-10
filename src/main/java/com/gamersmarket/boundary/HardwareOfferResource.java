@@ -2,18 +2,18 @@ package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.enums.messages.HardwareOfferMessages;
-import com.gamersmarket.common.providers.ObjectMapperProvider;
+import com.gamersmarket.common.utils.JsonUtils;
 import com.gamersmarket.common.utils.customresponse.CustomBasicResponse;
 import com.gamersmarket.control.hardware.HardwareOfferRepo;
 import com.gamersmarket.entity.hardware.HardwareOffer;
-import java.io.IOException;
-import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.util.List;
 
 @Stateless
 @Path("/hardware-offers")
@@ -22,13 +22,13 @@ import javax.ws.rs.core.Response;
 public class HardwareOfferResource {
 
     @Inject
-    CustomBasicResponse basicResponse;
+    private CustomBasicResponse basicResponse;
 
     @Inject
-    HardwareOfferRepo hardwareOfferRepo;
-    
+    private HardwareOfferRepo hardwareOfferRepo;
+
     @Inject
-    ObjectMapperProvider provider;
+    private JsonUtils jsonUtils;
 
     @GET
     public Response getHardwareOffers() {        
@@ -46,7 +46,7 @@ public class HardwareOfferResource {
     @POST
     @Path("/initial-offer")
     public Response addInitialHardwareOffer(String jsonObject) throws IOException {
-        JsonNode rootNode = provider.getContext(HardwareOfferResource.class).readTree(jsonObject);
+        JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         JsonNode hwPricingNode = rootNode.get("hwPricing");               
         String responseMessageDescription = HardwareOfferMessages.INITIAL_HARDWARE_OFFER_SUCCESS_MESSAGE.getMessageDescription();
 
@@ -57,7 +57,7 @@ public class HardwareOfferResource {
     @POST
     @Path("/final-offer")
     public Response addFinalHardwareOffer(String jsonObject) throws IOException {        
-        JsonNode rootNode = provider.getContext(HardwareOfferResource.class).readTree(jsonObject);
+        JsonNode rootNode = jsonUtils.readJsonTree(jsonObject);
         String responseMessageDescription = HardwareOfferMessages.FINAL_HARDWARE_OFFER_SUCCESS_MESSAGE.getMessageDescription();
         
         hardwareOfferRepo.buildFinalHardwareOffer(rootNode);
