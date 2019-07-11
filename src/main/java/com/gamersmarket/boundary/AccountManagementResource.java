@@ -102,10 +102,10 @@ public class AccountManagementResource {
         }
     }
 
-    private String issueToken(String login) {
+    private String issueToken(String emailAddress) {
         Key key = keyGenerator.generateKey();
         return Jwts.builder()
-                .setSubject(login)
+                .setSubject(emailAddress)
                 .setIssuer(uriInfo.getAbsolutePath().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(toDate(LocalDateTime.now().plusMinutes(15L)))
