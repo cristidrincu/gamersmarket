@@ -6,26 +6,16 @@ import com.gamersmarket.entity.gamers.Gamer;
 @JsonPropertyOrder({"authenticationToken", "firstName", "lastName", "email", "age"})
 public class GamerProfileDTO {
 
-    private String authenticationToken;
     private String email;
     private String firstName;
     private String lastName;
     private int age;
 
-    public GamerProfileDTO(String authenticationToken, Gamer gamer) {
-        this.authenticationToken = authenticationToken;
+    public GamerProfileDTO(Gamer gamer) {
         this.email = gamer.getEmail();
         this.firstName = gamer.getFirstName();
         this.lastName = gamer.getLastName();
         this.age = gamer.getAge();
-    }
-
-    public String getAuthenticationToken() {
-        return authenticationToken;
-    }
-
-    public void setAuthenticationToken(String authenticationToken) {
-        this.authenticationToken = authenticationToken;
     }
 
     public String getEmail() {

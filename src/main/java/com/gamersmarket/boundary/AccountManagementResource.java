@@ -31,6 +31,8 @@ import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
@@ -80,16 +82,20 @@ public class AccountManagementResource {
         String emailAddress = jsonUtils.readEmailAddressFromNode(jsonGamerAccount);
         String password = jsonUtils.readPasswordFromNode(jsonGamerAccount);
         Gamer gamer = gamersRepo.getGamerDetails(emailAddress);
+        Map<String, Object> jsonResponse = new HashMap<>();
 
         if (auth.authenticateUser(gamer, password)) {
             ObjectMapperProvider mapper = jsonUtils.getProvider();
 
             String token = issueToken(emailAddress);
-            GamerProfileDTO gamerProfileDTO = new GamerProfileDTO(token, gamer);
+            GamerProfileDTO gamerProfileDTO = new GamerProfileDTO(gamer);
+
+            jsonResponse.put("authenticationToken", token);
+            jsonResponse.put("gamer", gamerProfileDTO);
 
             return Response.ok()
                     .header(AUTHORIZATION, "Bearer: " + token)
-                    .entity(mapper.getObjectMapper().writeValueAsString(gamerProfileDTO))
+                    .entity(mapper.getObjectMapper().writeValueAsString(jsonResponse))
                     .build();
         } else {
             return Response.status(UNAUTHORIZED).build();
