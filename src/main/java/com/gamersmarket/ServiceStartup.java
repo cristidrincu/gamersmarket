@@ -87,6 +87,7 @@ public class ServiceStartup implements Extension {
         flyway.setLocations(migrationsLocations);
         flyway.getPlaceholders().put("connection.user", user);
         flyway.getPlaceholders().put("connection.password", password);
+        flyway.setInitOnMigrate(true);
         flyway.migrate();
         logger.info("Migration finished");
     }
