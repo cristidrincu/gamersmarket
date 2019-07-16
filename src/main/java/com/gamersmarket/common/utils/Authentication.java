@@ -7,12 +7,14 @@ package com.gamersmarket.common.utils;
 
 import com.gamersmarket.common.utils.password.PasswordUtils;
 import com.gamersmarket.entity.gamers.Gamer;
-import javax.inject.Inject;
 
-/**
- *
- * @author cristiandrincu
- */
+import javax.ejb.ConcurrencyManagement;
+import javax.ejb.ConcurrencyManagementType;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
+@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class Authentication {       
     
     @Inject
