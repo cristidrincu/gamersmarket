@@ -12,13 +12,14 @@ import com.gamersmarket.common.utils.password.PasswordUtils;
 import com.gamersmarket.control.gamers.GamersRepo;
 import com.gamersmarket.entity.gamers.Gamer;
 
+import javax.ejb.ConcurrencyManagement;
+import javax.ejb.ConcurrencyManagementType;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.Objects;
 
-/**
- *
- * @author cristiandrincu
- */
+@Singleton
+@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
 public class AccountManagement {
     
     @Inject
