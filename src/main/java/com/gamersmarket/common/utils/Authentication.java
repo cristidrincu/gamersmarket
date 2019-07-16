@@ -19,10 +19,7 @@ public class Authentication {
     
     @Inject
     private PasswordUtils passwordUtils;
-    
-    @Inject
-    public Authentication() {}        
-        
+
     public boolean authenticateUser(Gamer user, String providedPassword) {
         return passwordUtils.verifyUserPassword(providedPassword, user.getPassword(), user.getPasswordSalt());        
     }            
