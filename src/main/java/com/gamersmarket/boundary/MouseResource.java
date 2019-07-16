@@ -38,8 +38,7 @@ public class MouseResource {
 
     @GET
     public Response getMice() {
-//        return Response.ok().entity(mouseDetailsDTO.buildMiceList()).build();
-        return Response.ok().entity("here a mouse list lives").build();
+        return Response.ok().entity(mouseRepo.getItems()).build();
     }
     
     @GET
