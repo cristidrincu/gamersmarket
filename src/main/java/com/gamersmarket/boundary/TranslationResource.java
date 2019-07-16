@@ -7,13 +7,8 @@ package com.gamersmarket.boundary;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.gamersmarket.common.utils.JsonUtils;
-import com.gamersmarket.control.hardware.MouseRepo;
-import com.gamersmarket.control.language.LanguageRepo;
 import com.gamersmarket.control.translation.MouseTranslationRepo;
-import com.gamersmarket.entity.hardware.Mouse;
-import com.gamersmarket.entity.language.Language;
-import com.gamersmarket.entity.translation.TranslationMouse;
-import java.io.IOException;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -22,6 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 
 /**
  *
