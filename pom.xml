@@ -18,7 +18,7 @@
         <mockito.version>2.7.13</mockito.version>
         <glassfish.version>2.22.2</glassfish.version>
         <jersey_version>2.7.9</jersey_version>
-        <jackson_core_databind>2.9.9</jackson_core_databind>
+        <jackson_core_databind>2.10.0.pr1</jackson_core_databind>
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <javax-el.version>3.0.0</javax-el.version>
         <postgress.version>42.2.2</postgress.version>
