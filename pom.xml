@@ -21,7 +21,7 @@
         <jackson_core_databind>2.9.9</jackson_core_databind>
         <hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
         <javax-el.version>3.0.0</javax-el.version>
-        <postgress.version>42.2.2</postgress.version>
+        <postgress.version>42.2.25</postgress.version>
         <payara.version>4.1.2.181</payara.version>
         <jjwt.version>0.9.0</jjwt.version>
         <argLine>-Xmx1024M</argLine>
